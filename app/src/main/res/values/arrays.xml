@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="theme_values">
+        <item>crimson</item>
+        <item>cyan</item>
+        <item>deep_cyan</item>
+        <item>deep_purple</item>
+        <item>green</item>
+        <item>light_blue</item>
+        <item>purple</item>
+        <item>teal</item>
+    </string-array>
+</resources>

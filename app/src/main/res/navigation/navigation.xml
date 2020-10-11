@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@+id/nav_schedule">
+
+    <fragment
+        android:id="@+id/nav_schedule"
+        android:name="com.vo1d.schedulemanager.v2.ui.schedule.ScheduleFragment"
+        android:label="@string/menu_schedule"
+        tools:layout="@layout/fragment_schedule">
+        <action
+            android:id="@+id/add_class"
+            app:destination="@id/nav_class_creation">
+            <argument
+                android:name="dayId"
+                app:argType="integer" />
+        </action>
+        <action
+            android:id="@+id/edit_class"
+            app:destination="@id/nav_class_edition">
+            <argument
+                android:name="classId"
+                android:defaultValue="-1"
+                app:argType="integer" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/nav_subjects"
+        android:name="com.vo1d.schedulemanager.v2.ui.subjects.list.SubjectsListFragment"
+        android:label="@string/menu_subjects"
+        tools:layout="@layout/fragment_subjects_list">
+        <action
+            android:id="@+id/edit_subject"
+            app:destination="@id/nav_subject_edition">
+            <argument
+                android:name="subjectId"
+                android:defaultValue="-1"
+                app:argType="integer" />
+        </action>
+        <action
+            android:id="@+id/add_subject"
+            app:destination="@id/nav_subject_creation" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_about"
+        android:name="com.vo1d.schedulemanager.v2.ui.about.AboutFragment"
+        android:label="@string/menu_about"
+        tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@+id/nav_subject_creation"
+        android:name="com.vo1d.schedulemanager.v2.ui.subjects.setup.SubjectSetupFragment"
+        android:label="@string/fragment_label_subject_creation"
+        tools:layout="@layout/fragment_subject_setup" />
+    <fragment
+        android:id="@+id/nav_subject_edition"
+        android:name="com.vo1d.schedulemanager.v2.ui.subjects.setup.SubjectSetupFragment"
+        android:label="@string/fragment_label_subject_edition"
+        tools:layout="@layout/fragment_subject_setup" />
+    <fragment
+        android:id="@+id/nav_class_creation"
+        android:name="com.vo1d.schedulemanager.v2.ui.classes.setup.ClassSetupFragment"
+        android:label="@string/fragment_label_class_creation"
+        tools:layout="@layout/fragment_class_setup" />
+    <fragment
+        android:id="@+id/nav_class_edition"
+        android:name="com.vo1d.schedulemanager.v2.ui.classes.setup.ClassSetupFragment"
+        android:label="@string/fragment_label_class_edition"
+        tools:layout="@layout/fragment_subject_setup" />
+    <fragment
+        android:id="@+id/nav_preferences"
+        android:name="com.vo1d.schedulemanager.v2.ui.settings.SettingsFragment"
+        android:label="@string/fragment_label_settings" />
+
+</navigation>
