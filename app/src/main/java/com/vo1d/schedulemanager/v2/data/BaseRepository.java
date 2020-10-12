@@ -6,7 +6,7 @@ import android.os.AsyncTask;
 import java.util.concurrent.ExecutionException;
 
 @SuppressWarnings({"unchecked"})
-public abstract class BaseRepository<ItemType, DaoType extends BaseDao<ItemType>> {
+public abstract class BaseRepository<ItemType extends IMyEntity, DaoType extends IBaseDao<ItemType>> {
 
     protected DaoType dao;
 

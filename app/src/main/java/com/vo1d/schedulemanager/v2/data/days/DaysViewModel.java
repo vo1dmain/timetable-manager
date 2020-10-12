@@ -1,4 +1,4 @@
-package com.vo1d.schedulemanager.v2.data.day;
+package com.vo1d.schedulemanager.v2.data.days;
 
 import android.app.Application;
 
@@ -10,13 +10,13 @@ import java.util.List;
 
 public class DaysViewModel extends AndroidViewModel {
 
-    private DaysRepository repository;
-    LiveData<List<Day>> allDays;
+    private DayRepository repository;
+    private LiveData<List<Day>> allDays;
 
     public DaysViewModel(@NonNull Application application) {
         super(application);
-        repository = new DaysRepository(application);
-        allDays = repository.getAllDays();
+        repository = new DayRepository(application);
+        allDays = repository.getAll();
     }
 
     /*public void insert(Day day) {

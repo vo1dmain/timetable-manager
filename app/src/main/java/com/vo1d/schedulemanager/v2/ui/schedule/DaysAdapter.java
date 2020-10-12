@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.vo1d.schedulemanager.v2.data.day.Day;
+import com.vo1d.schedulemanager.v2.data.days.Day;
 import com.vo1d.schedulemanager.v2.ui.classes.list.ClassesListFragment;
 
 import java.util.LinkedList;

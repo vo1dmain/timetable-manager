@@ -1,4 +1,4 @@
-package com.vo1d.schedulemanager.v2.data.subject;
+package com.vo1d.schedulemanager.v2.data.subjects;
 
 import android.text.TextUtils;
 

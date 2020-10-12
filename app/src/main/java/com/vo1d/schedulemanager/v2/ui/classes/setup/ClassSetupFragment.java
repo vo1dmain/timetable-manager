@@ -27,19 +27,19 @@ import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 import com.vo1d.schedulemanager.v2.R;
 import com.vo1d.schedulemanager.v2.data.classes.Class;
+import com.vo1d.schedulemanager.v2.data.classes.ClassViewModel;
 import com.vo1d.schedulemanager.v2.data.classes.ClassWithSubject;
-import com.vo1d.schedulemanager.v2.data.classes.ClassesViewModel;
-import com.vo1d.schedulemanager.v2.data.subject.Subject;
-import com.vo1d.schedulemanager.v2.data.subject.SubjectTypes;
-import com.vo1d.schedulemanager.v2.data.subject.SubjectsViewModel;
+import com.vo1d.schedulemanager.v2.data.subjects.Subject;
+import com.vo1d.schedulemanager.v2.data.subjects.SubjectTypes;
+import com.vo1d.schedulemanager.v2.data.subjects.SubjectViewModel;
 
 import java.util.Collections;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class ClassSetupFragment extends Fragment {
-    private SubjectsViewModel svm;
+    private SubjectViewModel svm;
     private ClassSetupViewModel csvm;
-    private ClassesViewModel cvm;
+    private ClassViewModel cvm;
 
     private ChipGroup typesChipGroup;
     private AppCompatSpinner subjectSpinner;
@@ -62,9 +62,9 @@ public class ClassSetupFragment extends Fragment {
         ViewModelProvider provider = new ViewModelProvider(this);
 
         csvm = provider.get(ClassSetupViewModel.class);
-        cvm = provider.get(ClassesViewModel.class);
+        cvm = provider.get(ClassViewModel.class);
 
-        svm = new ViewModelProvider(requireActivity()).get(SubjectsViewModel.class);
+        svm = new ViewModelProvider(requireActivity()).get(SubjectViewModel.class);
     }
 
     @Override
@@ -84,6 +84,14 @@ public class ClassSetupFragment extends Fragment {
                 csvm.getSubjectsList()
         );
 
+        svm.getAllSubjects().observe(getViewLifecycleOwner(), subjects -> {
+            csvm.getSubjectsList().addAll(subjects == null ? Collections.emptyList() : subjects);
+            subjectsArrayAdapter.notifyDataSetChanged();
+            if (isEditionMode) {
+                subjectSpinner.setSelection(subjectsArrayAdapter.getPosition(currentSubject));
+            }
+        });
+
         subjectSpinner = view.findViewById(R.id.subject_spinner);
         typesChipGroup = view.findViewById(R.id.types_list);
 
@@ -101,7 +109,7 @@ public class ClassSetupFragment extends Fragment {
                 Object obj = parent.getItemAtPosition(position);
                 if (obj != null) {
                     if (obj instanceof Subject) {
-                        csvm.setSubjectId(((Subject) obj).getId());
+                        csvm.setSubjectId(((Subject) obj).id);
 
                         typesChipGroup.clearCheck();
                         typesChipGroup.removeAllViewsInLayout();
@@ -189,11 +197,6 @@ public class ClassSetupFragment extends Fragment {
 
         subjectSpinner.setAdapter(subjectsArrayAdapter);
 
-        svm.getAllSubjects().observe(getViewLifecycleOwner(), subjects -> {
-            csvm.getSubjectsList().addAll(subjects == null ? Collections.emptyList() : subjects);
-            subjectsArrayAdapter.notifyDataSetChanged();
-        });
-
         startTimePicker.setOnTimeChangedListener(
                 (view1, hourOfDay, minute) -> endTimePicker.setHour(startTimePicker.getHour() + 1)
         );
@@ -217,7 +220,6 @@ public class ClassSetupFragment extends Fragment {
                 startTimePicker.setMinute(current.aClass.getStartTimeMinutes());
                 endTimePicker.setHour(current.aClass.getEndTimeHour());
                 endTimePicker.setMinute(current.aClass.getEndTimeMinutes());
-                subjectSpinner.setSelection(subjectsArrayAdapter.getPosition(currentSubject));
             }
         }
     }

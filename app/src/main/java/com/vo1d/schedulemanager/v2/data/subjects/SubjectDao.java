@@ -1,16 +1,16 @@
-package com.vo1d.schedulemanager.v2.data.subject;
+package com.vo1d.schedulemanager.v2.data.subjects;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Query;
 import androidx.room.Transaction;
 
-import com.vo1d.schedulemanager.v2.data.BaseDao;
+import com.vo1d.schedulemanager.v2.data.IBaseDao;
 
 import java.util.List;
 
 @Dao
-public abstract class SubjectsDao implements BaseDao<Subject> {
+public abstract class SubjectDao implements IBaseDao<Subject> {
 
     @Transaction
     @Query("DELETE FROM subject_table")
@@ -18,7 +18,7 @@ public abstract class SubjectsDao implements BaseDao<Subject> {
 
     @Transaction
     @Query("SELECT * FROM subject_table ORDER BY title ASC")
-    abstract LiveData<List<Subject>> getAllSubjects();
+    abstract LiveData<List<Subject>> getAll();
 
     @Transaction
     @Query("SELECT * FROM subject_table WHERE title LIKE '%' || :filter || '%' ORDER BY title ASC")

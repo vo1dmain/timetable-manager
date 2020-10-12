@@ -1,4 +1,4 @@
-package com.vo1d.schedulemanager.v2.data.day;
+package com.vo1d.schedulemanager.v2.data.days;
 
 public enum NamesOfDays {
     Monday,

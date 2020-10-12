@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.vo1d.schedulemanager.v2.data.subject.SubjectTypes;
+import com.vo1d.schedulemanager.v2.data.subjects.SubjectTypes;
 
 import java.util.Collections;
 import java.util.LinkedList;

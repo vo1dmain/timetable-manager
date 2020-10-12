@@ -15,9 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.vo1d.schedulemanager.v2.R;
-import com.vo1d.schedulemanager.v2.data.subject.Subject;
-import com.vo1d.schedulemanager.v2.data.subject.SubjectTypes;
+import com.vo1d.schedulemanager.v2.data.subjects.Subject;
+import com.vo1d.schedulemanager.v2.data.subjects.SubjectTypes;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,7 +26,7 @@ class SubjectsListAdapter extends ListAdapter<Subject, SubjectsListAdapter.ViewH
     private static final DiffUtil.ItemCallback<Subject> DIFF_CALLBACK = new DiffUtil.ItemCallback<Subject>() {
         @Override
         public boolean areItemsTheSame(@NonNull Subject oldItem, @NonNull Subject newItem) {
-            return oldItem.getId() == newItem.getId();
+            return oldItem.id == newItem.id;
         }
 
         @Override
@@ -68,8 +69,8 @@ class SubjectsListAdapter extends ListAdapter<Subject, SubjectsListAdapter.ViewH
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Subject current = getItem(position);
 
-        holder.title.setText(current.getTitle());
-        holder.lecturer.setText(current.getLecturerName());
+        holder.title.setText(current.title);
+        holder.lecturer.setText(current.lecturerName);
         holder.typesChips.removeAllViewsInLayout();
 
         for (SubjectTypes t :
@@ -90,7 +91,7 @@ class SubjectsListAdapter extends ListAdapter<Subject, SubjectsListAdapter.ViewH
 
     @Override
     public long getItemId(int position) {
-        return getItem(position).getId();
+        return getItem(position).id;
     }
 
     public List<Long> getAllIds() {
@@ -103,12 +104,16 @@ class SubjectsListAdapter extends ListAdapter<Subject, SubjectsListAdapter.ViewH
         return list;
     }
 
+    public void clearData() {
+        submitList(Collections.emptyList());
+    }
+
     public interface OnItemClickListener {
         void onItemClick(Subject subject);
     }
 
     public interface OnSelectionChangedListener {
-        void onSelectionChanged(Subject subject, boolean isChecked);
+        void onSelectionChanged(Subject subject, View view, boolean isChecked);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -136,7 +141,7 @@ class SubjectsListAdapter extends ListAdapter<Subject, SubjectsListAdapter.ViewH
             checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 int position = getAdapterPosition();
                 if (buttonView != null && position != RecyclerView.NO_POSITION) {
-                    scListener.onSelectionChanged(getItem(position), isChecked);
+                    scListener.onSelectionChanged(getItem(position), itemView, isChecked);
                 }
             });
 

@@ -1,19 +1,22 @@
-package com.vo1d.schedulemanager.v2.data.subject;
+package com.vo1d.schedulemanager.v2.data.subjects;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
+import com.vo1d.schedulemanager.v2.data.IMyEntity;
+
 import java.util.Arrays;
 
 @Entity(tableName = "subject_table", indices = @Index(value = {"id"}, unique = true))
-public class Subject {
+public class Subject implements IMyEntity {
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
-    private String title;
-    private String lecturerName;
+    public int id;
+    public String title;
+    public String lecturerName;
 
     @TypeConverters({SubjectTypesConverter.class})
     private SubjectTypes[] subjectTypes;
@@ -22,30 +25,6 @@ public class Subject {
         this.title = title;
         this.lecturerName = lecturerName;
         this.subjectTypes = subjectTypes;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getLecturerName() {
-        return lecturerName;
-    }
-
-    public void setLecturerName(String lecturerName) {
-        this.lecturerName = lecturerName;
     }
 
     public SubjectTypes[] getSubjectTypes() {
@@ -61,7 +40,7 @@ public class Subject {
         if (obj instanceof Subject) {
             Subject s2 = (Subject) obj;
 
-            boolean c1 = (this.id == s2.getId());
+            boolean c1 = (this.id == s2.id);
 
             boolean c2 = (this.title.contentEquals(s2.title));
 
@@ -75,8 +54,9 @@ public class Subject {
         }
     }
 
+    @NonNull
     @Override
     public String toString() {
-        return title + " (" + lecturerName + ")" ;
+        return title + " (" + lecturerName + ")";
     }
 }

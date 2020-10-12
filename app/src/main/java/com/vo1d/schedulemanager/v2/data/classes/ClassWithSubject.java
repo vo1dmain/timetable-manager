@@ -3,7 +3,7 @@ package com.vo1d.schedulemanager.v2.data.classes;
 import androidx.room.Embedded;
 import androidx.room.Relation;
 
-import com.vo1d.schedulemanager.v2.data.subject.Subject;
+import com.vo1d.schedulemanager.v2.data.subjects.Subject;
 
 public class ClassWithSubject {
     @Embedded

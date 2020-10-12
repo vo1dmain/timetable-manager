@@ -19,7 +19,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.vo1d.schedulemanager.v2.R;
-import com.vo1d.schedulemanager.v2.data.day.DaysViewModel;
+import com.vo1d.schedulemanager.v2.data.days.DaysViewModel;
 
 import java.util.Objects;
 

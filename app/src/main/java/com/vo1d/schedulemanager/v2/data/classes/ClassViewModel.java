@@ -8,12 +8,12 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-public class ClassesViewModel extends AndroidViewModel {
-    private ClassesRepository repository;
+public class ClassViewModel extends AndroidViewModel {
+    private ClassRepository repository;
 
-    public ClassesViewModel(@NonNull Application application) {
+    public ClassViewModel(@NonNull Application application) {
         super(application);
-        repository = new ClassesRepository(application);
+        repository = new ClassRepository(application);
     }
 
     public long insert(Class c) {

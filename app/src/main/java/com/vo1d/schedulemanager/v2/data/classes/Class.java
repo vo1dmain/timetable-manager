@@ -6,10 +6,11 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import com.vo1d.schedulemanager.v2.data.day.Day;
-import com.vo1d.schedulemanager.v2.data.subject.Subject;
-import com.vo1d.schedulemanager.v2.data.subject.SubjectTypes;
-import com.vo1d.schedulemanager.v2.data.subject.SubjectTypesConverter;
+import com.vo1d.schedulemanager.v2.data.IMyEntity;
+import com.vo1d.schedulemanager.v2.data.days.Day;
+import com.vo1d.schedulemanager.v2.data.subjects.Subject;
+import com.vo1d.schedulemanager.v2.data.subjects.SubjectTypes;
+import com.vo1d.schedulemanager.v2.data.subjects.SubjectTypesConverter;
 
 import static androidx.room.ForeignKey.CASCADE;
 
@@ -23,9 +24,10 @@ import static androidx.room.ForeignKey.CASCADE;
                 @Index(value = "dayId"),
                 @Index(value = "subjectId")
         })
-public class Class {
+public class Class implements IMyEntity {
     @PrimaryKey(autoGenerate = true)
     public int id;
+
     public int subjectId;
     public int dayId;
 

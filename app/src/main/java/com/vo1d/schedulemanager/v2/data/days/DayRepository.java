@@ -1,4 +1,4 @@
-package com.vo1d.schedulemanager.v2.data.day;
+package com.vo1d.schedulemanager.v2.data.days;
 
 import android.app.Application;
 import android.os.AsyncTask;
@@ -11,15 +11,15 @@ import com.vo1d.schedulemanager.v2.data.Database;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-class DaysRepository extends BaseRepository<Day, DaysDao> {
+class DayRepository extends BaseRepository<Day, DayDao> {
 
-    DaysRepository(Application application) {
+    DayRepository(Application application) {
         Database database = Database.getInstance(application);
-        dao = database.daysDao();
+        dao = database.dayDao();
     }
 
-    LiveData<List<Day>> getAllDays() {
-        GetAllDaysAsyncTask task = new GetAllDaysAsyncTask(dao);
+    LiveData<List<Day>> getAll() {
+        GetAllAsyncTask task = new GetAllAsyncTask(dao);
         task.execute();
         try {
             return task.get();
@@ -28,16 +28,16 @@ class DaysRepository extends BaseRepository<Day, DaysDao> {
         }
     }
 
-    private static final class GetAllDaysAsyncTask extends AsyncTask<Void, Void, LiveData<List<Day>>> {
-        private DaysDao dao;
+    private static final class GetAllAsyncTask extends AsyncTask<Void, Void, LiveData<List<Day>>> {
+        private DayDao dao;
 
-        public GetAllDaysAsyncTask(DaysDao dao) {
+        public GetAllAsyncTask(DayDao dao) {
             this.dao = dao;
         }
 
         @Override
         protected LiveData<List<Day>> doInBackground(Void... voids) {
-            return dao.getAllDays();
+            return dao.getAll();
         }
     }
 }

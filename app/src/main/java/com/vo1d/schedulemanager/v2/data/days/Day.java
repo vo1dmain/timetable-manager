@@ -1,11 +1,13 @@
-package com.vo1d.schedulemanager.v2.data.day;
+package com.vo1d.schedulemanager.v2.data.days;
 
 import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import com.vo1d.schedulemanager.v2.data.IMyEntity;
+
 @Entity(tableName = "day_table", indices = {@Index(value = {"id"}, unique = true)})
-public class Day {
+public class Day implements IMyEntity {
 
     @PrimaryKey(autoGenerate = true)
     private int id;

@@ -28,19 +28,23 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textview.MaterialTextView;
 import com.vo1d.schedulemanager.v2.MainActivity;
 import com.vo1d.schedulemanager.v2.R;
-import com.vo1d.schedulemanager.v2.data.subject.Subject;
-import com.vo1d.schedulemanager.v2.data.subject.SubjectsViewModel;
+import com.vo1d.schedulemanager.v2.data.subjects.Subject;
+import com.vo1d.schedulemanager.v2.data.subjects.SubjectViewModel;
 import com.vo1d.schedulemanager.v2.ui.dialogs.ConfirmationDialog;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
-import static com.vo1d.schedulemanager.v2.ui.dialogs.ConfirmationDialog.DEFAULT_LISTENER;
 import static com.vo1d.schedulemanager.v2.ui.dialogs.ConfirmationDialog.DELETE_SELECTED;
 
 public class SubjectsListFragment extends Fragment {
 
-    private SubjectsViewModel svm;
+    private SubjectViewModel svm;
+    private SubjectsListViewModel slvm;
     private Resources resources;
     private SubjectsListAdapter adapter;
 
@@ -48,14 +52,17 @@ public class SubjectsListFragment extends Fragment {
     private ExtendedFloatingActionButton fabAdd;
     private MaterialTextView listIsEmptyTextView;
     private MaterialTextView nothingFoundTextView;
-    private ActionMode actionMode;
-    private SelectionTracker<Long> tracker;
     private MenuItem deleteAll;
 
     private SubjectsListFragmentDirections.EditSubject edition;
+
     private int visibility;
     private boolean inSearchMode = false;
+    private boolean isDeleteAction = false;
 
+    private ActionMode actionMode;
+    private SelectionTracker<Long> tracker;
+    private ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
     private ActionMode.Callback callback = new ActionMode.Callback() {
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
@@ -77,6 +84,7 @@ public class SubjectsListFragment extends Fragment {
                     tracker.setItemsSelected(adapter.getAllIds(), true);
                     return true;
                 case R.id.delete_selected:
+                    isDeleteAction = true;
                     openConfirmationDialog(DELETE_SELECTED);
                     return true;
                 default:
@@ -86,8 +94,11 @@ public class SubjectsListFragment extends Fragment {
 
         @Override
         public void onDestroyActionMode(ActionMode mode) {
-            tracker.clearSelection();
-            svm.clearSelection();
+            if (!isDeleteAction) {
+                tracker.clearSelection();
+                slvm.clearSelection();
+            }
+            isDeleteAction = false;
             actionMode = null;
             fabAdd.show();
         }
@@ -95,7 +106,7 @@ public class SubjectsListFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        svm = new ViewModelProvider(requireActivity()).get(SubjectsViewModel.class);
+        svm = new ViewModelProvider(requireActivity()).get(SubjectViewModel.class);
         resources = getResources();
         adapter = new SubjectsListAdapter();
 
@@ -106,6 +117,8 @@ public class SubjectsListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
+
+        slvm = new ViewModelProvider(this).get(SubjectsListViewModel.class);
 
         recyclerView = view.findViewById(R.id.subjects_list);
         fabAdd = view.findViewById(R.id.add_subject_fab);
@@ -134,20 +147,19 @@ public class SubjectsListFragment extends Fragment {
         fabAdd.setOnClickListener(v ->
                 Navigation.findNavController(v).navigate(R.id.add_subject));
 
-        adapter.setOnSelectionChangedListener((subject, isChecked) -> {
+        adapter.setOnSelectionChangedListener((subject, v, isChecked) -> {
             if (isChecked) {
-                svm.addToSelection(subject);
+                slvm.addToSelection(subject, v);
             } else {
-                svm.removeFromSelection(subject);
+                slvm.removeFromSelection(subject, v);
             }
         });
 
         adapter.setOnItemClickListener(subject -> {
-                    edition.setSubjectId(subject.getId());
-                    if (actionMode != null) {
-                        actionMode.finish();
+                    if (actionMode == null) {
+                        edition.setSubjectId(subject.id);
+                        Navigation.findNavController(view).navigate(edition);
                     }
-                    Navigation.findNavController(view).navigate(edition);
                 }
         );
 
@@ -195,7 +207,7 @@ public class SubjectsListFragment extends Fragment {
 
         adapter.setTracker(tracker);
 
-        svm.getSelectedSubjects().observe(getViewLifecycleOwner(), list -> {
+        slvm.getSelectedItems().observe(getViewLifecycleOwner(), list -> {
             if (list.isEmpty()) {
                 tracker.clearSelection();
             }
@@ -203,60 +215,112 @@ public class SubjectsListFragment extends Fragment {
     }
 
     private void openConfirmationDialog(int confirmationType) {
-        int titleId = R.string.dialog_title_placeholder;
-        String message = "";
-        ConfirmationDialog confirmationDialog;
-        ConfirmationDialog.DialogListener listener = DEFAULT_LISTENER;
-
         if (confirmationType == ConfirmationDialog.DELETE_ALL) {
-            titleId = R.string.dialog_title_delete_multiple_items;
-            message = resources.getString(R.string.dialog_message_delete_all);
-
-            listener = new ConfirmationDialog.DialogListener() {
-                @Override
-                public void onDialogPositiveClick(DialogFragment dialog) {
-                    svm.deleteAllSubjects();
-                    Snackbar.make(recyclerView, R.string.snackbar_message_all_deleted, Snackbar.LENGTH_LONG).show();
-                }
-
-                @Override
-                public void onDialogNegativeClick(DialogFragment dialog) {
-                    dialog.dismiss();
-                }
-            };
+            setupDeleteAllDialog().show(getParentFragmentManager(), "Delete all confirmation");
         } else if (confirmationType == DELETE_SELECTED) {
-            int count = tracker.getSelection().size();
+            setupDeleteSelectedDialog().show(getParentFragmentManager(), "Delete selected confirmation");
+        }
+    }
 
-            titleId = R.string.dialog_title_delete_multiple_items;
-            message = resources.getString(R.string.dialog_message_delete_selected, count);
+    private ConfirmationDialog setupDeleteAllDialog() {
+        int titleId = R.string.dialog_title_delete_multiple_items;
+        String message = resources.getString(R.string.dialog_message_delete_all);
 
-            String snackbarMes;
-            if (count == 1) {
-                String title = Objects.requireNonNull(svm.getSelectedSubjects().getValue()).get(0).getTitle();
-                snackbarMes = resources.getString(R.string.snackbar_message_delete_success, title);
-            } else if (count == Objects.requireNonNull(svm.getAllSubjects().getValue()).size()) {
-                snackbarMes = resources.getString(R.string.snackbar_message_all_deleted);
-            } else {
-                snackbarMes = resources.getString(R.string.snackbar_message_selected_deleted, count);
+        ConfirmationDialog.DialogListener listener = new ConfirmationDialog.DialogListener() {
+            @Override
+            public void onDialogPositiveClick(DialogFragment dialog) {
+                Snackbar s = Snackbar.make(recyclerView, R.string.snackbar_message_all_deleted, 2750);
+
+                ScheduledFuture<?> operation = executor.schedule(
+                        SubjectsListFragment.this::deleteAllItems,
+                        2750,
+                        TimeUnit.MILLISECONDS
+                );
+
+                List<Subject> backupList = adapter.getCurrentList();
+
+                s.setAction(R.string.snackbar_action_undone, v -> {
+                    operation.cancel(false);
+                    adapter.submitList(backupList);
+                });
+
+                adapter.clearData();
+
+                s.show();
             }
-            listener = new ConfirmationDialog.DialogListener() {
-                @Override
-                public void onDialogPositiveClick(DialogFragment dialog) {
-                    svm.deleteSelectedSubjects();
-                    actionMode.finish();
-                    Snackbar.make(recyclerView, snackbarMes, Snackbar.LENGTH_LONG).show();
-                }
 
-                @Override
-                public void onDialogNegativeClick(DialogFragment dialog) {
-                    dialog.dismiss();
-                }
-            };
+            @Override
+            public void onDialogNegativeClick(DialogFragment dialog) {
+                dialog.dismiss();
+            }
+        };
+
+        ConfirmationDialog dialog = new ConfirmationDialog(titleId, message);
+        dialog.setDialogListener(listener);
+
+        return dialog;
+    }
+
+    private ConfirmationDialog setupDeleteSelectedDialog() {
+        int count = tracker.getSelection().size();
+
+        int titleId = R.string.dialog_title_delete_multiple_items;
+        String message = resources.getString(R.string.dialog_message_delete_selected, count);
+
+        String snackbarMes;
+        if (count == 1) {
+            String title = Objects.requireNonNull(slvm.getSelectedItems().getValue()).get(0).title;
+            snackbarMes = resources.getString(R.string.snackbar_message_delete_success, title);
+        } else if (count == Objects.requireNonNull(svm.getAllSubjects().getValue()).size()) {
+            snackbarMes = resources.getString(R.string.snackbar_message_all_deleted);
+        } else {
+            snackbarMes = resources.getString(R.string.snackbar_message_selected_deleted, count);
         }
 
-        confirmationDialog = new ConfirmationDialog(titleId, message);
-        confirmationDialog.setDialogListener(listener);
-        confirmationDialog.show(getParentFragmentManager(), "Delete selected confirmation");
+        ConfirmationDialog.DialogListener listener = new ConfirmationDialog.DialogListener() {
+            @Override
+            public void onDialogPositiveClick(DialogFragment dialog) {
+                actionMode.finish();
+
+                Snackbar s = Snackbar.make(recyclerView, snackbarMes, 2750);
+
+                slvm.getSelectedViews().forEach(view -> view.setVisibility(View.GONE));
+
+                ScheduledFuture<?> operation = executor.schedule(
+                        SubjectsListFragment.this::deleteSelectedItems,
+                        2750,
+                        TimeUnit.MILLISECONDS
+                );
+
+                s.setAction(R.string.snackbar_action_undone, v -> {
+                    operation.cancel(false);
+                    slvm.getSelectedViews().forEach(view -> view.setVisibility(View.VISIBLE));
+                    slvm.clearSelection();
+                    tracker.clearSelection();
+                });
+
+                s.show();
+            }
+
+            @Override
+            public void onDialogNegativeClick(DialogFragment dialog) {
+                dialog.dismiss();
+            }
+        };
+
+        ConfirmationDialog dialog = new ConfirmationDialog(titleId, message);
+        dialog.setDialogListener(listener);
+
+        return dialog;
+    }
+
+    private void deleteSelectedItems() {
+        svm.delete(slvm.getSelectedItemsAsArray(new Subject[0]));
+        tracker.clearSelection();
+    }
+
+    private void deleteAllItems() {
+        svm.deleteAll();
     }
 
     @Override

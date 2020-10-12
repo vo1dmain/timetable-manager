@@ -61,8 +61,8 @@ class ClassesListAdapter extends ListAdapter<ClassWithSubject, ClassesListAdapte
 
         ClassWithSubject current = getItem(position);
 
-        holder.title.setText(current.subject.getTitle());
-        holder.lecturer.setText(current.subject.getLecturerName());
+        holder.title.setText(current.subject.title);
+        holder.lecturer.setText(current.subject.lecturerName);
 
         holder.typesChips.removeAllViewsInLayout();
         Chip c = (Chip) LayoutInflater.from(holder.typesChips.getContext())
@@ -119,7 +119,7 @@ class ClassesListAdapter extends ListAdapter<ClassWithSubject, ClassesListAdapte
     }
 
     public interface OnSelectionChangedListener {
-        void onSelectionChanged(Class c, boolean isChecked);
+        void onSelectionChanged(Class c, View parent, boolean isChecked);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -156,7 +156,7 @@ class ClassesListAdapter extends ListAdapter<ClassWithSubject, ClassesListAdapte
             checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 int position = getAdapterPosition();
                 if (buttonView != null && position != RecyclerView.NO_POSITION) {
-                    scListener.onSelectionChanged(getItem(position).aClass, isChecked);
+                    scListener.onSelectionChanged(getItem(position).aClass, itemView, isChecked);
                 }
             });
 

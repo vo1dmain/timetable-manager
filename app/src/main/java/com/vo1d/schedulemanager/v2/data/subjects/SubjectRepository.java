@@ -1,4 +1,4 @@
-package com.vo1d.schedulemanager.v2.data.subject;
+package com.vo1d.schedulemanager.v2.data.subjects;
 
 import android.app.Application;
 import android.os.AsyncTask;
@@ -11,11 +11,11 @@ import com.vo1d.schedulemanager.v2.data.Database;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-class SubjectsRepository extends BaseRepository<Subject, SubjectsDao> {
+public class SubjectRepository extends BaseRepository<Subject, SubjectDao> {
 
-    SubjectsRepository(Application application) {
+    public SubjectRepository(Application application) {
         Database database = Database.getInstance(application);
-        dao = database.subjectsDao();
+        dao = database.subjectDao();
     }
 
     void deleteAll() {
@@ -54,15 +54,15 @@ class SubjectsRepository extends BaseRepository<Subject, SubjectsDao> {
 
     private static final class DeleteAllAsyncTask extends AsyncTask<Void, Void, Void> {
 
-        private SubjectsDao subjectsDao;
+        private SubjectDao subjectDao;
 
-        private DeleteAllAsyncTask(SubjectsDao subjectsDao) {
-            this.subjectsDao = subjectsDao;
+        private DeleteAllAsyncTask(SubjectDao subjectDao) {
+            this.subjectDao = subjectDao;
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            subjectsDao.deleteAll();
+            subjectDao.deleteAll();
             return null;
         }
     }
@@ -70,42 +70,42 @@ class SubjectsRepository extends BaseRepository<Subject, SubjectsDao> {
     private static final class GetAllSubjectsAsyncTask extends AsyncTask<Void, Void, LiveData<List<Subject>>> {
 
 
-        private final SubjectsDao dao;
+        private final SubjectDao dao;
 
-        private GetAllSubjectsAsyncTask(SubjectsDao dao) {
+        private GetAllSubjectsAsyncTask(SubjectDao dao) {
             this.dao = dao;
         }
 
         @Override
         protected LiveData<List<Subject>> doInBackground(Void... voids) {
-            return dao.getAllSubjects();
+            return dao.getAll();
         }
     }
 
     private static final class GetFilteredSubjectsAsyncTask extends AsyncTask<String, Void, List<Subject>> {
-        private SubjectsDao subjectsDao;
+        private SubjectDao subjectDao;
 
-        private GetFilteredSubjectsAsyncTask(SubjectsDao subjectsDao) {
-            this.subjectsDao = subjectsDao;
+        private GetFilteredSubjectsAsyncTask(SubjectDao subjectDao) {
+            this.subjectDao = subjectDao;
         }
 
         @Override
         protected List<Subject> doInBackground(String... strings) {
-            return subjectsDao.getFilteredSubjects(strings[0]);
+            return subjectDao.getFilteredSubjects(strings[0]);
         }
     }
 
     private static final class FindSubjectByIdAsyncTask extends AsyncTask<Integer, Void, Subject> {
 
-        private SubjectsDao subjectsDao;
+        private SubjectDao subjectDao;
 
-        private FindSubjectByIdAsyncTask(SubjectsDao subjectsDao) {
-            this.subjectsDao = subjectsDao;
+        private FindSubjectByIdAsyncTask(SubjectDao subjectDao) {
+            this.subjectDao = subjectDao;
         }
 
         @Override
         protected Subject doInBackground(Integer... integers) {
-            return subjectsDao.findSubjectById(integers[0]);
+            return subjectDao.findSubjectById(integers[0]);
         }
     }
 

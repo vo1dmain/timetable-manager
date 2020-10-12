@@ -11,11 +11,11 @@ import com.vo1d.schedulemanager.v2.data.Database;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class ClassesRepository extends BaseRepository<Class, ClassesDao> {
+public class ClassRepository extends BaseRepository<Class, ClassDao> {
 
-    public ClassesRepository(Application application) {
+    public ClassRepository(Application application) {
         Database database = Database.getInstance(application);
-        dao = database.classesDao();
+        dao = database.classDao();
     }
 
     ClassWithSubject findClassById2(int id) {
@@ -27,7 +27,6 @@ public class ClassesRepository extends BaseRepository<Class, ClassesDao> {
             return null;
         }
     }
-
 
     LiveData<List<ClassWithSubject>> findAllClassesForADay2(int dayId) {
         FindAllClassesForADay2AsyncTask task = new FindAllClassesForADay2AsyncTask(dao);
@@ -45,9 +44,9 @@ public class ClassesRepository extends BaseRepository<Class, ClassesDao> {
 
     private static final class DeleteAllAsyncTask extends AsyncTask<Void, Void, Void> {
 
-        private ClassesDao dao;
+        private ClassDao dao;
 
-        private DeleteAllAsyncTask(ClassesDao dao) {
+        private DeleteAllAsyncTask(ClassDao dao) {
             this.dao = dao;
         }
 
@@ -60,9 +59,9 @@ public class ClassesRepository extends BaseRepository<Class, ClassesDao> {
 
     private static final class FindClassById2AsyncTask extends AsyncTask<Integer, Void, ClassWithSubject> {
 
-        private ClassesDao dao;
+        private ClassDao dao;
 
-        private FindClassById2AsyncTask(ClassesDao dao) {
+        private FindClassById2AsyncTask(ClassDao dao) {
             this.dao = dao;
         }
 
@@ -73,9 +72,9 @@ public class ClassesRepository extends BaseRepository<Class, ClassesDao> {
     }
 
     private static final class FindAllClassesForADay2AsyncTask extends AsyncTask<Integer, Void, LiveData<List<ClassWithSubject>>> {
-        private ClassesDao dao;
+        private ClassDao dao;
 
-        private FindAllClassesForADay2AsyncTask(ClassesDao dao) {
+        private FindAllClassesForADay2AsyncTask(ClassDao dao) {
             this.dao = dao;
         }
 

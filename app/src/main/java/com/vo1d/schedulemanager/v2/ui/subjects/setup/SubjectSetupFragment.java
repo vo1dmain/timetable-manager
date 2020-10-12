@@ -21,9 +21,9 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 import com.vo1d.schedulemanager.v2.R;
-import com.vo1d.schedulemanager.v2.data.subject.Subject;
-import com.vo1d.schedulemanager.v2.data.subject.SubjectTypes;
-import com.vo1d.schedulemanager.v2.data.subject.SubjectsViewModel;
+import com.vo1d.schedulemanager.v2.data.subjects.Subject;
+import com.vo1d.schedulemanager.v2.data.subjects.SubjectTypes;
+import com.vo1d.schedulemanager.v2.data.subjects.SubjectViewModel;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -32,7 +32,7 @@ import java.util.Objects;
 
 public class SubjectSetupFragment extends Fragment {
 
-    private SubjectsViewModel svm;
+    private SubjectViewModel svm;
     private SubjectSetupViewModel ssvm;
     private TextInputEditText titleInput;
     private TextInputEditText lecturerInput;
@@ -47,7 +47,7 @@ public class SubjectSetupFragment extends Fragment {
 
         ViewModelProvider provider = new ViewModelProvider(this);
         ssvm = provider.get(SubjectSetupViewModel.class);
-        svm = provider.get(SubjectsViewModel.class);
+        svm = provider.get(SubjectViewModel.class);
     }
 
     @Override
@@ -122,8 +122,8 @@ public class SubjectSetupFragment extends Fragment {
             isEditionMode = id != -1;
             if (isEditionMode) {
                 current = svm.findSubjectById(id);
-                titleInput.setText(current.getTitle());
-                lecturerInput.setText(current.getLecturerName());
+                titleInput.setText(current.title);
+                lecturerInput.setText(current.lecturerName);
                 for (SubjectTypes t :
                         current.getSubjectTypes()) {
                     types.check(chipIds.get(t.ordinal()));
@@ -168,8 +168,8 @@ public class SubjectSetupFragment extends Fragment {
     }
 
     private void applySubjectChanges() {
-        current.setTitle(Objects.requireNonNull(titleInput.getText()).toString());
-        current.setLecturerName(Objects.requireNonNull(lecturerInput.getText()).toString());
+        current.title = Objects.requireNonNull(titleInput.getText()).toString();
+        current.lecturerName = Objects.requireNonNull(lecturerInput.getText()).toString();
         current.setSubjectTypes(ssvm.getSelectedTypesAsArray());
 
         svm.update(current);

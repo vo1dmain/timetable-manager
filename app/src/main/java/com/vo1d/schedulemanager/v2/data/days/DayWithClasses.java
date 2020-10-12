@@ -1,7 +1,4 @@
-package com.vo1d.schedulemanager.v2.data.day;
-
-import androidx.room.Embedded;
-import androidx.room.Relation;
+package com.vo1d.schedulemanager.v2.data.days;
 
 import com.vo1d.schedulemanager.v2.data.classes.Class;
 

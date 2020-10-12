@@ -6,17 +6,33 @@ import android.os.AsyncTask;
 import androidx.annotation.NonNull;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.vo1d.schedulemanager.v2.data.classes.Class;
-import com.vo1d.schedulemanager.v2.data.classes.ClassesDao;
-import com.vo1d.schedulemanager.v2.data.day.Day;
-import com.vo1d.schedulemanager.v2.data.day.DaysDao;
-import com.vo1d.schedulemanager.v2.data.subject.Subject;
-import com.vo1d.schedulemanager.v2.data.subject.SubjectsDao;
+import com.vo1d.schedulemanager.v2.data.classes.ClassDao;
+import com.vo1d.schedulemanager.v2.data.days.Day;
+import com.vo1d.schedulemanager.v2.data.days.DayDao;
+import com.vo1d.schedulemanager.v2.data.lecturers.Lecturer;
+import com.vo1d.schedulemanager.v2.data.lecturers.LecturerDao;
+import com.vo1d.schedulemanager.v2.data.subjects.Subject;
+import com.vo1d.schedulemanager.v2.data.subjects.SubjectDao;
 
-@androidx.room.Database(entities = {Day.class, Subject.class, Class.class}, version = 1)
+@androidx.room.Database(entities = {Day.class, Subject.class, Class.class, Lecturer.class}, version = 2)
 public abstract class Database extends RoomDatabase {
+
+    private static final Migration MIGRATION_1_2 = new Migration(1, 2) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("CREATE TABLE IF NOT EXISTS lecturer_table (" +
+                    "id INTEGER NOT NULL PRIMARY KEY," +
+                    "firstName TEXT," +
+                    "middleName TEXT," +
+                    "lastName TEXT)");
+
+            database.execSQL("CREATE UNIQUE INDEX index_lecturer_table_id ON lecturer_table (id)");
+        }
+    };
 
     private static Database instance;
     private static Callback roomCallback = new Callback() {
@@ -31,31 +47,34 @@ public abstract class Database extends RoomDatabase {
         if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(),
                     Database.class, "days_database")
+                    .addMigrations(MIGRATION_1_2)
                     .addCallback(roomCallback)
                     .build();
         }
         return instance;
     }
 
-    public abstract DaysDao daysDao();
+    public abstract DayDao dayDao();
 
-    public abstract SubjectsDao subjectsDao();
+    public abstract SubjectDao subjectDao();
 
-    public abstract ClassesDao classesDao();
+    public abstract ClassDao classDao();
+
+    public abstract LecturerDao lecturerDao();
 
     private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
 
-        private DaysDao daysDao;
+        private DayDao dayDao;
 
         private PopulateDbAsyncTask(Database db) {
-            daysDao = db.daysDao();
+            dayDao = db.dayDao();
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
             for (int i = 0; i <= 5; i++) {
                 Day d = new Day(i);
-                daysDao.insert(d);
+                dayDao.insert(d);
             }
             return null;
         }

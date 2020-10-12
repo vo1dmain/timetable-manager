@@ -44,6 +44,23 @@
             app:destination="@id/nav_subject_creation" />
     </fragment>
     <fragment
+        android:id="@+id/nav_lecturers"
+        android:name="com.vo1d.schedulemanager.v2.ui.lecturers.list.LecturersListFragment"
+        android:label="@string/menu_lecturers"
+        tools:layout="@layout/fragment_lecturers_list">
+        <action
+            android:id="@+id/edit_lecturer"
+            app:destination="@id/nav_lecturer_edition">
+            <argument
+                android:name="lecturerId"
+                android:defaultValue="-1"
+                app:argType="integer" />
+        </action>
+        <action
+            android:id="@+id/add_lecturer"
+            app:destination="@id/nav_lecturer_creation" />
+    </fragment>
+    <fragment
         android:id="@+id/nav_about"
         android:name="com.vo1d.schedulemanager.v2.ui.about.AboutFragment"
         android:label="@string/menu_about"
@@ -58,6 +75,16 @@
         android:name="com.vo1d.schedulemanager.v2.ui.subjects.setup.SubjectSetupFragment"
         android:label="@string/fragment_label_subject_edition"
         tools:layout="@layout/fragment_subject_setup" />
+    <fragment
+        android:id="@+id/nav_lecturer_creation"
+        android:name="com.vo1d.schedulemanager.v2.ui.lecturers.setup.LecturerSetupFragment"
+        android:label="@string/fragment_label_lecturer_creation"
+        tools:layout="@layout/fragment_lecturer_setup" />
+    <fragment
+        android:id="@+id/nav_lecturer_edition"
+        android:name="com.vo1d.schedulemanager.v2.ui.lecturers.setup.LecturerSetupFragment"
+        android:label="@string/fragment_label_lecturer_edition"
+        tools:layout="@layout/fragment_lecturer_setup" />
     <fragment
         android:id="@+id/nav_class_creation"
         android:name="com.vo1d.schedulemanager.v2.ui.classes.setup.ClassSetupFragment"
