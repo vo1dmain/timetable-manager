@@ -1,18 +1,17 @@
 package com.vo1d.schedulemanager.v2.data;
 
-import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 
 import java.util.concurrent.ExecutionException;
 
-@SuppressWarnings({"unchecked"})
+@SuppressWarnings("unchecked")
 public abstract class BaseRepository<ItemType extends IMyEntity, DaoType extends IBaseDao<ItemType>> {
 
     protected DaoType dao;
 
     public long insert(ItemType item) {
         try {
-            InsertAsyncTask task = new InsertAsyncTask(dao);
+            InsertAsyncTask<ItemType, DaoType> task = new InsertAsyncTask<>(dao);
             task.execute(item);
             return task.get();
         } catch (ExecutionException | InterruptedException e) {
@@ -22,15 +21,15 @@ public abstract class BaseRepository<ItemType extends IMyEntity, DaoType extends
     }
 
     public void update(ItemType item) {
-        new UpdateAsyncTask(dao).execute(item);
+        new UpdateAsyncTask<>(dao).execute(item);
     }
 
-    public void delete(ItemType... items) {
-        new DeleteAsyncTask(dao).execute(items);
+    public void delete(ItemType[] items) {
+        new DeleteAsyncTask<>(dao).execute(items);
     }
 
-    @SuppressLint("StaticFieldLeak")
-    private class InsertAsyncTask extends AsyncTask<ItemType, Void, Long> {
+    private static class InsertAsyncTask<ItemType extends IMyEntity, DaoType extends IBaseDao<ItemType>>
+            extends AsyncTask<ItemType, Void, Long> {
 
         private DaoType dao;
 
@@ -39,13 +38,13 @@ public abstract class BaseRepository<ItemType extends IMyEntity, DaoType extends
         }
 
         @Override
-        protected Long doInBackground(ItemType... items) {
+        protected Long doInBackground(ItemType[] items) {
             return dao.insert(items[0]);
         }
     }
 
-    @SuppressLint("StaticFieldLeak")
-    private class UpdateAsyncTask extends AsyncTask<ItemType, Void, Void> {
+    private static class UpdateAsyncTask<ItemType extends IMyEntity, DaoType extends IBaseDao<ItemType>>
+            extends AsyncTask<ItemType, Void, Void> {
 
         private DaoType dao;
 
@@ -54,14 +53,14 @@ public abstract class BaseRepository<ItemType extends IMyEntity, DaoType extends
         }
 
         @Override
-        protected Void doInBackground(ItemType... subjects) {
+        protected Void doInBackground(ItemType[] subjects) {
             dao.update(subjects[0]);
             return null;
         }
     }
 
-    @SuppressLint("StaticFieldLeak")
-    private class DeleteAsyncTask extends AsyncTask<ItemType, Void, Void> {
+    private static class DeleteAsyncTask<ItemType extends IMyEntity, DaoType extends IBaseDao<ItemType>>
+            extends AsyncTask<ItemType, Void, Void> {
 
         private DaoType dao;
 
@@ -70,7 +69,7 @@ public abstract class BaseRepository<ItemType extends IMyEntity, DaoType extends
         }
 
         @Override
-        protected Void doInBackground(ItemType... subjects) {
+        protected Void doInBackground(ItemType[] subjects) {
             dao.delete(subjects);
             return null;
         }

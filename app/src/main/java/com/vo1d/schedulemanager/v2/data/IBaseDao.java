@@ -14,5 +14,5 @@ public interface IBaseDao<T extends IMyEntity> {
 
     @Transaction
     @Delete
-    void delete(T... objects);
+    void delete(T[] objects);
 }
