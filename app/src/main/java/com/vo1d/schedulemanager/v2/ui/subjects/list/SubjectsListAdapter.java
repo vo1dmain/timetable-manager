@@ -108,12 +108,20 @@ class SubjectsListAdapter extends ListAdapter<Subject, SubjectsListAdapter.ViewH
         submitList(Collections.emptyList());
     }
 
+    public void removeData(List<Subject> data) {
+        List<Subject> list = new LinkedList<>(getCurrentList());
+
+        list.removeAll(data);
+
+        submitList(list);
+    }
+
     public interface OnItemClickListener {
         void onItemClick(Subject subject);
     }
 
     public interface OnSelectionChangedListener {
-        void onSelectionChanged(Subject subject, View view, boolean isChecked);
+        void onSelectionChanged(Subject subject, boolean isChecked);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -141,7 +149,7 @@ class SubjectsListAdapter extends ListAdapter<Subject, SubjectsListAdapter.ViewH
             checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 int position = getAdapterPosition();
                 if (buttonView != null && position != RecyclerView.NO_POSITION) {
-                    scListener.onSelectionChanged(getItem(position), itemView, isChecked);
+                    scListener.onSelectionChanged(getItem(position), isChecked);
                 }
             });
 

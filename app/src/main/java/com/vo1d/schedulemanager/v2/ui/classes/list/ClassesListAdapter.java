@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.vo1d.schedulemanager.v2.R;
-import com.vo1d.schedulemanager.v2.data.classes.Class;
 import com.vo1d.schedulemanager.v2.data.classes.ClassWithSubject;
 
 import java.util.LinkedList;
@@ -102,6 +101,13 @@ class ClassesListAdapter extends ListAdapter<ClassWithSubject, ClassesListAdapte
         return list;
     }
 
+    public void removeData(List<ClassWithSubject> data) {
+        List<ClassWithSubject> list = new LinkedList<>(getCurrentList());
+        list.removeAll(data);
+
+        submitList(list);
+    }
+
     public void setOnItemClickListener(OnItemClickListener listener) {
         itemClickListener = listener;
     }
@@ -115,16 +121,18 @@ class ClassesListAdapter extends ListAdapter<ClassWithSubject, ClassesListAdapte
     }
 
     public interface OnItemClickListener {
-        void onItemClick(Class c);
+        void onItemClick(ClassWithSubject c);
     }
 
     public interface OnSelectionChangedListener {
-        void onSelectionChanged(Class c, View parent, boolean isChecked);
+        void onSelectionChanged(ClassWithSubject c, boolean isChecked);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
+        //private final Resources.Theme theme;
         public ChipGroup typesChips;
+        //private TypedValue value;
         private TextView title;
         private TextView lecturer;
         private TextView audience;
@@ -134,6 +142,9 @@ class ClassesListAdapter extends ListAdapter<ClassWithSubject, ClassesListAdapte
 
         ViewHolder(@NonNull View itemView, final OnItemClickListener cListener, final OnSelectionChangedListener scListener) {
             super(itemView);
+
+            //theme = itemView.getContext().getTheme();
+            //value = new TypedValue();
 
             typesChips = itemView.findViewById(R.id.subject_types_chip_group);
             title = itemView.findViewById(R.id.subject_title);
@@ -149,15 +160,25 @@ class ClassesListAdapter extends ListAdapter<ClassWithSubject, ClassesListAdapte
             itemView.setOnClickListener(v -> {
                 int position = getAdapterPosition();
                 if (cListener != null && position != RecyclerView.NO_POSITION) {
-                    cListener.onItemClick(getItem(position).aClass);
+                    cListener.onItemClick(getItem(position));
                 }
             });
 
             checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 int position = getAdapterPosition();
                 if (buttonView != null && position != RecyclerView.NO_POSITION) {
-                    scListener.onSelectionChanged(getItem(position).aClass, itemView, isChecked);
+                    scListener.onSelectionChanged(getItem(position), isChecked);
                 }
+
+                /*if (isChecked) {
+                    theme.resolveAttribute(R.attr.colorSecondaryVariant, value, true);
+                    @ColorInt int color = value.data;
+                    itemView.setBackgroundColor(color);
+                } else {
+                    theme.resolveAttribute(R.attr.colorSurface, value, true);
+                    @ColorInt int color = value.data;
+                    itemView.setBackgroundColor(color);
+                }*/
             });
 
 

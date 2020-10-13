@@ -28,10 +28,12 @@ import com.vo1d.schedulemanager.v2.MainActivity;
 import com.vo1d.schedulemanager.v2.R;
 import com.vo1d.schedulemanager.v2.data.classes.Class;
 import com.vo1d.schedulemanager.v2.data.classes.ClassViewModel;
+import com.vo1d.schedulemanager.v2.data.classes.ClassWithSubject;
 import com.vo1d.schedulemanager.v2.data.subjects.Subject;
 import com.vo1d.schedulemanager.v2.ui.dialogs.ConfirmationDialog;
 import com.vo1d.schedulemanager.v2.ui.schedule.ScheduleFragmentDirections;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -161,17 +163,17 @@ public class ClassesListFragment extends Fragment {
         fabAdd.setOnClickListener(v ->
                 Navigation.findNavController(v).navigate(addClass));
 
-        adapter.setOnSelectionChangedListener((c, parent, isChecked) -> {
+        adapter.setOnSelectionChangedListener((c, isChecked) -> {
             if (isChecked) {
-                clvm.addToSelection(c, parent);
+                clvm.addToSelection(c);
             } else {
-                clvm.removeFromSelection(c, parent);
+                clvm.removeFromSelection(c);
             }
         });
 
         adapter.setOnItemClickListener(c -> {
                     if (getActionMode() == null) {
-                        editClass.setClassId(c.id);
+                        editClass.setClassId(c.aClass.id);
                         Navigation.findNavController(view).navigate(editClass);
                     }
                 }
@@ -239,7 +241,6 @@ public class ClassesListFragment extends Fragment {
 
         String snackbarMes;
         if (count == 1) {
-
             Subject s = Objects.requireNonNull(clvm.getAllClassesForADay2().getValue()).get(0).subject;
             String title = s.title;
             snackbarMes = resources.getString(R.string.snackbar_message_delete_success, title);
@@ -252,7 +253,6 @@ public class ClassesListFragment extends Fragment {
         listener = new ConfirmationDialog.DialogListener() {
             @Override
             public void onDialogPositiveClick(DialogFragment dialog) {
-
                 getActionMode().finish();
 
                 Snackbar s = Snackbar.make(recyclerView, snackbarMes, 2750);
@@ -263,14 +263,17 @@ public class ClassesListFragment extends Fragment {
                         TimeUnit.MILLISECONDS
                 );
 
-                clvm.getSelectedViews().forEach(view -> view.setVisibility(View.GONE));
+                List<ClassWithSubject> data = clvm.getSelectedItems().getValue();
+
+                List<ClassWithSubject> backedUpData = adapter.getCurrentList();
 
                 s.setAction(R.string.snackbar_action_undone, v -> {
                     operation.cancel(false);
-                    clvm.getSelectedViews().forEach(view -> view.setVisibility(View.VISIBLE));
-                    clvm.clearSelection();
+                    adapter.submitList(backedUpData);
                     tracker.clearSelection();
                 });
+
+                adapter.removeData(data);
 
                 s.show();
             }
@@ -294,7 +297,7 @@ public class ClassesListFragment extends Fragment {
     }
 
     private void deleteSelectedItems() {
-        cvm.delete(clvm.getSelectedItemsAsArray(new Class[0]));
+        cvm.delete(clvm.getSelectedItemsAsClassArray(new Class[0]));
         tracker.clearSelection();
     }
 }

@@ -66,9 +66,8 @@ class LecturersListAdapter extends ListAdapter<Lecturer, LecturersListAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Lecturer current = getItem(position);
 
-        holder.firstName.setText(current.firstName);
-        holder.middleName.setText(current.middleName);
-        holder.lastName.setText(current.lastName);
+        holder.name.setText(current.getFullName());
+        holder.firstChar.setText(String.valueOf(current.firstName.charAt(0)));
 
         if (tracker != null) {
             if (tracker.hasSelection()) {
@@ -96,27 +95,33 @@ class LecturersListAdapter extends ListAdapter<Lecturer, LecturersListAdapter.Vi
         submitList(Collections.emptyList());
     }
 
+    public void removeData(List<Lecturer> data) {
+        List<Lecturer> list = new LinkedList<>(getCurrentList());
+
+        list.removeAll(data);
+
+        submitList(list);
+    }
+
     public interface OnItemClickListener {
         void onItemClick(Lecturer lecturer);
     }
 
     public interface OnSelectionChangedListener {
-        void onSelectionChanged(Lecturer lecturer, View itemView, boolean isChecked);
+        void onSelectionChanged(Lecturer lecturer, boolean isChecked);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView firstName;
-        private TextView middleName;
-        private TextView lastName;
+        private TextView name;
+        private TextView firstChar;
         private CheckBox checkBox;
 
         ViewHolder(@NonNull View itemView, final OnItemClickListener cListener, final OnSelectionChangedListener scListener) {
             super(itemView);
 
-            firstName = itemView.findViewById(R.id.first_name);
-            middleName = itemView.findViewById(R.id.middle_name);
-            lastName = itemView.findViewById(R.id.last_name);
+            name = itemView.findViewById(R.id.name);
+            firstChar = itemView.findViewById(R.id.lecturer_first_char);
             checkBox = itemView.findViewById(R.id.checkBox);
 
             itemView.setOnClickListener(v -> {
@@ -129,7 +134,7 @@ class LecturersListAdapter extends ListAdapter<Lecturer, LecturersListAdapter.Vi
             checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 int position = getAdapterPosition();
                 if (buttonView != null && position != RecyclerView.NO_POSITION) {
-                    scListener.onSelectionChanged(getItem(position), itemView, isChecked);
+                    scListener.onSelectionChanged(getItem(position), isChecked);
                 }
             });
 

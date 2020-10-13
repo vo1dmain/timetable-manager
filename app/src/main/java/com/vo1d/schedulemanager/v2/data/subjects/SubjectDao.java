@@ -21,7 +21,7 @@ public abstract class SubjectDao implements IBaseDao<Subject> {
     abstract LiveData<List<Subject>> getAll();
 
     @Transaction
-    @Query("SELECT * FROM subject_table WHERE title LIKE '%' || :filter || '%' ORDER BY title ASC")
+    @Query("SELECT * FROM subject_table WHERE title LIKE :filter || '%' ORDER BY title ASC")
     abstract List<Subject> getFilteredSubjects(String filter);
 
     @Query("SELECT * FROM subject_table WHERE id=:id")

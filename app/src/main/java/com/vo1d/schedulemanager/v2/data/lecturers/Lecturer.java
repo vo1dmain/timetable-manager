@@ -44,4 +44,8 @@ public class Lecturer implements IMyEntity {
     public String getShortName() {
         return lastName + " " + firstName.charAt(0) + ". " + middleName.charAt(0) + ".";
     }
+
+    public String getFullName() {
+        return firstName + " " + middleName + " " + lastName;
+    }
 }

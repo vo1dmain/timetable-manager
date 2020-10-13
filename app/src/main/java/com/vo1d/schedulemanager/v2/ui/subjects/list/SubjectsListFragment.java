@@ -147,11 +147,11 @@ public class SubjectsListFragment extends Fragment {
         fabAdd.setOnClickListener(v ->
                 Navigation.findNavController(v).navigate(R.id.add_subject));
 
-        adapter.setOnSelectionChangedListener((subject, v, isChecked) -> {
+        adapter.setOnSelectionChangedListener((subject, isChecked) -> {
             if (isChecked) {
-                slvm.addToSelection(subject, v);
+                slvm.addToSelection(subject);
             } else {
-                slvm.removeFromSelection(subject, v);
+                slvm.removeFromSelection(subject);
             }
         });
 
@@ -284,7 +284,9 @@ public class SubjectsListFragment extends Fragment {
 
                 Snackbar s = Snackbar.make(recyclerView, snackbarMes, 2750);
 
-                slvm.getSelectedViews().forEach(view -> view.setVisibility(View.GONE));
+                List<Subject> data = slvm.getSelectedItems().getValue();
+
+                List<Subject> backedUpData = adapter.getCurrentList();
 
                 ScheduledFuture<?> operation = executor.schedule(
                         SubjectsListFragment.this::deleteSelectedItems,
@@ -294,10 +296,11 @@ public class SubjectsListFragment extends Fragment {
 
                 s.setAction(R.string.snackbar_action_undone, v -> {
                     operation.cancel(false);
-                    slvm.getSelectedViews().forEach(view -> view.setVisibility(View.VISIBLE));
-                    slvm.clearSelection();
+                    adapter.submitList(backedUpData);
                     tracker.clearSelection();
                 });
+
+                adapter.removeData(data);
 
                 s.show();
             }

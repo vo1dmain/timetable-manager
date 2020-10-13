@@ -6,49 +6,55 @@
     android:clickable="true"
     android:focusable="true"
     app:cardElevation="0dp"
-    app:contentPaddingLeft="16dp">
+    app:contentPaddingLeft="8dp">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
 
-        <com.google.android.flexbox.FlexboxLayout
-            android:layout_width="match_parent"
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:clickable="true"
+                android:contentDescription="@string/lecturer_s_avatar"
+                android:focusable="true"
+                android:src="@drawable/ic_round_avatar" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/lecturer_first_char"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:maxLength="1"
+                android:maxLines="1"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                android:textColor="?attr/colorSurface" />
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"
             android:layout_weight="1"
-            app:alignItems="center"
-            app:flexDirection="row"
-            app:flexWrap="wrap">
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/last_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/first_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/middle_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
-
-        </com.google.android.flexbox.FlexboxLayout>
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/checkBox"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="end|center"
-            android:layout_weight="5"
             android:clickable="false"
             android:visibility="invisible" />
     </androidx.appcompat.widget.LinearLayoutCompat>

@@ -23,13 +23,11 @@ import com.vo1d.schedulemanager.v2.data.days.DaysViewModel;
 
 import java.util.Objects;
 
-@SuppressWarnings("FieldCanBeLocal")
+
 public class ScheduleFragment extends Fragment {
 
     private static ActionMode actionMode;
-    private Resources resources;
     private ViewPager2 vp2;
-    private TabLayout tabLayout;
     private DaysViewModel dvm;
     private DaysAdapter adapter;
 
@@ -52,7 +50,7 @@ public class ScheduleFragment extends Fragment {
         Calendar calendar = Calendar.getInstance();
         currentDay = calendar.get(Calendar.DAY_OF_WEEK) - 2;
 
-        resources = requireActivity().getResources();
+        Resources resources = requireActivity().getResources();
         dvm = new ViewModelProvider(requireActivity()).get(DaysViewModel.class);
         daysNames = resources.getStringArray(R.array.days_of_week);
     }
@@ -66,7 +64,7 @@ public class ScheduleFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        tabLayout = view.findViewById(R.id.tabs);
+        TabLayout tabLayout = view.findViewById(R.id.tabs);
         vp2 = view.findViewById(R.id.view_pager);
 
         adapter = new DaysAdapter(this);

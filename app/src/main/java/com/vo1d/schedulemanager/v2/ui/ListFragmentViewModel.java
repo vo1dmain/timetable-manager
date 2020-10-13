@@ -1,7 +1,6 @@
 package com.vo1d.schedulemanager.v2.ui;
 
 import android.app.Application;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -17,25 +16,21 @@ import java.util.Objects;
 public abstract class ListFragmentViewModel<ItemType extends IMyEntity> extends AndroidViewModel {
 
     protected LiveData<List<ItemType>> selectedItems = new MutableLiveData<>(new LinkedList<>());
-    protected List<View> selectedViews = new LinkedList<>();
 
     public ListFragmentViewModel(@NonNull Application application) {
         super(application);
     }
 
-    public void addToSelection(ItemType item, View itemView) {
+    public void addToSelection(ItemType item) {
         Objects.requireNonNull(selectedItems.getValue()).add(item);
-        selectedViews.add(itemView);
     }
 
-    public void removeFromSelection(ItemType item, View itemView) {
+    public void removeFromSelection(ItemType item) {
         Objects.requireNonNull(selectedItems.getValue()).remove(item);
-        selectedViews.remove(itemView);
     }
 
     public void clearSelection() {
         Objects.requireNonNull(selectedItems.getValue()).clear();
-        selectedViews.clear();
     }
 
     public LiveData<List<ItemType>> getSelectedItems() {
@@ -44,9 +39,5 @@ public abstract class ListFragmentViewModel<ItemType extends IMyEntity> extends 
 
     public ItemType[] getSelectedItemsAsArray(@NonNull ItemType[] array) {
         return Objects.requireNonNull(selectedItems.getValue()).toArray(array);
-    }
-
-    public List<View> getSelectedViews() {
-        return selectedViews;
     }
 }

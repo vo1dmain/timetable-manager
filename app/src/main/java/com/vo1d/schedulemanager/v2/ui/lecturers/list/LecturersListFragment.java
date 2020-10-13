@@ -147,11 +147,11 @@ public class LecturersListFragment extends Fragment {
         fabAdd.setOnClickListener(v ->
                 Navigation.findNavController(v).navigate(R.id.add_lecturer));
 
-        adapter.setOnSelectionChangedListener((lecturer, itemView, isChecked) -> {
+        adapter.setOnSelectionChangedListener((lecturer, isChecked) -> {
             if (isChecked) {
-                llvm.addToSelection(lecturer, itemView);
+                llvm.addToSelection(lecturer);
             } else {
-                llvm.removeFromSelection(lecturer, itemView);
+                llvm.removeFromSelection(lecturer);
             }
         });
 
@@ -290,14 +290,17 @@ public class LecturersListFragment extends Fragment {
                         TimeUnit.MILLISECONDS
                 );
 
-                llvm.getSelectedViews().forEach(view -> view.setVisibility(View.GONE));
+                List<Lecturer> data = llvm.getSelectedItems().getValue();
+
+                List<Lecturer> backedUpData = adapter.getCurrentList();
 
                 s.setAction(R.string.snackbar_action_undone, v -> {
                     operation.cancel(false);
-                    llvm.getSelectedViews().forEach(view -> view.setVisibility(View.VISIBLE));
-                    llvm.clearSelection();
+                    adapter.submitList(backedUpData);
                     tracker.clearSelection();
                 });
+
+                adapter.removeData(data);
 
                 s.show();
             }

@@ -96,4 +96,5 @@
     <string name="title_type_setting_block">Тип занятия</string>
     <string name="title_types_choosing_block">Типы занятий</string>
     <string name="snackbar_action_undone">Отмена</string>
+    <string name="lecturer_s_avatar">Иконка преподавателя</string>
 </resources>
