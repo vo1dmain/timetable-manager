@@ -9,8 +9,8 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 public class SubjectViewModel extends AndroidViewModel {
-    private SubjectRepository repository;
-    private LiveData<List<Subject>> allSubjects;
+    private final SubjectRepository repository;
+    private final LiveData<List<Subject>> allSubjects;
 
     public SubjectViewModel(@NonNull Application application) {
         super(application);

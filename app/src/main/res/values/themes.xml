@@ -1,99 +1,99 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
+
+    <style name="ActionModeStyle" parent="@style/Widget.MaterialComponents.ActionBar.PrimarySurface">
+        <item name="titleTextStyle">@style/ActionModeStyle.TitleTextAppearance</item>
+    </style>
+
+    <style name="ActionModeStyle.TitleTextAppearance" parent="@style/TextAppearance.AppCompat.Widget.ActionMode.Title">
+        <item name="android:textColor">?attr/colorOnPrimarySurface</item>
+    </style>
+
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.ScheduleManager" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimaryDark">?attr/colorSurface</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="actionModeStyle">@style/ActionModeStyle</item>
     </style>
 
-    <style name="ActionModeStyle" parent="@style/Widget.AppCompat.ActionMode">
-        <item name="background">?attr/colorPrimarySurface</item>
-        <item name="titleTextStyle">@style/ActionModeTitleTextStyle</item>
-    </style>
-
-    <style name="ActionModeTitleTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionMode.Title">
-        <item name="android:textColor">?attr/colorOnPrimarySurface</item>
-    </style>
-
-    <style name="AppTheme.Crimson" parent="AppTheme">
+    <style name="Theme.ScheduleManager.Crimson" parent="Theme.ScheduleManager">
         <item name="colorPrimary">@color/pink_500</item>
         <item name="colorPrimaryVariant">@color/pink_500_light</item>
         <item name="colorPrimaryDark">@color/pink_500_dark</item>
-        <item name="colorOnPrimary">@color/black_900</item>
+        <item name="colorOnPrimary">@color/color_control_black</item>
         <item name="colorSecondary">@color/cyan_300</item>
-        <item name="colorSecondaryVariant">@color/cyan_300_light</item>
-        <item name="colorOnSecondary">@color/black_900</item>
+        <item name="colorSecondaryVariant">@color/cyan_300_dark</item>
+        <item name="colorOnSecondary">@color/color_control_black</item>
     </style>
 
-    <style name="AppTheme.Cyan" parent="AppTheme">
+    <style name="Theme.ScheduleManager.Cyan" parent="Theme.ScheduleManager">
         <item name="colorPrimary">@color/cyan_300</item>
         <item name="colorPrimaryVariant">@color/cyan_300_light</item>
         <item name="colorPrimaryDark">@color/cyan_300_dark</item>
-        <item name="colorOnPrimary">@color/black_900</item>
+        <item name="colorOnPrimary">@color/color_control_black</item>
         <item name="colorSecondary">@color/deep_orange_400</item>
         <item name="colorSecondaryVariant">@color/deep_orange_400_light</item>
-        <item name="colorOnSecondary">@color/black_900</item>
+        <item name="colorOnSecondary">@color/color_control_black</item>
     </style>
 
-    <style name="AppTheme.DeepCyan" parent="AppTheme">
+    <style name="Theme.ScheduleManager.DeepCyan" parent="Theme.ScheduleManager">
         <item name="colorPrimary">@color/cyan_900</item>
         <item name="colorPrimaryVariant">@color/cyan_900_light</item>
         <item name="colorPrimaryDark">@color/cyan_900_dark</item>
-        <item name="colorOnPrimary">@color/white_900</item>
+        <item name="colorOnPrimary">@color/color_control_white</item>
         <item name="colorSecondary">@color/red_A200</item>
         <item name="colorSecondaryVariant">@color/red_A200_light</item>
-        <item name="colorOnSecondary">@color/black_900</item>
+        <item name="colorOnSecondary">@color/color_control_black</item>
     </style>
 
-    <style name="AppTheme.DeepPurple" parent="AppTheme">
+    <style name="Theme.ScheduleManager.DeepPurple" parent="Theme.ScheduleManager">
         <item name="colorPrimary">@color/deep_purple_200</item>
         <item name="colorPrimaryVariant">@color/deep_purple_200_light</item>
         <item name="colorPrimaryDark">@color/deep_purple_200_dark</item>
-        <item name="colorOnPrimary">@color/black_900</item>
+        <item name="colorOnPrimary">@color/color_control_black</item>
         <item name="colorSecondary">@color/pink_100</item>
-        <item name="colorSecondaryVariant">@color/pink_100_light</item>
-        <item name="colorOnSecondary">@color/black_900</item>
+        <item name="colorSecondaryVariant">@color/pink_100_dark</item>
+        <item name="colorOnSecondary">@color/color_control_black</item>
     </style>
 
-    <style name="AppTheme.Green" parent="AppTheme">
+    <style name="Theme.ScheduleManager.Green" parent="Theme.ScheduleManager">
         <item name="colorPrimary">@color/green_300</item>
         <item name="colorPrimaryVariant">@color/green_300_light</item>
         <item name="colorPrimaryDark">@color/green_300_dark</item>
-        <item name="colorOnPrimary">@color/black_900</item>
+        <item name="colorOnPrimary">@color/color_control_black</item>
         <item name="colorSecondary">@color/pink_500</item>
         <item name="colorSecondaryVariant">@color/pink_500_light</item>
-        <item name="colorOnSecondary">@color/black_900</item>
+        <item name="colorOnSecondary">@color/color_control_black</item>
     </style>
 
-    <style name="AppTheme.LightBlue" parent="AppTheme">
+    <style name="Theme.ScheduleManager.LightBlue" parent="Theme.ScheduleManager">
         <item name="colorPrimary">@color/blue_100</item>
         <item name="colorPrimaryVariant">@color/blue_100_light</item>
         <item name="colorPrimaryDark">@color/blue_100_dark</item>
-        <item name="colorOnPrimary">@color/black_900</item>
+        <item name="colorOnPrimary">@color/color_control_black</item>
         <item name="colorSecondary">@color/teal_100</item>
-        <item name="colorSecondaryVariant">@color/teal_100_light</item>
-        <item name="colorOnSecondary">@color/black_900</item>
+        <item name="colorSecondaryVariant">@color/teal_100_dark</item>
+        <item name="colorOnSecondary">@color/color_control_black</item>
     </style>
 
-    <style name="AppTheme.Purple" parent="AppTheme">
+    <style name="Theme.ScheduleManager.Purple" parent="Theme.ScheduleManager">
         <item name="colorPrimary">@color/purple_100</item>
         <item name="colorPrimaryVariant">@color/purple_100_light</item>
         <item name="colorPrimaryDark">@color/purple_100_dark</item>
-        <item name="colorOnPrimary">@color/black_900</item>
+        <item name="colorOnPrimary">@color/color_control_black</item>
         <item name="colorSecondary">@color/deep_orange_50</item>
-        <item name="colorSecondaryVariant">@color/deep_orange_50_light</item>
-        <item name="colorOnSecondary">@color/black_900</item>
+        <item name="colorSecondaryVariant">@color/deep_orange_50_dark</item>
+        <item name="colorOnSecondary">@color/color_control_black</item>
     </style>
 
-    <style name="AppTheme.Teal" parent="AppTheme">
+    <style name="Theme.ScheduleManager.Teal" parent="Theme.ScheduleManager">
         <item name="colorPrimary">@color/teal_200</item>
         <item name="colorPrimaryVariant">@color/teal_200_light</item>
         <item name="colorPrimaryDark">@color/teal_200_dark</item>
-        <item name="colorOnPrimary">@color/black_900</item>
+        <item name="colorOnPrimary">@color/color_control_black</item>
         <item name="colorSecondary">@color/indigo_100</item>
-        <item name="colorSecondaryVariant">@color/indigo_100_light</item>
-        <item name="colorOnSecondary">@color/black_900</item>
+        <item name="colorSecondaryVariant">@color/indigo_100_dark</item>
+        <item name="colorOnSecondary">@color/color_control_black</item>
     </style>
-
 </resources>

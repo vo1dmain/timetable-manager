@@ -10,8 +10,8 @@ import java.util.List;
 
 public class DaysViewModel extends AndroidViewModel {
 
-    private DayRepository repository;
-    private LiveData<List<Day>> allDays;
+    private final DayRepository repository;
+    private final LiveData<List<Day>> allDays;
 
     public DaysViewModel(@NonNull Application application) {
         super(application);
@@ -19,7 +19,7 @@ public class DaysViewModel extends AndroidViewModel {
         allDays = repository.getAll();
     }
 
-    /*public void insert(Day day) {
+    public void insert(Day day) {
         repository.insert(day);
     }
 
@@ -27,10 +27,9 @@ public class DaysViewModel extends AndroidViewModel {
         repository.update(day);
     }
 
-    public void delete(Day day) {
-        repository.delete(day);
+    public void delete(Day... days) {
+        repository.delete(days);
     }
-    */
 
     public LiveData<List<Day>> getAllDays() {
         return allDays;

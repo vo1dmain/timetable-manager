@@ -52,7 +52,7 @@ class LecturerRepository extends BaseRepository<Lecturer, LecturerDao> {
     }
 
     private static final class DeleteAllAsyncTask extends AsyncTask<Void, Void, Void> {
-        private LecturerDao dao;
+        private final LecturerDao dao;
 
         public DeleteAllAsyncTask(LecturerDao dao) {
             this.dao = dao;
@@ -66,7 +66,7 @@ class LecturerRepository extends BaseRepository<Lecturer, LecturerDao> {
     }
 
     private static final class FindLecturerByIdAsyncTask extends AsyncTask<Integer, Void, Lecturer> {
-        private LecturerDao dao;
+        private final LecturerDao dao;
 
         public FindLecturerByIdAsyncTask(LecturerDao dao) {
             this.dao = dao;
@@ -79,7 +79,7 @@ class LecturerRepository extends BaseRepository<Lecturer, LecturerDao> {
     }
 
     private static final class GetFilteredLecturersAsyncTask extends AsyncTask<String, Void, List<Lecturer>> {
-        private LecturerDao dao;
+        private final LecturerDao dao;
 
         private GetFilteredLecturersAsyncTask(LecturerDao dao) {
             this.dao = dao;
@@ -92,7 +92,7 @@ class LecturerRepository extends BaseRepository<Lecturer, LecturerDao> {
     }
 
     private static final class GetAllAsyncTask extends AsyncTask<Void, Void, LiveData<List<Lecturer>>> {
-        private LecturerDao dao;
+        private final LecturerDao dao;
 
         public GetAllAsyncTask(LecturerDao dao) {
             this.dao = dao;

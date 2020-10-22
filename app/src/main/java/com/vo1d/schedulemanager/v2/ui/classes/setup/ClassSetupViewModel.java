@@ -17,6 +17,7 @@ public class ClassSetupViewModel extends ViewModel {
     private final MutableLiveData<Boolean> subjectIsSet = new MutableLiveData<>(false);
     private final MutableLiveData<Boolean> subjectTypeIsSet = new MutableLiveData<>(false);
     private final MutableLiveData<Boolean> canBeSaved = new MutableLiveData<>(false);
+    private final List<Subject> subjectsList = new ArrayList<>(Collections.emptyList());
     private boolean _buildingIsFiled = false;
     private boolean _cabinetIsFilled = false;
     private boolean _subjectIsSet = false;
@@ -26,7 +27,6 @@ public class ClassSetupViewModel extends ViewModel {
     private int buildingNumber;
     private int cabinetNumber;
     private SubjectTypes type;
-    private List<Subject> subjectsList = new ArrayList<>(Collections.emptyList());
 
     public ClassSetupViewModel() {
         buildingIsFilled.observeForever(aBoolean -> {

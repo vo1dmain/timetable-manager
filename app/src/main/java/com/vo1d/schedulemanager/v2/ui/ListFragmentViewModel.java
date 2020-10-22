@@ -15,18 +15,22 @@ import java.util.Objects;
 
 public abstract class ListFragmentViewModel<ItemType extends IMyEntity> extends AndroidViewModel {
 
-    protected LiveData<List<ItemType>> selectedItems = new MutableLiveData<>(new LinkedList<>());
+    protected MutableLiveData<List<ItemType>> selectedItems = new MutableLiveData<>(new LinkedList<>());
 
     public ListFragmentViewModel(@NonNull Application application) {
         super(application);
     }
 
     public void addToSelection(ItemType item) {
-        Objects.requireNonNull(selectedItems.getValue()).add(item);
+        List<ItemType> list = Objects.requireNonNull(selectedItems.getValue());
+        list.add(item);
+        selectedItems.postValue(list);
     }
 
     public void removeFromSelection(ItemType item) {
-        Objects.requireNonNull(selectedItems.getValue()).remove(item);
+        List<ItemType> list = Objects.requireNonNull(selectedItems.getValue());
+        list.remove(item);
+        selectedItems.postValue(list);
     }
 
     public void clearSelection() {

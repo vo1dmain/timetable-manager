@@ -8,11 +8,12 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.selection.SelectionTracker;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.vo1d.schedulemanager.v2.R;
@@ -34,11 +35,10 @@ class ClassesListAdapter extends ListAdapter<ClassWithSubject, ClassesListAdapte
         }
     };
     private final Resources r;
-
-    private OnItemClickListener itemClickListener;
-    private OnSelectionChangedListener selectionChangedListener;
-
-    private SelectionTracker<Long> tracker;
+    private final List<EditionModeListener> editionModeListeners = new LinkedList<>();
+    private boolean isEditionMode;
+    private ItemButtonClickListener itemClickListener;
+    private SelectionChangedListener selectionChangedListener;
 
     public ClassesListAdapter(Resources r) {
         super(DIFF_CALLBACK);
@@ -66,7 +66,14 @@ class ClassesListAdapter extends ListAdapter<ClassWithSubject, ClassesListAdapte
         holder.typesChips.removeAllViewsInLayout();
         Chip c = (Chip) LayoutInflater.from(holder.typesChips.getContext())
                 .inflate(R.layout.chip_subject_type_display, holder.typesChips, false);
-        c.setText(current.aClass.getType()[0].toString());
+
+        String s;
+        if (current.aClass.getType() == null) {
+            s = "null";
+        } else {
+            s = current.aClass.getType()[0].toString();
+        }
+        c.setText(s);
         c.setSelected(true);
         holder.typesChips.addView(c);
 
@@ -79,26 +86,15 @@ class ClassesListAdapter extends ListAdapter<ClassWithSubject, ClassesListAdapte
             holder.audience.setText(r.getString(R.string.audience_info, current.aClass.getAudienceInfo()));
         }
 
-        if (tracker != null) {
-            if (tracker.hasSelection()) {
-                holder.checkBox.setChecked(tracker.isSelected(getItemId(holder.getAdapterPosition())));
-            }
+        if (isEditionMode) {
+            holder.checkBox.setVisibility(View.VISIBLE);
+            holder.editButton.setVisibility(View.VISIBLE);
         }
     }
 
     @Override
     public long getItemId(int position) {
         return getItem(position).aClass.id;
-    }
-
-    public List<Long> getAllIds() {
-        List<Long> list = new LinkedList<>();
-
-        for (int i = 0; i < getItemCount(); i++) {
-            list.add(getItemId(i));
-        }
-
-        return list;
     }
 
     public void removeData(List<ClassWithSubject> data) {
@@ -108,59 +104,77 @@ class ClassesListAdapter extends ListAdapter<ClassWithSubject, ClassesListAdapte
         submitList(list);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
+    public void setItemButtonClickListener(ItemButtonClickListener listener) {
         itemClickListener = listener;
     }
 
-    public void setOnSelectionChangedListener(OnSelectionChangedListener listener) {
+    public void setSelectionChangedListener(SelectionChangedListener listener) {
         selectionChangedListener = listener;
     }
 
-    public void setTracker(SelectionTracker<Long> tracker) {
-        this.tracker = tracker;
+    public void selectAll() {
+
     }
 
-    public interface OnItemClickListener {
-        void onItemClick(ClassWithSubject c);
+    public void setEditionMode(boolean editionMode) {
+        this.isEditionMode = editionMode;
+        editionModeListeners.forEach(editionModeListener -> editionModeListener.onEditionModeChanged(editionMode));
     }
 
-    public interface OnSelectionChangedListener {
+    private void addEditionModeListener(EditionModeListener listener) {
+        this.editionModeListeners.add(listener);
+    }
+
+    private void removeEditionModeListener(EditionModeListener listener) {
+        this.editionModeListeners.remove(listener);
+    }
+
+    public interface ItemButtonClickListener {
+        void onButtonClick(ClassWithSubject c);
+    }
+
+    public interface SelectionChangedListener {
         void onSelectionChanged(ClassWithSubject c, boolean isChecked);
+    }
+
+    private interface EditionModeListener {
+        void onEditionModeChanged(boolean isEditionMode);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        //private final Resources.Theme theme;
-        public ChipGroup typesChips;
-        //private TypedValue value;
-        private TextView title;
-        private TextView lecturer;
-        private TextView audience;
-        private TextView startTime;
-        private TextView endTime;
-        private CheckBox checkBox;
+        private final MaterialCardView card;
+        private final ChipGroup typesChips;
+        private final TextView title;
+        private final TextView lecturer;
+        private final TextView audience;
+        private final TextView startTime;
+        private final TextView endTime;
+        private final CheckBox checkBox;
+        private final AppCompatImageButton editButton;
 
-        ViewHolder(@NonNull View itemView, final OnItemClickListener cListener, final OnSelectionChangedListener scListener) {
+        private final EditionModeListener listener;
+
+        ViewHolder(@NonNull View itemView, final ItemButtonClickListener cListener, final SelectionChangedListener scListener) {
             super(itemView);
 
-            //theme = itemView.getContext().getTheme();
-            //value = new TypedValue();
-
+            card = (MaterialCardView) itemView;
             typesChips = itemView.findViewById(R.id.subject_types_chip_group);
             title = itemView.findViewById(R.id.subject_title);
             lecturer = itemView.findViewById(R.id.lecturer_name);
             startTime = itemView.findViewById(R.id.class_start_time);
             endTime = itemView.findViewById(R.id.class_end_time);
             audience = itemView.findViewById(R.id.audience_info);
+            checkBox = itemView.findViewById(R.id.checkBox);
+            editButton = itemView.findViewById(R.id.button_edit);
 
             audience.setVisibility(View.VISIBLE);
+            checkBox.setClickable(true);
 
-            checkBox = itemView.findViewById(R.id.checkBox);
-
-            itemView.setOnClickListener(v -> {
+            editButton.setOnClickListener(v -> {
                 int position = getAdapterPosition();
                 if (cListener != null && position != RecyclerView.NO_POSITION) {
-                    cListener.onItemClick(getItem(position));
+                    cListener.onButtonClick(getItem(position));
                 }
             });
 
@@ -168,32 +182,33 @@ class ClassesListAdapter extends ListAdapter<ClassWithSubject, ClassesListAdapte
                 int position = getAdapterPosition();
                 if (buttonView != null && position != RecyclerView.NO_POSITION) {
                     scListener.onSelectionChanged(getItem(position), isChecked);
+                    card.setChecked(isChecked);
                 }
+            });
 
-                /*if (isChecked) {
-                    theme.resolveAttribute(R.attr.colorSecondaryVariant, value, true);
-                    @ColorInt int color = value.data;
-                    itemView.setBackgroundColor(color);
+            listener = isEditionMode -> {
+                if (isEditionMode) {
+                    checkBox.setVisibility(View.VISIBLE);
+                    editButton.setVisibility(View.VISIBLE);
+                    card.setOnClickListener(v -> checkBox.setChecked(!checkBox.isChecked()));
+
                 } else {
-                    theme.resolveAttribute(R.attr.colorSurface, value, true);
-                    @ColorInt int color = value.data;
-                    itemView.setBackgroundColor(color);
-                }*/
-            });
-
-
-            tracker.addObserver(new SelectionTracker.SelectionObserver<Long>() {
-                @Override
-                public void onSelectionChanged() {
-                    if (tracker.hasSelection()) {
-                        checkBox.setVisibility(View.VISIBLE);
-                    } else if (!tracker.hasSelection()) {
-                        checkBox.setChecked(false);
-                        checkBox.setVisibility(View.INVISIBLE);
-                    }
+                    checkBox.setChecked(false);
+                    card.setChecked(false);
+                    checkBox.setVisibility(View.INVISIBLE);
+                    editButton.setVisibility(View.GONE);
                 }
-            });
+                card.setClickable(isEditionMode);
+                card.setCheckable(isEditionMode);
+            };
 
+            ClassesListAdapter.this.addEditionModeListener(listener);
+        }
+
+        @Override
+        protected void finalize() throws Throwable {
+            super.finalize();
+            ClassesListAdapter.this.removeEditionModeListener(listener);
         }
     }
 }

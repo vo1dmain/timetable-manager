@@ -31,13 +31,12 @@ public class Class implements IMyEntity {
     public int subjectId;
     public int dayId;
 
-    public int startTime;
     public int audienceBuilding;
     public int audienceCabinet;
-    private int endTimeHour;
-    private int endTimeMinutes;
-    private int startTimeHour;
-    private int startTimeMinutes;
+    public int startTimeHour;
+    public int startTimeMinutes;
+    public int endTimeHour;
+    public int endTimeMinutes;
 
     @TypeConverters({SubjectTypesConverter.class})
     private SubjectTypes[] type;
@@ -48,40 +47,6 @@ public class Class implements IMyEntity {
         this.type = type;
         this.audienceBuilding = audienceBuilding;
         this.audienceCabinet = audienceCabinet;
-    }
-
-    public int getStartTimeHour() {
-        return startTimeHour;
-    }
-
-    public void setStartTimeHour(int startTimeHour) {
-        this.startTimeHour = startTimeHour;
-        this.startTime = this.startTimeHour * 100 + this.startTimeMinutes;
-    }
-
-    public int getStartTimeMinutes() {
-        return startTimeMinutes;
-    }
-
-    public void setStartTimeMinutes(int startTimeMinutes) {
-        this.startTimeMinutes = startTimeMinutes;
-        this.startTime = this.startTimeHour * 100 + this.startTimeMinutes;
-    }
-
-    public int getEndTimeHour() {
-        return endTimeHour;
-    }
-
-    public void setEndTimeHour(int endTimeHour) {
-        this.endTimeHour = endTimeHour;
-    }
-
-    public int getEndTimeMinutes() {
-        return endTimeMinutes;
-    }
-
-    public void setEndTimeMinutes(int endTimeMinutes) {
-        this.endTimeMinutes = endTimeMinutes;
     }
 
     public String getAudienceInfo() {

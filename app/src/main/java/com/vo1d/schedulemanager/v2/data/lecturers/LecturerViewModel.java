@@ -10,8 +10,8 @@ import java.util.List;
 
 public class LecturerViewModel extends AndroidViewModel {
 
-    private LecturerRepository repository;
-    private LiveData<List<Lecturer>> allLecturers;
+    private final LecturerRepository repository;
+    private final LiveData<List<Lecturer>> allLecturers;
 
     public LecturerViewModel(@NonNull Application application) {
         super(application);

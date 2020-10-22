@@ -44,7 +44,7 @@ public class ClassRepository extends BaseRepository<Class, ClassDao> {
 
     private static final class DeleteAllAsyncTask extends AsyncTask<Void, Void, Void> {
 
-        private ClassDao dao;
+        private final ClassDao dao;
 
         private DeleteAllAsyncTask(ClassDao dao) {
             this.dao = dao;
@@ -59,7 +59,7 @@ public class ClassRepository extends BaseRepository<Class, ClassDao> {
 
     private static final class FindClassById2AsyncTask extends AsyncTask<Integer, Void, ClassWithSubject> {
 
-        private ClassDao dao;
+        private final ClassDao dao;
 
         private FindClassById2AsyncTask(ClassDao dao) {
             this.dao = dao;
@@ -72,7 +72,7 @@ public class ClassRepository extends BaseRepository<Class, ClassDao> {
     }
 
     private static final class FindAllClassesForADay2AsyncTask extends AsyncTask<Integer, Void, LiveData<List<ClassWithSubject>>> {
-        private ClassDao dao;
+        private final ClassDao dao;
 
         private FindAllClassesForADay2AsyncTask(ClassDao dao) {
             this.dao = dao;

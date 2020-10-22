@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 class SubjectKeyProvider extends ItemKeyProvider<Long> {
 
-    private SubjectsListAdapter adapter;
-    private RecyclerView recyclerView;
+    private final SubjectsListAdapter adapter;
+    private final RecyclerView recyclerView;
 
     public SubjectKeyProvider(SubjectsListAdapter adapter, RecyclerView recyclerView) {
         super(SCOPE_MAPPED);

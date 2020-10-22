@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.vo1d.schedulemanager.v2.R;
@@ -84,7 +85,10 @@ class SubjectsListAdapter extends ListAdapter<Subject, SubjectsListAdapter.ViewH
 
         if (tracker != null) {
             if (tracker.hasSelection()) {
-                holder.checkBox.setChecked(tracker.isSelected(getItemId(holder.getAdapterPosition())));
+                boolean isChecked = tracker.isSelected(getItemId(holder.getAdapterPosition()));
+                holder.checkBox.setVisibility(View.VISIBLE);
+                holder.checkBox.setChecked(isChecked);
+                holder.card.setChecked(isChecked);
             }
         }
     }
@@ -126,14 +130,16 @@ class SubjectsListAdapter extends ListAdapter<Subject, SubjectsListAdapter.ViewH
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView title;
-        private TextView lecturer;
-        private CheckBox checkBox;
-        private ChipGroup typesChips;
+        private final MaterialCardView card;
+        private final TextView title;
+        private final TextView lecturer;
+        private final CheckBox checkBox;
+        private final ChipGroup typesChips;
 
         ViewHolder(@NonNull View itemView, final OnItemClickListener cListener, final OnSelectionChangedListener scListener) {
             super(itemView);
 
+            card = (MaterialCardView) itemView;
             title = itemView.findViewById(R.id.subject_title);
             lecturer = itemView.findViewById(R.id.lecturer_name);
             checkBox = itemView.findViewById(R.id.checkBox);
@@ -161,6 +167,7 @@ class SubjectsListAdapter extends ListAdapter<Subject, SubjectsListAdapter.ViewH
                         checkBox.setVisibility(View.VISIBLE);
                     } else if (!tracker.hasSelection()) {
                         checkBox.setChecked(false);
+                        card.setChecked(false);
                         checkBox.setVisibility(View.INVISIBLE);
                     }
                 }

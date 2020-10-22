@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 class LecturerKeyProvider extends ItemKeyProvider<Long> {
 
-    private LecturersListAdapter adapter;
-    private RecyclerView recyclerView;
+    private final LecturersListAdapter adapter;
+    private final RecyclerView recyclerView;
 
     public LecturerKeyProvider(LecturersListAdapter adapter, RecyclerView recyclerView) {
         super(SCOPE_MAPPED);

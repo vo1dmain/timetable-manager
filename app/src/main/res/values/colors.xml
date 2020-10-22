@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black_900">#000000</color>
+    <color name="black_900">#FF000000</color>
     <color name="blue_100">#bbdefb</color>
     <color name="blue_100_light">#eeffff</color>
     <color name="blue_100_dark">#8aacc8</color>
@@ -43,5 +43,5 @@
     <color name="teal_200">#80cbc4</color>
     <color name="teal_200_light">#b2fef7</color>
     <color name="teal_200_dark">#4f9a94</color>
-    <color name="white_900">#ffffff</color>
+    <color name="white_900">#FFffffff</color>
 </resources>

@@ -18,7 +18,7 @@ import com.vo1d.schedulemanager.v2.data.lecturers.LecturerDao;
 import com.vo1d.schedulemanager.v2.data.subjects.Subject;
 import com.vo1d.schedulemanager.v2.data.subjects.SubjectDao;
 
-@androidx.room.Database(entities = {Day.class, Subject.class, Class.class, Lecturer.class}, version = 2)
+@androidx.room.Database(entities = {Day.class, Subject.class, Class.class, Lecturer.class}, version = 4)
 public abstract class Database extends RoomDatabase {
 
     private static final Migration MIGRATION_1_2 = new Migration(1, 2) {
@@ -34,8 +34,52 @@ public abstract class Database extends RoomDatabase {
         }
     };
 
+    private static final Migration MIGRATION_2_3 = new Migration(2, 3) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+
+            database.execSQL("CREATE TABLE IF NOT EXISTS new_class_table (" +
+                    "id INTEGER NOT NULL PRIMARY KEY," +
+                    "subjectId INTEGER NOT NULL REFERENCES subject_table(id) ON DELETE CASCADE," +
+                    "dayId INTEGER NOT NULL REFERENCES day_table(id) ON DELETE CASCADE," +
+                    "audienceBuilding INTEGER NOT NULL," +
+                    "audienceCabinet INTEGER NOT NULL," +
+                    "startTimeHour INTEGER NOT NULL," +
+                    "startTimeMinutes INTEGER NOT NULL," +
+                    "endTimeHour INTEGER NOT NULL," +
+                    "endTimeMinutes INTEGER NOT NULL," +
+                    "type TEXT)");
+
+            database.execSQL("PRAGMA foreign_keys=off;");
+            database.execSQL("INSERT INTO new_class_table" +
+                    "(id, subjectId, dayId, audienceBuilding, " +
+                    "audienceCabinet, startTimeHour, startTimeMinutes," +
+                    "endTimeHour, endTimeMinutes) " +
+                    "SELECT id, subjectId, dayId, audienceBuilding, " +
+                    "audienceCabinet, startTimeHour, startTimeMinutes," +
+                    "endTimeHour, endTimeMinutes " +
+                    "FROM class_table;"
+            );
+
+            database.execSQL("DROP TABLE class_table");
+            database.execSQL("PRAGMA foreign_keys=on");
+            database.execSQL("ALTER TABLE new_class_table RENAME TO class_table");
+
+            database.execSQL("CREATE UNIQUE INDEX index_class_table_id ON class_table (id)");
+            database.execSQL("CREATE  INDEX index_class_table_subject_id ON class_table (subjectId)");
+            database.execSQL("CREATE  INDEX index_class_table_day_id ON class_table (dayId)");
+        }
+    };
+
+    private static final Migration MIGRATION_3_4 = new Migration(3, 4) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE lecturer_table ADD COLUMN phoneNumber TEXT");
+        }
+    };
+
     private static Database instance;
-    private static Callback roomCallback = new Callback() {
+    private static final Callback roomCallback = new Callback() {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
@@ -47,7 +91,7 @@ public abstract class Database extends RoomDatabase {
         if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(),
                     Database.class, "days_database")
-                    .addMigrations(MIGRATION_1_2)
+                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
                     .addCallback(roomCallback)
                     .build();
         }
@@ -64,7 +108,7 @@ public abstract class Database extends RoomDatabase {
 
     private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
 
-        private DayDao dayDao;
+        private final DayDao dayDao;
 
         private PopulateDbAsyncTask(Database db) {
             dayDao = db.dayDao();

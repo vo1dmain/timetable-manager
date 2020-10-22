@@ -8,10 +8,7 @@ public enum NamesOfDays {
     Friday,
     Saturday;
 
-    private static NamesOfDays[] allValues = values();
-
-    public static NamesOfDays fromInt(int i)
-    {
-        return allValues[i];
+    public static NamesOfDays fromInt(int i) {
+        return values()[i];
     }
 }

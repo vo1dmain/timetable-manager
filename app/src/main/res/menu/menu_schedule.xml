@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/start_edition_mode"
+        android:id="@+id/start_edition_mode_action"
         android:icon="@drawable/ic_edit"
         android:title="@string/action_edit_title"
         app:showAsAction="ifRoom"
-        android:visible="false"/>
+        android:visible="true" />
 </menu>

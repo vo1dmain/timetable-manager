@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.card.MaterialCardView;
 import com.vo1d.schedulemanager.v2.R;
 import com.vo1d.schedulemanager.v2.data.lecturers.Lecturer;
 
@@ -67,11 +68,14 @@ class LecturersListAdapter extends ListAdapter<Lecturer, LecturersListAdapter.Vi
         Lecturer current = getItem(position);
 
         holder.name.setText(current.getFullName());
-        holder.firstChar.setText(String.valueOf(current.firstName.charAt(0)));
+        holder.phone.setText(current.phoneNumber);
+        holder.firstChar.setText(String.valueOf(current.lastName.charAt(0)));
 
         if (tracker != null) {
             if (tracker.hasSelection()) {
-                holder.checkBox.setChecked(tracker.isSelected(getItemId(holder.getAdapterPosition())));
+                boolean isChecked = tracker.isSelected(getItemId(holder.getAdapterPosition()));
+                holder.card.setChecked(isChecked);
+                holder.checkBox.setChecked(isChecked);
             }
         }
     }
@@ -113,14 +117,18 @@ class LecturersListAdapter extends ListAdapter<Lecturer, LecturersListAdapter.Vi
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView name;
-        private TextView firstChar;
-        private CheckBox checkBox;
+        private final MaterialCardView card;
+        private final TextView name;
+        private final TextView phone;
+        private final TextView firstChar;
+        private final CheckBox checkBox;
 
         ViewHolder(@NonNull View itemView, final OnItemClickListener cListener, final OnSelectionChangedListener scListener) {
             super(itemView);
 
+            card = (MaterialCardView) itemView;
             name = itemView.findViewById(R.id.name);
+            phone = itemView.findViewById(R.id.phone);
             firstChar = itemView.findViewById(R.id.lecturer_first_char);
             checkBox = itemView.findViewById(R.id.checkBox);
 
@@ -135,17 +143,23 @@ class LecturersListAdapter extends ListAdapter<Lecturer, LecturersListAdapter.Vi
                 int position = getAdapterPosition();
                 if (buttonView != null && position != RecyclerView.NO_POSITION) {
                     scListener.onSelectionChanged(getItem(position), isChecked);
+                    if (isChecked) {
+                        firstChar.setVisibility(View.GONE);
+                        tracker.select(LecturersListAdapter.this.getItemId(position));
+                    } else {
+                        firstChar.setVisibility(View.VISIBLE);
+                        tracker.deselect(LecturersListAdapter.this.getItemId(position));
+                    }
                 }
             });
 
             tracker.addObserver(new SelectionTracker.SelectionObserver<Long>() {
                 @Override
                 public void onSelectionChanged() {
-                    if (tracker.hasSelection()) {
-                        checkBox.setVisibility(View.VISIBLE);
-                    } else if (!tracker.hasSelection()) {
+                    if (!tracker.hasSelection()) {
                         checkBox.setChecked(false);
-                        checkBox.setVisibility(View.INVISIBLE);
+                        card.setChecked(false);
+                        firstChar.setVisibility(View.VISIBLE);
                     }
                 }
             });

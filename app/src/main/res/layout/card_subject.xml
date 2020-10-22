@@ -3,11 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clickable="true"
-    android:focusable="true"
+    android:checkable="true"
+    android:clickable="false"
+    android:focusable="false"
     app:cardElevation="0dp"
+    app:checkedIcon="@null"
     app:contentPaddingLeft="16dp">
 
-    <include layout="@layout/subject_info"/>
+
+    <include layout="@layout/subject_info" />
 
 </com.google.android.material.card.MaterialCardView>

@@ -43,13 +43,12 @@ import static com.vo1d.schedulemanager.v2.ui.dialogs.ConfirmationDialog.DELETE_S
 
 public class LecturersListFragment extends Fragment {
 
+    private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
     private LecturersListFragmentDirections.EditLecturer edition;
-
     private LecturersListViewModel llvm;
     private LecturerViewModel lvm;
     private Resources resources;
     private LecturersListAdapter adapter;
-
     private RecyclerView recyclerView;
     private ExtendedFloatingActionButton fabAdd;
     private MaterialTextView listIsEmptyTextView;
@@ -57,13 +56,10 @@ public class LecturersListFragment extends Fragment {
     private ActionMode actionMode;
     private SelectionTracker<Long> tracker;
     private MenuItem deleteAll;
-
     private int visibility;
     private boolean inSearchMode = false;
     private boolean isDeleteAction = false;
-
-    private ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-    private ActionMode.Callback callback = new ActionMode.Callback() {
+    private final ActionMode.Callback callback = new ActionMode.Callback() {
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             mode.getMenuInflater().inflate(R.menu.menu_action_mode, menu);
@@ -79,17 +75,16 @@ public class LecturersListFragment extends Fragment {
 
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.select_all:
-                    tracker.setItemsSelected(adapter.getAllIds(), true);
-                    return true;
-                case R.id.delete_selected:
-                    isDeleteAction = true;
-                    openConfirmationDialog(DELETE_SELECTED);
-                    return true;
-                default:
-                    return false;
+            int itemId = item.getItemId();
+            if (itemId == R.id.select_all) {
+                tracker.setItemsSelected(adapter.getAllIds(), true);
+                return true;
+            } else if (itemId == R.id.delete_selected) {
+                isDeleteAction = true;
+                openConfirmationDialog(DELETE_SELECTED);
+                return true;
             }
+            return false;
         }
 
         @Override
@@ -381,13 +376,7 @@ public class LecturersListFragment extends Fragment {
 
         deleteAll = menu.findItem(R.id.delete_all_action);
 
-        lvm.getAllLecturers().observe(this, subjects -> {
-            if (subjects.size() == 0) {
-                deleteAll.setEnabled(false);
-            } else {
-                deleteAll.setEnabled(true);
-            }
-        });
+        lvm.getAllLecturers().observe(this, subjects -> deleteAll.setEnabled(subjects.size() != 0));
 
         super.onCreateOptionsMenu(menu, inflater);
     }

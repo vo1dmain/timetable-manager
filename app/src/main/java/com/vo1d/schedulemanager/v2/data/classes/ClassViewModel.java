@@ -9,7 +9,7 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 public class ClassViewModel extends AndroidViewModel {
-    private ClassRepository repository;
+    private final ClassRepository repository;
 
     public ClassViewModel(@NonNull Application application) {
         super(application);

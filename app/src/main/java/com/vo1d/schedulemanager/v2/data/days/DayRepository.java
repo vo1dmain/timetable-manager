@@ -29,7 +29,7 @@ class DayRepository extends BaseRepository<Day, DayDao> {
     }
 
     private static final class GetAllAsyncTask extends AsyncTask<Void, Void, LiveData<List<Day>>> {
-        private DayDao dao;
+        private final DayDao dao;
 
         public GetAllAsyncTask(DayDao dao) {
             this.dao = dao;

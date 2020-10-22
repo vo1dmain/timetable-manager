@@ -43,27 +43,23 @@ import static com.vo1d.schedulemanager.v2.ui.dialogs.ConfirmationDialog.DELETE_S
 
 public class SubjectsListFragment extends Fragment {
 
+    private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
     private SubjectViewModel svm;
     private SubjectsListViewModel slvm;
     private Resources resources;
     private SubjectsListAdapter adapter;
-
     private RecyclerView recyclerView;
     private ExtendedFloatingActionButton fabAdd;
     private MaterialTextView listIsEmptyTextView;
     private MaterialTextView nothingFoundTextView;
     private MenuItem deleteAll;
-
     private SubjectsListFragmentDirections.EditSubject edition;
-
     private int visibility;
     private boolean inSearchMode = false;
     private boolean isDeleteAction = false;
-
     private ActionMode actionMode;
     private SelectionTracker<Long> tracker;
-    private ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-    private ActionMode.Callback callback = new ActionMode.Callback() {
+    private final ActionMode.Callback callback = new ActionMode.Callback() {
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             mode.getMenuInflater().inflate(R.menu.menu_action_mode, menu);
@@ -79,17 +75,16 @@ public class SubjectsListFragment extends Fragment {
 
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.select_all:
-                    tracker.setItemsSelected(adapter.getAllIds(), true);
-                    return true;
-                case R.id.delete_selected:
-                    isDeleteAction = true;
-                    openConfirmationDialog(DELETE_SELECTED);
-                    return true;
-                default:
-                    return false;
+            int itemId = item.getItemId();
+            if (itemId == R.id.select_all) {
+                tracker.setItemsSelected(adapter.getAllIds(), true);
+                return true;
+            } else if (itemId == R.id.delete_selected) {
+                isDeleteAction = true;
+                openConfirmationDialog(DELETE_SELECTED);
+                return true;
             }
+            return false;
         }
 
         @Override
@@ -381,20 +376,15 @@ public class SubjectsListFragment extends Fragment {
 
         deleteAll = menu.findItem(R.id.delete_all_action);
 
-        svm.getAllSubjects().observe(this, subjects -> {
-            if (subjects.size() == 0) {
-                deleteAll.setEnabled(false);
-            } else {
-                deleteAll.setEnabled(true);
-            }
-        });
+        svm.getAllSubjects().observe(this, subjects -> deleteAll.setEnabled(subjects.size() != 0));
 
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.delete_all_action) {
+        int id = item.getItemId();
+        if (id == R.id.delete_all_action) {
             openConfirmationDialog(ConfirmationDialog.DELETE_ALL);
             return true;
         }

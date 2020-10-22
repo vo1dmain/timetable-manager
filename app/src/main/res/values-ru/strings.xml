@@ -2,12 +2,13 @@
 <resources>
     <string name="action_confirm_creation_title">Подтвердить</string>
     <string name="action_delete_all_title">Удалить все</string>
-    <string name="action_delete_item_title">Удалить предмет</string>
+    <string name="action_delete_item_title">Удалить</string>
     <string name="action_edit_title">Изменить</string>
     <string name="action_search_title">Искать</string>
     <string name="action_select_all_title">Все</string>
 
     <string name="add_class">Новое занятие</string>
+    <string name="add_lecturer">Добавить</string>
     <string name="add_subject">Новый предмет</string>
 
     <string name="app_name">Менеджер расписаний</string>
@@ -30,6 +31,7 @@
     <string name="dialog_message_delete_all">Все элементы будут удалены навсегда.</string>
     <string name="dialog_message_delete_one">Это действие невозможно будет отменить.</string>
     <string name="dialog_message_delete_selected">Выбранные элементы (%1$d) будут удалены навсегда.</string>
+    <string name="dialog_message_delete_tab">День \"%1$s\" и все занятия в нём будут удалены навсегда.</string>
     <string name="dialog_negative">Отмена</string>
     <string name="dialog_positive">ОК</string>
     <string name="dialog_title_delete_multiple_items">Удалить элементы?</string>
@@ -50,7 +52,10 @@
     <string name="hint_lecturer_last_name">Фамилия</string>
     <string name="hint_lecturer_middle_name">Отчество</string>
     <string name="hint_lecturer_name">Преподаватель</string>
+    <string name="hint_lecturer_phone">Номер телефона</string>
     <string name="hint_subject_name">Название</string>
+
+    <string name="lecturer_s_avatar">Иконка преподавателя</string>
 
     <string name="menu_about">О приложении</string>
     <string name="menu_lecturers">Преподаватели</string>
@@ -64,6 +69,7 @@
 
     <string name="selection_count">Выбрано: %1$d</string>
 
+    <string name="snackbar_action_undone">Отмена</string>
     <string name="snackbar_message_all_deleted">Все элементы удалены.</string>
     <string name="snackbar_message_creation_success">Добавлен новый элемент: %1$s.</string>
     <string name="snackbar_message_delete_failure">Не удалось удалить предмет \"%1$s\".</string>
@@ -90,11 +96,11 @@
     </string-array>
     <string name="theme_title">Тема</string>
 
+    <string name="title_contact_info_block">Контакты</string>
+    <string name="title_main_info_block">Основная информация</string>
     <string name="title_room_setting_block">Аудитория</string>
     <string name="title_subject_setting_block">Предмет</string>
     <string name="title_time_setting_block">Время</string>
     <string name="title_type_setting_block">Тип занятия</string>
     <string name="title_types_choosing_block">Типы занятий</string>
-    <string name="snackbar_action_undone">Отмена</string>
-    <string name="lecturer_s_avatar">Иконка преподавателя</string>
 </resources>

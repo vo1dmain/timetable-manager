@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 
 import java.util.concurrent.ExecutionException;
 
+
 @SuppressWarnings("unchecked")
 public abstract class BaseRepository<ItemType extends IMyEntity, DaoType extends IBaseDao<ItemType>> {
 
@@ -31,7 +32,7 @@ public abstract class BaseRepository<ItemType extends IMyEntity, DaoType extends
     private static class InsertAsyncTask<ItemType extends IMyEntity, DaoType extends IBaseDao<ItemType>>
             extends AsyncTask<ItemType, Void, Long> {
 
-        private DaoType dao;
+        private final DaoType dao;
 
         private InsertAsyncTask(DaoType dao) {
             this.dao = dao;
@@ -46,7 +47,7 @@ public abstract class BaseRepository<ItemType extends IMyEntity, DaoType extends
     private static class UpdateAsyncTask<ItemType extends IMyEntity, DaoType extends IBaseDao<ItemType>>
             extends AsyncTask<ItemType, Void, Void> {
 
-        private DaoType dao;
+        private final DaoType dao;
 
         private UpdateAsyncTask(DaoType dao) {
             this.dao = dao;
@@ -62,7 +63,7 @@ public abstract class BaseRepository<ItemType extends IMyEntity, DaoType extends
     private static class DeleteAsyncTask<ItemType extends IMyEntity, DaoType extends IBaseDao<ItemType>>
             extends AsyncTask<ItemType, Void, Void> {
 
-        private DaoType dao;
+        private final DaoType dao;
 
         private DeleteAsyncTask(DaoType dao) {
             this.dao = dao;

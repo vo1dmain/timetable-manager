@@ -29,7 +29,6 @@ public class ClassesListViewModel extends ListFragmentViewModel<ClassWithSubject
         this.allClassesForADay2 = allClassesForADay;
     }
 
-
     public Class[] getSelectedItemsAsClassArray(@NonNull Class[] array) {
         List<Class> classList = new ArrayList<>();
         Objects.requireNonNull(selectedItems.getValue())

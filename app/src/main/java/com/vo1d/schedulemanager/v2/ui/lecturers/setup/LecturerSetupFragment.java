@@ -1,6 +1,7 @@
 package com.vo1d.schedulemanager.v2.ui.lecturers.setup;
 
 import android.os.Bundle;
+import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -31,9 +32,9 @@ public class LecturerSetupFragment extends Fragment {
     private TextInputEditText firstNameInput;
     private TextInputEditText middleNameInput;
     private TextInputEditText lastNameInput;
+    private TextInputEditText phoneInput;
 
     private boolean isEditionMode = false;
-    private Lecturer current;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,8 +47,7 @@ public class LecturerSetupFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         return inflater.inflate(R.layout.fragment_lecturer_setup, container, false);
     }
@@ -59,6 +59,7 @@ public class LecturerSetupFragment extends Fragment {
         firstNameInput = view.findViewById(R.id.first_name_input);
         middleNameInput = view.findViewById(R.id.middle_name_input);
         lastNameInput = view.findViewById(R.id.last_name_input);
+        phoneInput = view.findViewById(R.id.phone_input);
 
         firstNameInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -105,14 +106,17 @@ public class LecturerSetupFragment extends Fragment {
             }
         });
 
+        phoneInput.addTextChangedListener(new PhoneNumberFormattingTextWatcher("RU"));
+
         if (getArguments() != null) {
             int id = getArguments().getInt("lecturerId");
             isEditionMode = id != -1;
             if (isEditionMode) {
-                current = lvm.findLecturerById(id);
-                firstNameInput.setText(current.firstName);
-                middleNameInput.setText(current.middleName);
-                lastNameInput.setText(current.lastName);
+                lsvm.setCurrentLecturer(lvm.findLecturerById(id));
+                firstNameInput.setText(lsvm.getCurrentLecturer().firstName);
+                middleNameInput.setText(lsvm.getCurrentLecturer().middleName);
+                lastNameInput.setText(lsvm.getCurrentLecturer().lastName);
+                phoneInput.setText(lsvm.getCurrentLecturer().phoneNumber);
             }
         }
     }
@@ -147,16 +151,19 @@ public class LecturerSetupFragment extends Fragment {
         String firstName = Objects.requireNonNull(firstNameInput.getText()).toString();
         String middleName = Objects.requireNonNull(middleNameInput.getText()).toString();
         String lastName = Objects.requireNonNull(lastNameInput.getText()).toString();
+        String phoneNumber = Objects.requireNonNull(phoneInput.getText()).toString();
 
-        Lecturer newLecturer = new Lecturer(firstName, middleName, lastName);
+        Lecturer newLecturer = new Lecturer(firstName, middleName, lastName, phoneNumber);
 
         lvm.insert(newLecturer);
     }
 
     private void applySubjectChanges() {
+        Lecturer current = lsvm.getCurrentLecturer();
         current.firstName = Objects.requireNonNull(firstNameInput.getText()).toString();
         current.middleName = Objects.requireNonNull(middleNameInput.getText()).toString();
         current.lastName = Objects.requireNonNull(lastNameInput.getText()).toString();
+        current.phoneNumber = Objects.requireNonNull(phoneInput.getText()).toString();
 
         lvm.update(current);
     }

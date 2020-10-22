@@ -18,11 +18,13 @@ public class Lecturer implements IMyEntity {
     public String firstName;
     public String middleName;
     public String lastName;
+    public String phoneNumber;
 
-    public Lecturer(String firstName, String middleName, String lastName) {
+    public Lecturer(String firstName, String middleName, String lastName, String phoneNumber) {
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
+        this.phoneNumber = phoneNumber == null ? "null" : phoneNumber;
     }
 
     @Override
@@ -33,12 +35,13 @@ public class Lecturer implements IMyEntity {
         return id == lecturer.id &&
                 firstName.equals(lecturer.firstName) &&
                 middleName.equals(lecturer.middleName) &&
-                lastName.equals(lecturer.lastName);
+                lastName.equals(lecturer.lastName) &&
+                phoneNumber.equals(lecturer.phoneNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, middleName, lastName);
+        return Objects.hash(id, firstName, middleName, lastName, phoneNumber);
     }
 
     public String getShortName() {
@@ -46,6 +49,6 @@ public class Lecturer implements IMyEntity {
     }
 
     public String getFullName() {
-        return firstName + " " + middleName + " " + lastName;
+        return lastName + " " + firstName + " " + middleName;
     }
 }

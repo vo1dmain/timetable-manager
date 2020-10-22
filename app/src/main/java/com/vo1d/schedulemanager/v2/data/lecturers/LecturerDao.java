@@ -20,14 +20,14 @@ public abstract class LecturerDao implements IBaseDao<Lecturer> {
     abstract Lecturer findLecturerById(int id);
 
     @Transaction
-    @Query("SELECT * FROM lecturer_table ORDER BY firstName ASC, middleName ASC, lastName ASC")
+    @Query("SELECT * FROM lecturer_table ORDER BY lastName ASC, middleName ASC, firstName ASC")
     abstract LiveData<List<Lecturer>> getAll();
 
     @Transaction
     @Query("SELECT * FROM lecturer_table " +
-            "WHERE (firstName LIKE :filter || '%') " +
+            "WHERE (lastName LIKE :filter || '%')" +
             "OR (middleName LIKE :filter || '%') " +
-            "OR (lastName LIKE :filter || '%')  " +
-            "ORDER BY firstName ASC, middleName ASC, lastName ASC")
+            "OR (firstName LIKE :filter || '%')" +
+            "ORDER BY lastName ASC, middleName ASC, firstName ASC")
     abstract List<Lecturer> getFilteredLecturers(String filter);
 }

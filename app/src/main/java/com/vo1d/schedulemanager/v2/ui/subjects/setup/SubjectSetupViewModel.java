@@ -1,6 +1,5 @@
 package com.vo1d.schedulemanager.v2.ui.subjects.setup;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -67,9 +66,5 @@ public class SubjectSetupViewModel extends ViewModel {
     public SubjectTypes[] getSelectedTypesAsArray() {
         Collections.sort(Objects.requireNonNull(selectedTypes.getValue()));
         return Objects.requireNonNull(selectedTypes.getValue()).toArray(new SubjectTypes[0]);
-    }
-
-    public LiveData<List<SubjectTypes>> getSelectedTypes() {
-        return selectedTypes;
     }
 }

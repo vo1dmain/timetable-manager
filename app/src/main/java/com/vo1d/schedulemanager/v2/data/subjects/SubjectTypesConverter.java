@@ -22,6 +22,9 @@ public class SubjectTypesConverter {
 
     @TypeConverter
     public SubjectTypes[] toSubjectTypes(String data) {
+        if (data == null) {
+            return null;
+        }
         String[] strings = data.split(",");
         List<SubjectTypes> types = new LinkedList<>();
 

@@ -9,18 +9,17 @@ import com.vo1d.schedulemanager.v2.data.IMyEntity;
 @Entity(tableName = "day_table", indices = {@Index(value = {"id"}, unique = true)})
 public class Day implements IMyEntity {
 
+    private final int order;
     @PrimaryKey(autoGenerate = true)
     private int id;
-
-    private int order;
 
     public Day(int order) {
         this.order = order;
     }
 
-    //public Day(DaysOfTheWeek order) {
-    //    this.order = order.ordinal();
-    //}
+    public Day(NamesOfDays name) {
+        this.order = name.ordinal();
+    }
 
     public int getId() {
         return id;

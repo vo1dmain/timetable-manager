@@ -138,9 +138,11 @@ public class ClassSetupFragment extends Fragment {
                         }
 
                         if (isEditionMode) {
-                            Chip c = typesChipGroup.findViewWithTag(current.aClass.getType()[0]);
-                            if (c != null) {
-                                typesChipGroup.check(c.getId());
+                            if (current.aClass.getType() != null) {
+                                Chip c = typesChipGroup.findViewWithTag(current.aClass.getType()[0]);
+                                if (c != null) {
+                                    typesChipGroup.check(c.getId());
+                                }
                             }
                         }
                     }
@@ -216,10 +218,10 @@ public class ClassSetupFragment extends Fragment {
                 buildingInput.setText(String.valueOf(current.aClass.audienceBuilding));
                 cabinetInput.setText(String.valueOf(current.aClass.audienceCabinet));
 
-                startTimePicker.setHour(current.aClass.getStartTimeHour());
-                startTimePicker.setMinute(current.aClass.getStartTimeMinutes());
-                endTimePicker.setHour(current.aClass.getEndTimeHour());
-                endTimePicker.setMinute(current.aClass.getEndTimeMinutes());
+                startTimePicker.setHour(current.aClass.startTimeHour);
+                startTimePicker.setMinute(current.aClass.startTimeMinutes);
+                endTimePicker.setHour(current.aClass.endTimeHour);
+                endTimePicker.setMinute(current.aClass.endTimeMinutes);
             }
         }
     }
@@ -254,10 +256,10 @@ public class ClassSetupFragment extends Fragment {
         current.aClass.setType(csvm.getType());
         current.aClass.audienceBuilding = csvm.getBuildingNumber();
         current.aClass.audienceCabinet = csvm.getCabinetNumber();
-        current.aClass.setStartTimeHour(startTimePicker.getHour());
-        current.aClass.setStartTimeMinutes(startTimePicker.getMinute());
-        current.aClass.setEndTimeHour(endTimePicker.getHour());
-        current.aClass.setEndTimeMinutes(endTimePicker.getMinute());
+        current.aClass.startTimeHour = startTimePicker.getHour();
+        current.aClass.startTimeMinutes = startTimePicker.getMinute();
+        current.aClass.endTimeHour = endTimePicker.getHour();
+        current.aClass.endTimeMinutes = endTimePicker.getMinute();
 
         cvm.update(current.aClass);
     }
@@ -270,10 +272,10 @@ public class ClassSetupFragment extends Fragment {
                 csvm.getCabinetNumber(),
                 csvm.getType()
         );
-        newClass.setStartTimeHour(startTimePicker.getHour());
-        newClass.setStartTimeMinutes(startTimePicker.getMinute());
-        newClass.setEndTimeHour(endTimePicker.getHour());
-        newClass.setEndTimeMinutes(endTimePicker.getMinute());
+        newClass.startTimeHour = startTimePicker.getHour();
+        newClass.startTimeMinutes = startTimePicker.getMinute();
+        newClass.endTimeHour = endTimePicker.getHour();
+        newClass.endTimeMinutes = endTimePicker.getMinute();
 
         cvm.insert(newClass);
     }

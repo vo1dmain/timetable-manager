@@ -12,24 +12,9 @@ import com.vo1d.schedulemanager.v2.R;
 public class ConfirmationDialog extends DialogFragment {
     public static final int DELETE_ALL = 0;
     public static final int DELETE_SELECTED = 1;
-
-    public static final DialogListener DEFAULT_LISTENER = new DialogListener() {
-        @Override
-        public void onDialogPositiveClick(DialogFragment dialog) {
-            dialog.dismiss();
-        }
-
-        @Override
-        public void onDialogNegativeClick(DialogFragment dialog) {
-            dialog.dismiss();
-        }
-    };
-
+    private final int titleId;
+    private final String message;
     private ConfirmationDialog.DialogListener mListener;
-
-    private int titleId;
-
-    private String message;
 
     public ConfirmationDialog(int titleId, String message) {
         this.titleId = titleId;

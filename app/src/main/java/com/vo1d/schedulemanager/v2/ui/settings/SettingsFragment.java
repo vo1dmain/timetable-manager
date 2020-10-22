@@ -34,28 +34,28 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 String s = (String) newValue;
                 switch (s) {
                     case "crimson":
-                        edit.putInt(idKey, R.style.AppTheme_Crimson);
+                        edit.putInt(idKey, R.style.Theme_ScheduleManager_Crimson);
                         break;
                     case "cyan":
-                        edit.putInt(idKey, R.style.AppTheme_Cyan);
+                        edit.putInt(idKey, R.style.Theme_ScheduleManager_Cyan);
                         break;
                     case "deep_cyan":
-                        edit.putInt(idKey, R.style.AppTheme_DeepCyan);
+                        edit.putInt(idKey, R.style.Theme_ScheduleManager_DeepCyan);
                         break;
                     case "deep_purple":
-                        edit.putInt(idKey, R.style.AppTheme_DeepPurple);
+                        edit.putInt(idKey, R.style.Theme_ScheduleManager_DeepPurple);
                         break;
                     case "green":
-                        edit.putInt(idKey, R.style.AppTheme_Green);
+                        edit.putInt(idKey, R.style.Theme_ScheduleManager_Green);
                         break;
                     case "purple":
-                        edit.putInt(idKey, R.style.AppTheme_Purple);
+                        edit.putInt(idKey, R.style.Theme_ScheduleManager_Purple);
                         break;
                     case "light_blue":
-                        edit.putInt(idKey, R.style.AppTheme_LightBlue);
+                        edit.putInt(idKey, R.style.Theme_ScheduleManager_LightBlue);
                         break;
                     case "teal":
-                        edit.putInt(idKey, R.style.AppTheme_Teal);
+                        edit.putInt(idKey, R.style.Theme_ScheduleManager_Teal);
                         break;
                 }
                 edit.apply();

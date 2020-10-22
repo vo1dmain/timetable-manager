@@ -15,13 +15,10 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.selection.SelectionPredicates;
-import androidx.recyclerview.selection.SelectionTracker;
-import androidx.recyclerview.selection.StorageStrategy;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textview.MaterialTextView;
 import com.vo1d.schedulemanager.v2.MainActivity;
@@ -45,7 +42,6 @@ import static com.vo1d.schedulemanager.v2.ui.schedule.ScheduleFragment.setAction
 
 public class ClassesListFragment extends Fragment {
 
-
     private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 
     private boolean isDeleteAction = false;
@@ -56,12 +52,11 @@ public class ClassesListFragment extends Fragment {
     private Resources resources;
     private ClassesListAdapter adapter;
     private RecyclerView recyclerView;
-    private ExtendedFloatingActionButton fabAdd;
     private MaterialTextView listIsEmptyTextView;
-    private SelectionTracker<Long> tracker;
     private ScheduleFragmentDirections.AddClass addClass;
     private ScheduleFragmentDirections.EditClass editClass;
-    private ActionMode.Callback callback = new ActionMode.Callback() {
+    private MaterialButton buttonAdd;
+    private final ActionMode.Callback callback = new ActionMode.Callback() {
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             mode.getMenuInflater().inflate(R.menu.menu_action_mode, menu);
@@ -70,35 +65,34 @@ public class ClassesListFragment extends Fragment {
 
         @Override
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-            mode.setTitle(resources.getString(R.string.selection_count, tracker.getSelection().size()));
-            fabAdd.hide();
+            mode.setTitle(resources.getString(R.string.selection_count, 0));
+            buttonAdd.setVisibility(View.VISIBLE);
             return true;
         }
 
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.select_all:
-                    tracker.setItemsSelected(adapter.getAllIds(), true);
-                    return true;
-                case R.id.delete_selected:
-                    isDeleteAction = true;
-                    openConfirmationDialog();
-                    return true;
-                default:
-                    return false;
+            int itemId = item.getItemId();
+            if (itemId == R.id.select_all) {
+                adapter.selectAll();
+                return true;
+            } else if (itemId == R.id.delete_selected) {
+                isDeleteAction = true;
+                openConfirmationDialog();
+                return true;
             }
+            return false;
         }
 
         @Override
         public void onDestroyActionMode(ActionMode mode) {
             if (!isDeleteAction) {
-                tracker.clearSelection();
                 clvm.clearSelection();
             }
             isDeleteAction = false;
             setActionMode(null);
-            fabAdd.show();
+            finishEditionMode();
+            buttonAdd.setVisibility(View.GONE);
         }
     };
 
@@ -143,8 +137,8 @@ public class ClassesListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         recyclerView = view.findViewById(R.id.classes_list);
-        fabAdd = view.findViewById(R.id.add_class_fab);
         listIsEmptyTextView = view.findViewById(R.id.classes_placeholder);
+        buttonAdd = view.findViewById(R.id.add_class_button);
 
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(llm);
@@ -152,18 +146,15 @@ public class ClassesListFragment extends Fragment {
 
         recyclerView.setHasFixedSize(true);
 
-        recyclerView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
-            if (oldScrollY < scrollY) {
-                fabAdd.hide();
-            } else {
-                fabAdd.show();
+        buttonAdd.setOnClickListener(v -> {
+            Navigation.findNavController(v).navigate(addClass);
+            ActionMode am = getActionMode();
+            if (am != null) {
+                am.finish();
             }
         });
 
-        fabAdd.setOnClickListener(v ->
-                Navigation.findNavController(v).navigate(addClass));
-
-        adapter.setOnSelectionChangedListener((c, isChecked) -> {
+        adapter.setSelectionChangedListener((c, isChecked) -> {
             if (isChecked) {
                 clvm.addToSelection(c);
             } else {
@@ -171,13 +162,14 @@ public class ClassesListFragment extends Fragment {
             }
         });
 
-        adapter.setOnItemClickListener(c -> {
-                    if (getActionMode() == null) {
-                        editClass.setClassId(c.aClass.id);
-                        Navigation.findNavController(view).navigate(editClass);
-                    }
-                }
-        );
+        adapter.setItemButtonClickListener(c -> {
+            editClass.setClassId(c.aClass.id);
+            Navigation.findNavController(requireView()).navigate(editClass);
+            ActionMode am = getActionMode();
+            if (am != null) {
+                am.finish();
+            }
+        });
 
         clvm.getAllClassesForADay2().observe(getViewLifecycleOwner(), adapter::submitList);
 
@@ -194,54 +186,42 @@ public class ClassesListFragment extends Fragment {
             }
         });
 
-        tracker = new SelectionTracker.Builder<>(
-                "selectedClassTrackerId",
-                recyclerView,
-                new ClassKeyProvider(adapter, recyclerView),
-                new ClassDetailsLookup(recyclerView),
-                StorageStrategy.createLongStorage()
-        )
-                .withSelectionPredicate(SelectionPredicates.createSelectAnything())
-                .build();
-
-        tracker.addObserver(new SelectionTracker.SelectionObserver<Long>() {
-            @Override
-            public void onSelectionChanged() {
-                if (tracker.hasSelection()) {
-                    if (getActionMode() == null) {
-                        setActionMode(((MainActivity) requireActivity()).startSupportActionMode(callback));
-                    } else {
-                        getActionMode().setTitle(resources.getString(R.string.selection_count, tracker.getSelection().size()));
-                    }
-                } else if (!tracker.hasSelection()) {
-                    if (getActionMode() != null) {
-                        getActionMode().finish();
-                    }
-                }
-            }
-        });
-
-        adapter.setTracker(tracker);
-
         clvm.getSelectedItems().observe(getViewLifecycleOwner(), list -> {
-            if (list.isEmpty()) {
-                tracker.clearSelection();
+            ActionMode am = getActionMode();
+            if (am != null) {
+                am.setTitle(resources.getString(R.string.selection_count, list.size()));
             }
         });
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putInt("dayId", dayId);
+    }
+
+    public void startEditionMode() {
+        setActionMode(((MainActivity) requireActivity()).startSupportActionMode(callback));
+        adapter.setEditionMode(true);
+    }
+
+    public void finishEditionMode() {
+        adapter.setEditionMode(false);
     }
 
     private void openConfirmationDialog() {
         ConfirmationDialog confirmationDialog;
         ConfirmationDialog.DialogListener listener;
 
-        int count = tracker.getSelection().size();
+        int count = Objects.requireNonNull(clvm.getSelectedItems().getValue()).size();
 
         int titleId = R.string.dialog_title_delete_multiple_items;
         String message = resources.getString(R.string.dialog_message_delete_selected, count);
 
         String snackbarMes;
         if (count == 1) {
-            Subject s = Objects.requireNonNull(clvm.getAllClassesForADay2().getValue()).get(0).subject;
+            Subject s = Objects.requireNonNull(clvm.getSelectedItems().getValue()).get(0).subject;
             String title = s.title;
             snackbarMes = resources.getString(R.string.snackbar_message_delete_success, title);
         } else if (count == Objects.requireNonNull(clvm.getAllClassesForADay2().getValue()).size()) {
@@ -253,27 +233,29 @@ public class ClassesListFragment extends Fragment {
         listener = new ConfirmationDialog.DialogListener() {
             @Override
             public void onDialogPositiveClick(DialogFragment dialog) {
-                getActionMode().finish();
 
                 Snackbar s = Snackbar.make(recyclerView, snackbarMes, 2750);
 
+                List<ClassWithSubject> data = clvm.getSelectedItems().getValue();
+                Class[] classes = clvm.getSelectedItemsAsClassArray(new Class[0]);
+
                 ScheduledFuture<?> operation = executor.schedule(
-                        ClassesListFragment.this::deleteSelectedItems,
+                        () -> deleteSelectedItems(classes),
                         2750,
                         TimeUnit.MILLISECONDS
                 );
-
-                List<ClassWithSubject> data = clvm.getSelectedItems().getValue();
 
                 List<ClassWithSubject> backedUpData = adapter.getCurrentList();
 
                 s.setAction(R.string.snackbar_action_undone, v -> {
                     operation.cancel(false);
                     adapter.submitList(backedUpData);
-                    tracker.clearSelection();
+                    clvm.clearSelection();
                 });
 
                 adapter.removeData(data);
+
+                getActionMode().finish();
 
                 s.show();
             }
@@ -289,15 +271,8 @@ public class ClassesListFragment extends Fragment {
         confirmationDialog.show(getParentFragmentManager(), "Delete selected confirmation");
     }
 
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        outState.putInt("dayId", dayId);
-    }
-
-    private void deleteSelectedItems() {
-        cvm.delete(clvm.getSelectedItemsAsClassArray(new Class[0]));
-        tracker.clearSelection();
+    private void deleteSelectedItems(Class[] classes) {
+        cvm.delete(classes);
+        clvm.clearSelection();
     }
 }

@@ -54,15 +54,15 @@ public class SubjectRepository extends BaseRepository<Subject, SubjectDao> {
 
     private static final class DeleteAllAsyncTask extends AsyncTask<Void, Void, Void> {
 
-        private SubjectDao subjectDao;
+        private final SubjectDao dao;
 
-        private DeleteAllAsyncTask(SubjectDao subjectDao) {
-            this.subjectDao = subjectDao;
+        private DeleteAllAsyncTask(SubjectDao dao) {
+            this.dao = dao;
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            subjectDao.deleteAll();
+            dao.deleteAll();
             return null;
         }
     }
@@ -83,29 +83,29 @@ public class SubjectRepository extends BaseRepository<Subject, SubjectDao> {
     }
 
     private static final class GetFilteredSubjectsAsyncTask extends AsyncTask<String, Void, List<Subject>> {
-        private SubjectDao subjectDao;
+        private final SubjectDao dao;
 
-        private GetFilteredSubjectsAsyncTask(SubjectDao subjectDao) {
-            this.subjectDao = subjectDao;
+        private GetFilteredSubjectsAsyncTask(SubjectDao dao) {
+            this.dao = dao;
         }
 
         @Override
         protected List<Subject> doInBackground(String... strings) {
-            return subjectDao.getFilteredSubjects(strings[0]);
+            return dao.getFilteredSubjects(strings[0]);
         }
     }
 
     private static final class FindSubjectByIdAsyncTask extends AsyncTask<Integer, Void, Subject> {
 
-        private SubjectDao subjectDao;
+        private final SubjectDao dao;
 
-        private FindSubjectByIdAsyncTask(SubjectDao subjectDao) {
-            this.subjectDao = subjectDao;
+        private FindSubjectByIdAsyncTask(SubjectDao dao) {
+            this.dao = dao;
         }
 
         @Override
         protected Subject doInBackground(Integer... integers) {
-            return subjectDao.findSubjectById(integers[0]);
+            return dao.findSubjectById(integers[0]);
         }
     }
 
