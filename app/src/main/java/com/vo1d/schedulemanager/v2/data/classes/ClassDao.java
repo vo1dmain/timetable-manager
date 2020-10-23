@@ -22,4 +22,8 @@ public abstract class ClassDao implements IBaseDao<Class> {
     @Transaction
     @Query("SELECT * FROM class_table WHERE dayId=:dayId ORDER BY startTimeHour ASC, startTimeMinutes ASC")
     abstract LiveData<List<ClassWithSubject>> findAllClassesForADay2(int dayId);
+
+    @Transaction
+    @Query("SELECT * FROM class_table WHERE dayId=:dayId ORDER BY startTimeHour ASC, startTimeMinutes ASC")
+    abstract Class[] findAllClassesForADayAsArray(int dayId);
 }

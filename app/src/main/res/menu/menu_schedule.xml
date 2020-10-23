@@ -5,6 +5,11 @@
         android:id="@+id/start_edition_mode_action"
         android:icon="@drawable/ic_edit"
         android:title="@string/action_edit_title"
-        app:showAsAction="ifRoom"
-        android:visible="true" />
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/add_action"
+        android:icon="@drawable/ic_add"
+        android:title="@string/add_day"
+        app:showAsAction="ifRoom" />
 </menu>

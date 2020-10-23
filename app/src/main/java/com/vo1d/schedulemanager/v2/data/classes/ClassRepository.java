@@ -38,6 +38,16 @@ public class ClassRepository extends BaseRepository<Class, ClassDao> {
         }
     }
 
+    Class[] findAllClassesForADayAsArray(int dayId) {
+        FindAllClassesForADayAsArrayAsyncTask task = new FindAllClassesForADayAsArrayAsyncTask(dao);
+        task.execute(dayId);
+        try {
+            return task.get();
+        } catch (ExecutionException | InterruptedException e) {
+            return null;
+        }
+    }
+
     void deleteAll() {
         new DeleteAllAsyncTask(dao).execute();
     }
@@ -81,6 +91,19 @@ public class ClassRepository extends BaseRepository<Class, ClassDao> {
         @Override
         protected LiveData<List<ClassWithSubject>> doInBackground(Integer... integers) {
             return dao.findAllClassesForADay2(integers[0]);
+        }
+    }
+
+    private static final class FindAllClassesForADayAsArrayAsyncTask extends AsyncTask<Integer, Void, Class[]> {
+        private final ClassDao dao;
+
+        private FindAllClassesForADayAsArrayAsyncTask(ClassDao dao) {
+            this.dao = dao;
+        }
+
+        @Override
+        protected Class[] doInBackground(Integer... integers) {
+            return dao.findAllClassesForADayAsArray(integers[0]);
         }
     }
 }

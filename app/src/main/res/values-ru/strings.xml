@@ -8,7 +8,8 @@
     <string name="action_select_all_title">Все</string>
 
     <string name="add_class">Новое занятие</string>
-    <string name="add_lecturer">Добавить</string>
+    <string name="add_day">Добавить день</string>
+    <string name="add_lecturer">Добавить преподавателя</string>
     <string name="add_subject">Новый предмет</string>
 
     <string name="app_name">Менеджер расписаний</string>
@@ -19,7 +20,15 @@
 
     <string name="category_title_appearance">Оформление</string>
 
-    <string-array name="days_of_week">
+    <string-array name="days_of_week_full">
+        <item>Понедельник</item>
+        <item>Вторник</item>
+        <item>Среда</item>
+        <item>Четверг</item>
+        <item>Пятница</item>
+        <item>Суббота</item>
+    </string-array>
+    <string-array name="days_of_week_short">
         <item>ПН</item>
         <item>ВТ</item>
         <item>СР</item>
@@ -37,6 +46,7 @@
     <string name="dialog_title_delete_multiple_items">Удалить элементы?</string>
     <string name="dialog_title_delete_one">Удалить этот элемент?</string>
     <string name="dialog_title_placeholder">Вы уверены?</string>
+    <string name="dialog_title_select_day">Добавить день</string>
 
     <string name="fragment_label_class_creation">Новое занятие</string>
     <string name="fragment_label_class_edition">Изменить занятие</string>

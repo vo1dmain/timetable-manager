@@ -29,6 +29,7 @@ public class Class implements IMyEntity {
     public int id;
 
     public int subjectId;
+
     public int dayId;
 
     public int audienceBuilding;

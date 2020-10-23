@@ -23,7 +23,6 @@ import androidx.recyclerview.selection.StorageStrategy;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textview.MaterialTextView;
 import com.vo1d.schedulemanager.v2.MainActivity;
@@ -39,6 +38,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import static com.vo1d.schedulemanager.v2.MainActivity.getActionMode;
+import static com.vo1d.schedulemanager.v2.MainActivity.setActionMode;
 import static com.vo1d.schedulemanager.v2.ui.dialogs.ConfirmationDialog.DELETE_SELECTED;
 
 public class SubjectsListFragment extends Fragment {
@@ -49,15 +50,12 @@ public class SubjectsListFragment extends Fragment {
     private Resources resources;
     private SubjectsListAdapter adapter;
     private RecyclerView recyclerView;
-    private ExtendedFloatingActionButton fabAdd;
     private MaterialTextView listIsEmptyTextView;
     private MaterialTextView nothingFoundTextView;
     private MenuItem deleteAll;
     private SubjectsListFragmentDirections.EditSubject edition;
     private int visibility;
-    private boolean inSearchMode = false;
     private boolean isDeleteAction = false;
-    private ActionMode actionMode;
     private SelectionTracker<Long> tracker;
     private final ActionMode.Callback callback = new ActionMode.Callback() {
         @Override
@@ -69,7 +67,6 @@ public class SubjectsListFragment extends Fragment {
         @Override
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
             mode.setTitle(resources.getString(R.string.selection_count, tracker.getSelection().size()));
-            fabAdd.hide();
             return true;
         }
 
@@ -94,8 +91,7 @@ public class SubjectsListFragment extends Fragment {
                 slvm.clearSelection();
             }
             isDeleteAction = false;
-            actionMode = null;
-            fabAdd.show();
+            setActionMode(null);
         }
     };
 
@@ -116,7 +112,6 @@ public class SubjectsListFragment extends Fragment {
         slvm = new ViewModelProvider(this).get(SubjectsListViewModel.class);
 
         recyclerView = view.findViewById(R.id.subjects_list);
-        fabAdd = view.findViewById(R.id.add_subject_fab);
         listIsEmptyTextView = view.findViewById(R.id.subjects_placeholder);
         nothingFoundTextView = view.findViewById(R.id.search_placeholder);
 
@@ -129,19 +124,6 @@ public class SubjectsListFragment extends Fragment {
 
         recyclerView.setHasFixedSize(true);
 
-        recyclerView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
-            if (!inSearchMode) {
-                if (oldScrollY < scrollY) {
-                    fabAdd.hide();
-                } else {
-                    fabAdd.show();
-                }
-            }
-        });
-
-        fabAdd.setOnClickListener(v ->
-                Navigation.findNavController(v).navigate(R.id.add_subject));
-
         adapter.setOnSelectionChangedListener((subject, isChecked) -> {
             if (isChecked) {
                 slvm.addToSelection(subject);
@@ -151,10 +133,10 @@ public class SubjectsListFragment extends Fragment {
         });
 
         adapter.setOnItemClickListener(subject -> {
-                    if (actionMode == null) {
-                        edition.setSubjectId(subject.id);
-                        Navigation.findNavController(view).navigate(edition);
-                    }
+            if (getActionMode() == null) {
+                edition.setSubjectId(subject.id);
+                Navigation.findNavController(view).navigate(edition);
+            }
                 }
         );
 
@@ -162,8 +144,8 @@ public class SubjectsListFragment extends Fragment {
 
         svm.getAllSubjects().observe(getViewLifecycleOwner(), subjects -> {
             if (subjects.size() == 0) {
-                if (actionMode != null) {
-                    actionMode.finish();
+                if (getActionMode() != null) {
+                    getActionMode().finish();
                 }
                 recyclerView.setVisibility(View.GONE);
                 listIsEmptyTextView.setVisibility(View.VISIBLE);
@@ -187,14 +169,14 @@ public class SubjectsListFragment extends Fragment {
             @Override
             public void onSelectionChanged() {
                 if (tracker.hasSelection()) {
-                    if (actionMode == null) {
-                        actionMode = ((MainActivity) requireActivity()).startSupportActionMode(callback);
+                    if (getActionMode() == null) {
+                        setActionMode(((MainActivity) requireActivity()).startSupportActionMode(callback));
                     } else {
-                        actionMode.setTitle(resources.getString(R.string.selection_count, tracker.getSelection().size()));
+                        getActionMode().setTitle(resources.getString(R.string.selection_count, tracker.getSelection().size()));
                     }
                 } else if (!tracker.hasSelection()) {
-                    if (actionMode != null) {
-                        actionMode.finish();
+                    if (getActionMode() != null) {
+                        getActionMode().finish();
                     }
                 }
             }
@@ -275,7 +257,7 @@ public class SubjectsListFragment extends Fragment {
         ConfirmationDialog.DialogListener listener = new ConfirmationDialog.DialogListener() {
             @Override
             public void onDialogPositiveClick(DialogFragment dialog) {
-                actionMode.finish();
+                getActionMode().finish();
 
                 Snackbar s = Snackbar.make(recyclerView, snackbarMes, 2750);
 
@@ -329,18 +311,14 @@ public class SubjectsListFragment extends Fragment {
         item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
-                inSearchMode = true;
                 svm.getAllSubjects().removeObserver(adapter::submitList);
-                fabAdd.hide();
                 visibility = listIsEmptyTextView.getVisibility();
                 return true;
             }
 
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
-                inSearchMode = false;
                 svm.getAllSubjects().observe(getViewLifecycleOwner(), adapter::submitList);
-                fabAdd.show();
                 nothingFoundTextView.setVisibility(View.GONE);
                 return true;
             }
@@ -386,6 +364,9 @@ public class SubjectsListFragment extends Fragment {
         int id = item.getItemId();
         if (id == R.id.delete_all_action) {
             openConfirmationDialog(ConfirmationDialog.DELETE_ALL);
+            return true;
+        } else if (id == R.id.add_action) {
+            Navigation.findNavController(requireView()).navigate(R.id.add_subject);
             return true;
         }
         return super.onOptionsItemSelected(item);

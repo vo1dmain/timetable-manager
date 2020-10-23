@@ -18,16 +18,16 @@ public class SubjectViewModel extends AndroidViewModel {
         allSubjects = repository.getAllSubjects();
     }
 
-    public long insert(Subject subject) {
-        return repository.insert(subject);
+    public void insert(Subject... s) {
+        repository.insert(s);
     }
 
-    public void update(Subject subject) {
-        repository.update(subject);
+    public void update(Subject s) {
+        repository.update(s);
     }
 
-    public void delete(Subject... subjects) {
-        repository.delete(subjects);
+    public void delete(Subject... s) {
+        repository.delete(s);
     }
 
     public void deleteAll() {

@@ -19,16 +19,16 @@ public class LecturerViewModel extends AndroidViewModel {
         allLecturers = repository.getAll();
     }
 
-    public long insert(Lecturer lecturer) {
-        return repository.insert(lecturer);
+    public void insert(Lecturer... l) {
+        repository.insert(l);
     }
 
-    public void update(Lecturer lecturer) {
-        repository.update(lecturer);
+    public void update(Lecturer l) {
+        repository.update(l);
     }
 
-    public void delete(Lecturer... lecturers) {
-        repository.delete(lecturers);
+    public void delete(Lecturer... l) {
+        repository.delete(l);
     }
 
     public void deleteAll() {

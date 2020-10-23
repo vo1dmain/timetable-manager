@@ -4,10 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.inputmethod.InputMethodManager;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
@@ -16,15 +14,24 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.preference.PreferenceManager;
 
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.vo1d.schedulemanager.v2.data.days.DaysOfWeek;
 import com.vo1d.schedulemanager.v2.data.subjects.SubjectTypes;
 
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static ActionMode actionMode;
     private AppBarConfiguration appBarConfiguration;
-    private DrawerLayout drawerLayout;
+
+    public static ActionMode getActionMode() {
+        return actionMode;
+    }
+
+    public static void setActionMode(ActionMode actionMode) {
+        MainActivity.actionMode = actionMode;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,17 +44,22 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         SubjectTypes.setResources(getResources());
+        DaysOfWeek.setResources(getResources());
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        drawerLayout = findViewById(R.id.drawer_layout);
+        BottomNavigationView navigationView = findViewById(R.id.bottom_navigation);
         NavController navController = Objects.requireNonNull(navHostFragment).getNavController();
         appBarConfiguration = new AppBarConfiguration
-                .Builder(R.id.nav_schedule, R.id.nav_subjects, R.id.nav_lecturers, R.id.nav_preferences, R.id.nav_about)
-                .setOpenableLayout(drawerLayout)
+                .Builder(R.id.nav_schedule, R.id.nav_subjects, R.id.nav_lecturers, R.id.nav_preferences)
                 .build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            if (actionMode != null) {
+                actionMode.finish();
+            }
+        });
     }
 
     @Override
@@ -59,17 +71,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
-    }
-
-    @Override
-    public void onSupportActionModeStarted(@NonNull ActionMode mode) {
-        super.onSupportActionModeStarted(mode);
-        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-    }
-
-    @Override
-    public void onSupportActionModeFinished(@NonNull ActionMode mode) {
-        super.onSupportActionModeFinished(mode);
-        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
     }
 }

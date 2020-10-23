@@ -8,6 +8,7 @@
     <string name="action_select_all_title">All</string>
 
     <string name="add_class">Add class</string>
+    <string name="add_day">Add day</string>
     <string name="add_lecturer">Add lecturer</string>
     <string name="add_subject">Add subject</string>
 
@@ -19,7 +20,15 @@
 
     <string name="category_title_appearance">Appearance</string>
 
-    <string-array name="days_of_week">
+    <string-array name="days_of_week_full">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+    </string-array>
+    <string-array name="days_of_week_short">
         <item>MON</item>
         <item>TUE</item>
         <item>WED</item>
@@ -37,6 +46,7 @@
     <string name="dialog_title_delete_multiple_items">Delete subjects?</string>
     <string name="dialog_title_delete_one">Delete this item?</string>
     <string name="dialog_title_placeholder">Are you sure?</string>
+    <string name="dialog_title_select_day">Add new day</string>
 
     <string name="fragment_label_class_creation">New class</string>
     <string name="fragment_label_class_edition">Edit class</string>

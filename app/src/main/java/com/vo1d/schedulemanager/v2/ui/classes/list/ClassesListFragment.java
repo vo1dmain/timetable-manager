@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.view.ActionMode;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,19 +33,12 @@ import com.vo1d.schedulemanager.v2.ui.schedule.ScheduleFragmentDirections;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
 
-import static com.vo1d.schedulemanager.v2.ui.schedule.ScheduleFragment.getActionMode;
-import static com.vo1d.schedulemanager.v2.ui.schedule.ScheduleFragment.setActionMode;
+import static com.vo1d.schedulemanager.v2.MainActivity.getActionMode;
+import static com.vo1d.schedulemanager.v2.MainActivity.setActionMode;
 
 public class ClassesListFragment extends Fragment {
 
-    private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-
-    private boolean isDeleteAction = false;
     private int dayId;
 
     private ClassViewModel cvm;
@@ -56,7 +50,12 @@ public class ClassesListFragment extends Fragment {
     private ScheduleFragmentDirections.AddClass addClass;
     private ScheduleFragmentDirections.EditClass editClass;
     private MaterialButton buttonAdd;
+
+    private Observer<List<ClassWithSubject>> actionModeObserver;
+
     private final ActionMode.Callback callback = new ActionMode.Callback() {
+        private MenuItem delete;
+
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             mode.getMenuInflater().inflate(R.menu.menu_action_mode, menu);
@@ -65,8 +64,15 @@ public class ClassesListFragment extends Fragment {
 
         @Override
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-            mode.setTitle(resources.getString(R.string.selection_count, 0));
             buttonAdd.setVisibility(View.VISIBLE);
+            delete = menu.findItem(R.id.delete_selected);
+            if (actionModeObserver == null) {
+                actionModeObserver = lecturers -> {
+                    mode.setTitle(resources.getString(R.string.selection_count, lecturers.size()));
+                    delete.setEnabled(!lecturers.isEmpty());
+                };
+            }
+            clvm.getSelectedItems().observe(getViewLifecycleOwner(), actionModeObserver);
             return true;
         }
 
@@ -77,7 +83,6 @@ public class ClassesListFragment extends Fragment {
                 adapter.selectAll();
                 return true;
             } else if (itemId == R.id.delete_selected) {
-                isDeleteAction = true;
                 openConfirmationDialog();
                 return true;
             }
@@ -86,12 +91,11 @@ public class ClassesListFragment extends Fragment {
 
         @Override
         public void onDestroyActionMode(ActionMode mode) {
-            if (!isDeleteAction) {
-                clvm.clearSelection();
-            }
-            isDeleteAction = false;
+            clvm.clearSelection();
             setActionMode(null);
             finishEditionMode();
+            clvm.getSelectedItems().removeObserver(actionModeObserver);
+            delete.setEnabled(false);
             buttonAdd.setVisibility(View.GONE);
         }
     };
@@ -171,9 +175,8 @@ public class ClassesListFragment extends Fragment {
             }
         });
 
-        clvm.getAllClassesForADay2().observe(getViewLifecycleOwner(), adapter::submitList);
-
         clvm.getAllClassesForADay2().observe(getViewLifecycleOwner(), classes -> {
+            adapter.submitList(classes);
             if (classes.size() == 0) {
                 if (getActionMode() != null) {
                     getActionMode().finish();
@@ -183,13 +186,6 @@ public class ClassesListFragment extends Fragment {
             } else {
                 recyclerView.setVisibility(View.VISIBLE);
                 listIsEmptyTextView.setVisibility(View.GONE);
-            }
-        });
-
-        clvm.getSelectedItems().observe(getViewLifecycleOwner(), list -> {
-            ActionMode am = getActionMode();
-            if (am != null) {
-                am.setTitle(resources.getString(R.string.selection_count, list.size()));
             }
         });
     }
@@ -234,28 +230,12 @@ public class ClassesListFragment extends Fragment {
             @Override
             public void onDialogPositiveClick(DialogFragment dialog) {
 
-                Snackbar s = Snackbar.make(recyclerView, snackbarMes, 2750);
-
-                List<ClassWithSubject> data = clvm.getSelectedItems().getValue();
+                Snackbar s = Snackbar.make(recyclerView, snackbarMes, Snackbar.LENGTH_LONG);
                 Class[] classes = clvm.getSelectedItemsAsClassArray(new Class[0]);
 
-                ScheduledFuture<?> operation = executor.schedule(
-                        () -> deleteSelectedItems(classes),
-                        2750,
-                        TimeUnit.MILLISECONDS
-                );
+                deleteSelectedItems(classes);
 
-                List<ClassWithSubject> backedUpData = adapter.getCurrentList();
-
-                s.setAction(R.string.snackbar_action_undone, v -> {
-                    operation.cancel(false);
-                    adapter.submitList(backedUpData);
-                    clvm.clearSelection();
-                });
-
-                adapter.removeData(data);
-
-                getActionMode().finish();
+                s.setAction(R.string.snackbar_action_undone, v -> restoreDeletedItems(classes));
 
                 s.show();
             }
@@ -269,6 +249,10 @@ public class ClassesListFragment extends Fragment {
         confirmationDialog = new ConfirmationDialog(titleId, message);
         confirmationDialog.setDialogListener(listener);
         confirmationDialog.show(getParentFragmentManager(), "Delete selected confirmation");
+    }
+
+    private void restoreDeletedItems(Class[] classes) {
+        cvm.insert(classes);
     }
 
     private void deleteSelectedItems(Class[] classes) {

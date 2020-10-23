@@ -2,23 +2,14 @@ package com.vo1d.schedulemanager.v2.data;
 
 import android.os.AsyncTask;
 
-import java.util.concurrent.ExecutionException;
-
 
 @SuppressWarnings("unchecked")
 public abstract class BaseRepository<ItemType extends IMyEntity, DaoType extends IBaseDao<ItemType>> {
 
     protected DaoType dao;
 
-    public long insert(ItemType item) {
-        try {
-            InsertAsyncTask<ItemType, DaoType> task = new InsertAsyncTask<>(dao);
-            task.execute(item);
-            return task.get();
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-            return -1;
-        }
+    public void insert(ItemType[] items) {
+        new InsertAsyncTask<>(dao).execute(items);
     }
 
     public void update(ItemType item) {
@@ -30,7 +21,7 @@ public abstract class BaseRepository<ItemType extends IMyEntity, DaoType extends
     }
 
     private static class InsertAsyncTask<ItemType extends IMyEntity, DaoType extends IBaseDao<ItemType>>
-            extends AsyncTask<ItemType, Void, Long> {
+            extends AsyncTask<ItemType, Void, Void> {
 
         private final DaoType dao;
 
@@ -39,8 +30,9 @@ public abstract class BaseRepository<ItemType extends IMyEntity, DaoType extends
         }
 
         @Override
-        protected Long doInBackground(ItemType[] items) {
-            return dao.insert(items[0]);
+        protected Void doInBackground(ItemType[] items) {
+            dao.insert(items);
+            return null;
         }
     }
 

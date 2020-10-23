@@ -1,39 +1,41 @@
 package com.vo1d.schedulemanager.v2.data.days;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.vo1d.schedulemanager.v2.data.IMyEntity;
+import com.vo1d.schedulemanager.v2.data.weeks.Week;
 
-@Entity(tableName = "day_table", indices = {@Index(value = {"id"}, unique = true)})
+import static androidx.room.ForeignKey.CASCADE;
+
+@Entity(tableName = "day_table",
+        foreignKeys = {
+                @ForeignKey(entity = Week.class, parentColumns = "id", childColumns = "weekId", onDelete = CASCADE)
+        },
+        indices = {
+                @Index(value = {"id"}, unique = true),
+                @Index(value = {"weekId"})
+        })
 public class Day implements IMyEntity {
 
-    private final int order;
+    public final int order;
+
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    public int id;
 
-    public Day(int order) {
+    @ColumnInfo(defaultValue = "1")
+    public int weekId;
+
+    public Day(int order, int weekId) {
         this.order = order;
+        this.weekId = weekId;
     }
 
-    public Day(NamesOfDays name) {
+    public Day(DaysOfWeek name, int weekId) {
         this.order = name.ordinal();
+        this.weekId = weekId;
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getOrder() {
-        return order;
-    }
-
-    //public void setOrder(int order) {
-    //    this.order = order;
-    //}
 }

@@ -16,8 +16,8 @@ public class ClassViewModel extends AndroidViewModel {
         repository = new ClassRepository(application);
     }
 
-    public long insert(Class c) {
-        return repository.insert(c);
+    public void insert(Class... c) {
+        repository.insert(c);
     }
 
     public void update(Class c) {
@@ -38,5 +38,9 @@ public class ClassViewModel extends AndroidViewModel {
 
     public LiveData<List<ClassWithSubject>> findAllClassesForADay2(int dayId) {
         return repository.findAllClassesForADay2(dayId);
+    }
+
+    public Class[] findAllClassesForADayAsArray(int dayId) {
+        return repository.findAllClassesForADayAsArray(dayId);
     }
 }

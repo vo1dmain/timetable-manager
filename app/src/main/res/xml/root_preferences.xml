@@ -9,4 +9,8 @@
             app:title="@string/theme_title"
             app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
+    <Preference
+        app:icon="@drawable/ic_info"
+        app:key="about"
+        app:title="@string/menu_about" />
 </PreferenceScreen>

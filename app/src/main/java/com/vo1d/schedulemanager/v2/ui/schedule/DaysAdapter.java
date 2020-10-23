@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 class DaysAdapter extends FragmentStateAdapter {
 
@@ -24,7 +25,7 @@ class DaysAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        ClassesListFragment fragment = new ClassesListFragment(days.get(position).getId());
+        ClassesListFragment fragment = new ClassesListFragment(days.get(position).id);
         fragments.put(position, fragment);
         return fragment;
     }
@@ -39,16 +40,7 @@ class DaysAdapter extends FragmentStateAdapter {
         notifyDataSetChanged();
     }
 
-    public List<Day> getCurrentList() {
-        return days;
-    }
-
-    public void removeData(Day data) {
-        days.remove(data);
-        notifyDataSetChanged();
-    }
-
     public void startEditionModeOnTab(int tabIndex) {
-        fragments.get(tabIndex).startEditionMode();
+        Objects.requireNonNull(fragments.get(tabIndex)).startEditionMode();
     }
 }

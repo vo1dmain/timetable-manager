@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.view.ActionMode;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -24,40 +25,42 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.vo1d.schedulemanager.v2.R;
+import com.vo1d.schedulemanager.v2.data.classes.Class;
+import com.vo1d.schedulemanager.v2.data.classes.ClassViewModel;
 import com.vo1d.schedulemanager.v2.data.days.Day;
+import com.vo1d.schedulemanager.v2.data.days.DaysOfWeek;
 import com.vo1d.schedulemanager.v2.data.days.DaysViewModel;
+import com.vo1d.schedulemanager.v2.data.weeks.WeekViewModel;
+import com.vo1d.schedulemanager.v2.data.weeks.WeekWithDays;
 import com.vo1d.schedulemanager.v2.ui.dialogs.ConfirmationDialog;
+import com.vo1d.schedulemanager.v2.ui.dialogs.ListDialog;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
+
+import static com.vo1d.schedulemanager.v2.MainActivity.getActionMode;
 
 
 public class ScheduleFragment extends Fragment {
 
-    private static ActionMode actionMode;
-    private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
     private ViewPager2 vp2;
+    private WeekViewModel wvm;
     private DaysViewModel dvm;
     private DaysAdapter adapter;
     private LinearLayout tabStrip;
-    private String[] daysNames;
-    private Day currentTag;
-    private View chosenTab;
+    private String[] daysNamesShort;
+    private String[] daysNamesFull;
+    private Day tagToDelete;
+    private View tabToDelete;
     private Resources resources;
 
+    private WeekWithDays currentWeek;
+
+    private LiveData<WeekWithDays> currentWeekLive;
+
     private int currentDayNumber;
-
-    public static ActionMode getActionMode() {
-        return actionMode;
-    }
-
-    public static void setActionMode(ActionMode actionMode) {
-        ScheduleFragment.actionMode = actionMode;
-    }
+    private MenuItem actionAdd;
+    private ClassViewModel cvm;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,8 +71,13 @@ public class ScheduleFragment extends Fragment {
         currentDayNumber = calendar.get(Calendar.DAY_OF_WEEK) - 2;
 
         resources = requireActivity().getResources();
-        dvm = new ViewModelProvider(requireActivity()).get(DaysViewModel.class);
-        daysNames = resources.getStringArray(R.array.days_of_week);
+        daysNamesShort = resources.getStringArray(R.array.days_of_week_short);
+        daysNamesFull = resources.getStringArray(R.array.days_of_week_full);
+
+        ViewModelProvider provider = new ViewModelProvider(requireActivity());
+        wvm = provider.get(WeekViewModel.class);
+        dvm = provider.get(DaysViewModel.class);
+        cvm = provider.get(ClassViewModel.class);
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -91,19 +99,24 @@ public class ScheduleFragment extends Fragment {
 
         vp2.setOffscreenPageLimit(3);
 
-        dvm.getAllDays().observe(getViewLifecycleOwner(), days -> {
-            adapter.submitList(days);
+        currentWeekLive = wvm.findWeekById(1);
+
+        currentWeekLive.observe(getViewLifecycleOwner(), weekWithDays -> {
+            currentWeek = weekWithDays;
+            adapter.submitList(currentWeek.days);
             vp2.setCurrentItem(currentDayNumber, false);
 
             for (int i = 0; i < tabStrip.getChildCount(); i++) {
                 registerForContextMenu(tabStrip.getChildAt(i));
-                tabStrip.getChildAt(i).setTag(days.get(i));
+                tabStrip.getChildAt(i).setTag(currentWeek.days.get(i));
             }
         });
 
-        new TabLayoutMediator(tabLayout, vp2, (tab, position) ->
-                tab.setText(daysNames[Objects.requireNonNull(dvm.getAllDays().getValue()).get(position).getOrder()])
-        ).attach();
+        TabLayoutMediator defaultTabMediator = new TabLayoutMediator(tabLayout, vp2, (tab, position) ->
+                tab.setText(daysNamesShort[currentWeek.days.get(position).order])
+        );
+
+        defaultTabMediator.attach();
 
         if (savedInstanceState != null) {
             vp2.setCurrentItem(savedInstanceState.getInt("tabPosition"), false);
@@ -113,6 +126,11 @@ public class ScheduleFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.menu_schedule, menu);
+
+        actionAdd = menu.findItem(R.id.add_action);
+
+        currentWeekLive.observe(getViewLifecycleOwner(), weekWithDays ->
+                actionAdd.setEnabled(!weekWithDays.week.availableDays.isEmpty()));
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -121,6 +139,9 @@ public class ScheduleFragment extends Fragment {
         int id = item.getItemId();
         if (id == R.id.start_edition_mode_action) {
             adapter.startEditionModeOnTab(vp2.getCurrentItem());
+            return true;
+        } else if (id == R.id.add_action) {
+            openSelectionDialog(currentWeek.week.availableDays);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -137,13 +158,14 @@ public class ScheduleFragment extends Fragment {
     @Override
     public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        requireActivity().getMenuInflater().inflate(R.menu.menu_context, menu);
+        requireActivity().getMenuInflater().inflate(R.menu.menu_tab_context, menu);
 
-        currentTag = (Day) v.getTag();
-        chosenTab = v;
+        tagToDelete = (Day) v.getTag();
+        tabToDelete = v;
 
-        if (actionMode != null) {
-            actionMode.finish();
+        ActionMode mode = getActionMode();
+        if (mode != null) {
+            mode.finish();
         }
     }
 
@@ -162,9 +184,18 @@ public class ScheduleFragment extends Fragment {
         setupDeleteTabDialog().show(getParentFragmentManager(), "Delete tab confirmation");
     }
 
+    private void openSelectionDialog(List<DaysOfWeek> availableDays) {
+        new ListDialog(R.string.dialog_title_select_day, availableDays, (dialog, itemNumber) -> {
+            dvm.insert(new Day(availableDays.get(itemNumber), currentWeek.week.id));
+            availableDays.remove(itemNumber);
+            wvm.update(currentWeek.week);
+        })
+                .show(getParentFragmentManager(), "Select day dialog");
+    }
+
     private ConfirmationDialog setupDeleteTabDialog() {
         int titleId = R.string.dialog_title_delete_one;
-        String title = daysNames[currentTag.getOrder()];
+        String title = daysNamesFull[tagToDelete.order];
 
         String message = resources.getString(R.string.dialog_message_delete_tab, title);
         String snackbarMes = resources.getString(R.string.snackbar_message_delete_success, title);
@@ -172,22 +203,13 @@ public class ScheduleFragment extends Fragment {
         ConfirmationDialog.DialogListener listener = new ConfirmationDialog.DialogListener() {
             @Override
             public void onDialogPositiveClick(DialogFragment dialog) {
-                Snackbar s = Snackbar.make(requireView(), snackbarMes, 2750);
+                Snackbar s = Snackbar.make(requireView(), snackbarMes, Snackbar.LENGTH_LONG);
 
-                ScheduledFuture<?> operation = executor.schedule(
-                        ScheduleFragment.this::deleteSelectedItems,
-                        2750,
-                        TimeUnit.MILLISECONDS
-                );
+                Class[] classes = cvm.findAllClassesForADayAsArray(tagToDelete.id);
 
-                List<Day> backedUpData = adapter.getCurrentList();
+                s.setAction(R.string.snackbar_action_undone, v -> restoreDeletedDay(tagToDelete, classes));
 
-                s.setAction(R.string.snackbar_action_undone, v -> {
-                    operation.cancel(false);
-                    adapter.submitList(backedUpData);
-                });
-
-                adapter.removeData(currentTag);
+                deleteSelectedTab();
 
                 s.show();
             }
@@ -204,8 +226,18 @@ public class ScheduleFragment extends Fragment {
         return dialog;
     }
 
-    private void deleteSelectedItems() {
-        dvm.delete(currentTag);
-        unregisterForContextMenu(chosenTab);
+    private void deleteSelectedTab() {
+        dvm.delete(tagToDelete);
+        unregisterForContextMenu(tabToDelete);
+        currentWeek.week.availableDays.add(DaysOfWeek.fromInt(tagToDelete.order));
+        Collections.sort(currentWeek.week.availableDays);
+        wvm.update(currentWeek.week);
+    }
+
+    private void restoreDeletedDay(Day day, Class[] classes) {
+        dvm.insert(day);
+        cvm.insert(classes);
+        currentWeek.week.availableDays.remove(DaysOfWeek.fromInt(tagToDelete.order));
+        wvm.update(currentWeek.week);
     }
 }

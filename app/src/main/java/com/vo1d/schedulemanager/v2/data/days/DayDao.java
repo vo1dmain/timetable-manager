@@ -15,8 +15,4 @@ public abstract class DayDao implements IBaseDao<Day> {
     @Transaction
     @Query("SELECT * FROM day_table ORDER BY `order` ASC")
     abstract LiveData<List<Day>> getAll();
-
-    //@Transaction
-    //@Query("SELECT * FROM day_table ORDER BY `order` ASC")
-    //abstract LiveData<List<DayWithClasses>> getAllDays2();
 }

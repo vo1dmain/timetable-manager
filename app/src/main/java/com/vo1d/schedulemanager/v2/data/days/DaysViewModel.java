@@ -19,16 +19,16 @@ public class DaysViewModel extends AndroidViewModel {
         allDays = repository.getAll();
     }
 
-    public void insert(Day day) {
-        repository.insert(day);
+    public void insert(Day... d) {
+        repository.insert(d);
     }
 
-    public void update(Day day) {
-        repository.update(day);
+    public void update(Day d) {
+        repository.update(d);
     }
 
-    public void delete(Day... days) {
-        repository.delete(days);
+    public void delete(Day... d) {
+        repository.delete(d);
     }
 
     public LiveData<List<Day>> getAllDays() {

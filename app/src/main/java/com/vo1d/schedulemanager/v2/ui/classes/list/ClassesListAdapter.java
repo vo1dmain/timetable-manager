@@ -97,13 +97,6 @@ class ClassesListAdapter extends ListAdapter<ClassWithSubject, ClassesListAdapte
         return getItem(position).aClass.id;
     }
 
-    public void removeData(List<ClassWithSubject> data) {
-        List<ClassWithSubject> list = new LinkedList<>(getCurrentList());
-        list.removeAll(data);
-
-        submitList(list);
-    }
-
     public void setItemButtonClickListener(ItemButtonClickListener listener) {
         itemClickListener = listener;
     }

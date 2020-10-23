@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
-
-    <style name="ActionModeStyle" parent="@style/Widget.MaterialComponents.ActionBar.PrimarySurface">
-        <item name="titleTextStyle">@style/ActionModeStyle.TitleTextAppearance</item>
-    </style>
-
-    <style name="ActionModeStyle.TitleTextAppearance" parent="@style/TextAppearance.AppCompat.Widget.ActionMode.Title">
-        <item name="android:textColor">?attr/colorOnPrimarySurface</item>
-    </style>
-
     <!-- Base application theme. -->
     <style name="Theme.ScheduleManager" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimaryDark">?attr/colorSurface</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
-        <item name="actionModeStyle">@style/ActionModeStyle</item>
     </style>
 
     <style name="Theme.ScheduleManager.Crimson" parent="Theme.ScheduleManager">

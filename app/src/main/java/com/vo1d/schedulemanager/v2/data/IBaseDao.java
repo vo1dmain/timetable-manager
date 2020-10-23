@@ -6,8 +6,9 @@ import androidx.room.Transaction;
 import androidx.room.Update;
 
 public interface IBaseDao<T extends IMyEntity> {
+    @Transaction
     @Insert
-    long insert(T obj);
+    void insert(T[] obj);
 
     @Update
     void update(T obj);
