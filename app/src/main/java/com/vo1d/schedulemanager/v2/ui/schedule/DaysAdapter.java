@@ -16,18 +16,30 @@ import java.util.Objects;
 class DaysAdapter extends FragmentStateAdapter {
 
     private final Map<Integer, ClassesListFragment> fragments = new HashMap<>();
+    private final List<Integer> ids = new LinkedList<>();
     private List<Day> days = new LinkedList<>();
 
     public DaysAdapter(@NonNull Fragment fragment) {
         super(fragment);
     }
 
+    @Override
+    public boolean containsItem(long itemId) {
+        return ids.contains((int) itemId);
+    }
+
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        ClassesListFragment fragment = new ClassesListFragment(days.get(position).id);
+        int id = days.get(position).id;
+        ClassesListFragment fragment = new ClassesListFragment(id);
         fragments.put(position, fragment);
         return fragment;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return ids.get(position);
     }
 
     @Override
@@ -37,6 +49,12 @@ class DaysAdapter extends FragmentStateAdapter {
 
     public void submitList(List<Day> days) {
         this.days = days;
+        fragments.clear();
+        ids.clear();
+        for (Day day :
+                this.days) {
+            ids.add(day.id);
+        }
         notifyDataSetChanged();
     }
 

@@ -1,5 +1,6 @@
 package com.vo1d.schedulemanager.v2.data.classes;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
@@ -7,104 +8,95 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.vo1d.schedulemanager.v2.data.IMyEntity;
+import com.vo1d.schedulemanager.v2.data.courses.Course;
+import com.vo1d.schedulemanager.v2.data.courses.CourseTypes;
+import com.vo1d.schedulemanager.v2.data.courses.CourseTypesConverter;
 import com.vo1d.schedulemanager.v2.data.days.Day;
-import com.vo1d.schedulemanager.v2.data.subjects.Subject;
-import com.vo1d.schedulemanager.v2.data.subjects.SubjectTypes;
-import com.vo1d.schedulemanager.v2.data.subjects.SubjectTypesConverter;
+
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Objects;
 
 import static androidx.room.ForeignKey.CASCADE;
 
 @Entity(tableName = "class_table",
         foreignKeys = {
-                @ForeignKey(entity = Subject.class, parentColumns = "id", childColumns = "subjectId", onDelete = CASCADE),
+                @ForeignKey(entity = Course.class, parentColumns = "id", childColumns = "courseId", onDelete = CASCADE),
                 @ForeignKey(entity = Day.class, parentColumns = "id", childColumns = "dayId", onDelete = CASCADE)
         },
         indices = {
                 @Index(value = "id", unique = true),
                 @Index(value = "dayId"),
-                @Index(value = "subjectId")
+                @Index(value = "courseId"),
+                @Index(value = "instructorId")
         })
 public class Class implements IMyEntity {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
-    public int subjectId;
-
+    @ColumnInfo(defaultValue = "0")
+    public int instructorId;
+    public int courseId;
     public int dayId;
-
     public int audienceBuilding;
     public int audienceCabinet;
-    public int startTimeHour;
-    public int startTimeMinutes;
-    public int endTimeHour;
-    public int endTimeMinutes;
 
-    @TypeConverters({SubjectTypesConverter.class})
-    private SubjectTypes[] type;
+    @TypeConverters({DateToStringConverter.class})
+    @ColumnInfo(defaultValue = "00:00")
+    public Date startTime;
 
-    public Class(int subjectId, int dayId, int audienceBuilding, int audienceCabinet, SubjectTypes... type) {
-        this.subjectId = subjectId;
+    @TypeConverters({DateToStringConverter.class})
+    @ColumnInfo(defaultValue = "00:00")
+    public Date endTime;
+
+    @TypeConverters({CourseTypesConverter.class})
+    private CourseTypes[] type;
+
+    public Class(int courseId,
+                 int dayId,
+                 int instructorId,
+                 int audienceBuilding,
+                 int audienceCabinet,
+                 CourseTypes... type) {
+        this.courseId = courseId;
         this.dayId = dayId;
+        this.instructorId = instructorId;
         this.type = type;
         this.audienceBuilding = audienceBuilding;
         this.audienceCabinet = audienceCabinet;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Class)) return false;
+        Class aClass = (Class) o;
+        return id == aClass.id &&
+                courseId == aClass.courseId &&
+                dayId == aClass.dayId &&
+                audienceBuilding == aClass.audienceBuilding &&
+                audienceCabinet == aClass.audienceCabinet &&
+                startTime.equals(aClass.startTime) &&
+                endTime.equals(aClass.endTime) &&
+                Arrays.equals(type, aClass.type);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(id, courseId, dayId, audienceBuilding, audienceCabinet, startTime, endTime);
+        result = 31 * result + Arrays.hashCode(type);
+        return result;
     }
 
     public String getAudienceInfo() {
         return (String.valueOf(audienceBuilding) + '-' + audienceCabinet);
     }
 
-    public String getStartTimeAsString() {
-        String hour = String.valueOf(startTimeHour);
-        String minute = String.valueOf(startTimeMinutes);
-
-        if (hour.length() == 1) {
-            hour = '0' + hour;
-        }
-
-        if (minute.length() == 1) {
-            minute = '0' + minute;
-        }
-
-        return hour + ':' + minute;
-    }
-
-    public String getEndTimeAsString() {
-        String hour = String.valueOf(endTimeHour);
-        String minute = String.valueOf(endTimeMinutes);
-
-        if (hour.length() == 1) {
-            hour = '0' + hour;
-        }
-
-        if (minute.length() == 1) {
-            minute = '0' + minute;
-        }
-
-        return hour + ':' + minute;
-    }
-
-    public SubjectTypes[] getType() {
+    public CourseTypes[] getType() {
         return this.type;
     }
 
-    public void setType(SubjectTypes... type) {
+    public void setType(CourseTypes... type) {
         this.type = type;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Class aClass = (Class) o;
-        return id == aClass.id &&
-                subjectId == aClass.subjectId &&
-                dayId == aClass.dayId &&
-                startTimeHour == aClass.startTimeHour &&
-                startTimeMinutes == aClass.startTimeMinutes &&
-                endTimeHour == aClass.endTimeHour &&
-                endTimeMinutes == aClass.endTimeMinutes &&
-                type == aClass.type;
-    }
-
 }

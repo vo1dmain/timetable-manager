@@ -10,6 +10,9 @@ public interface IBaseDao<T extends IMyEntity> {
     @Insert
     void insert(T[] obj);
 
+    @Insert
+    long insert(T obj);
+
     @Update
     void update(T obj);
 

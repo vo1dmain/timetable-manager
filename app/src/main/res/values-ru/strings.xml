@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
+    <string name="action_add_day_title">Добавить день</string>
+    <string name="action_add_week_title">Добавить неделю</string>
     <string name="action_confirm_creation_title">Подтвердить</string>
     <string name="action_delete_all_title">Удалить все</string>
     <string name="action_delete_item_title">Удалить</string>
+    <string name="action_delete_this_week_title">Удалить эту неделю</string>
     <string name="action_edit_title">Изменить</string>
+    <string name="action_rename_week_title">Переименовать неделю</string>
     <string name="action_search_title">Искать</string>
     <string name="action_select_all_title">Все</string>
 
     <string name="add_class">Новое занятие</string>
-    <string name="add_day">Добавить день</string>
-    <string name="add_lecturer">Добавить преподавателя</string>
-    <string name="add_subject">Новый предмет</string>
+    <string name="add_course">Новый курс</string>
+    <string name="add_instructor">Добавить инструктора</string>
 
     <string name="app_name">Менеджер расписаний</string>
     <string name="app_version">Версия:</string>
@@ -18,7 +21,14 @@
     <string name="audience_distant">Дистанционно</string>
     <string name="audience_info">Ауд. %1$s</string>
 
+    <string name="category_formatting_title">Форматирование</string>
     <string name="category_title_appearance">Оформление</string>
+
+    <string-array name="course_types">
+        <item>Лекция</item>
+        <item>Практика</item>
+        <item>Лабораторная</item>
+    </string-array>
 
     <string-array name="days_of_week_full">
         <item>Понедельник</item>
@@ -38,9 +48,10 @@
     </string-array>
 
     <string name="dialog_message_delete_all">Все элементы будут удалены навсегда.</string>
+    <string name="dialog_message_delete_day">День \"%1$s\" и все занятия в нём будут удалены навсегда.</string>
     <string name="dialog_message_delete_one">Это действие невозможно будет отменить.</string>
     <string name="dialog_message_delete_selected">Выбранные элементы (%1$d) будут удалены навсегда.</string>
-    <string name="dialog_message_delete_tab">День \"%1$s\" и все занятия в нём будут удалены навсегда.</string>
+    <string name="dialog_message_delete_week">Неделя \"%1$s\" и всё её содержимое будут удалены навсегда.</string>
     <string name="dialog_negative">Отмена</string>
     <string name="dialog_positive">ОК</string>
     <string name="dialog_title_delete_multiple_items">Удалить элементы?</string>
@@ -49,50 +60,49 @@
     <string name="dialog_title_select_day">Добавить день</string>
 
     <string name="fragment_label_class_creation">Новое занятие</string>
-    <string name="fragment_label_class_edition">Изменить занятие</string>
-    <string name="fragment_label_lecturer_creation">Новый преподаватель</string>
-    <string name="fragment_label_lecturer_edition">Изменить преподавателя</string>
+    <string name="fragment_label_class_edition">Редактировать</string>
+    <string name="fragment_label_course_creation">Новый курс</string>
+    <string name="fragment_label_course_edition">Редактировать</string>
+    <string name="fragment_label_instructor_creation">Новый инструктор</string>
+    <string name="fragment_label_instructor_edition">Редактировать</string>
     <string name="fragment_label_settings">Настройки</string>
-    <string name="fragment_label_subject_creation">Новый предмет</string>
-    <string name="fragment_label_subject_edition">Изменить предмет</string>
 
     <string name="hint_audience_building">Корпус №</string>
     <string name="hint_audience_cabinet">Кабинет №</string>
-    <string name="hint_lecturer_first_name">Имя</string>
-    <string name="hint_lecturer_last_name">Фамилия</string>
-    <string name="hint_lecturer_middle_name">Отчество</string>
-    <string name="hint_lecturer_name">Преподаватель</string>
-    <string name="hint_lecturer_phone">Номер телефона</string>
-    <string name="hint_subject_name">Название</string>
+    <string name="hint_course_name">Название курса</string>
+    <string name="hint_end_time">Окончание</string>
+    <string name="hint_instructor_first_name">Имя</string>
+    <string name="hint_instructor_last_name">Фамилия</string>
+    <string name="hint_instructor_middle_name">Отчество</string>
+    <string name="hint_instructor_name">Имя инструктора</string>
+    <string name="hint_instructor_phone">Номер телефона</string>
+    <string name="hint_new_week_title">Название недели</string>
+    <string name="hint_set_instructors">Инструкторы</string>
+    <string name="hint_start_time">Начало</string>
 
-    <string name="lecturer_s_avatar">Иконка преподавателя</string>
+    <string name="instructor_avatar_hint">Аватар инструктора</string>
 
     <string name="menu_about">О приложении</string>
-    <string name="menu_lecturers">Преподаватели</string>
+    <string name="menu_courses">Курсы</string>
+    <string name="menu_instructors">Инструкторы</string>
     <string name="menu_schedule">Расписание</string>
-    <string name="menu_subjects">Предметы</string>
 
     <string name="placeholder_classes">Сегодня занятий нет.</string>
-    <string name="placeholder_lecturers">Пока ни одного преподавателя.</string>
+    <string name="placeholder_courses">Пока ни одного курса.</string>
+    <string name="placeholder_instructors">Пока ни одного инструктора.</string>
+    <string name="placeholder_schedule">Пока ни одного учебного дня.</string>
     <string name="placeholder_search">Ничего не найдено.</string>
-    <string name="placeholder_subjects">Пока ни одного предмета.</string>
 
     <string name="selection_count">Выбрано: %1$d</string>
 
     <string name="snackbar_action_undone">Отмена</string>
     <string name="snackbar_message_all_deleted">Все элементы удалены.</string>
     <string name="snackbar_message_creation_success">Добавлен новый элемент: %1$s.</string>
-    <string name="snackbar_message_delete_failure">Не удалось удалить предмет \"%1$s\".</string>
+    <string name="snackbar_message_delete_failure">Не удалось удалить элемент \"%1$s\".</string>
     <string name="snackbar_message_delete_success">Элемент \"%1$s\" удалён.</string>
     <string name="snackbar_message_selected_deleted">Элементов удалено: %1$d</string>
     <string name="snackbar_message_update_failure">Не удалось обновить элемент \"%1$s\".</string>
     <string name="snackbar_message_update_success">Элемент \"%1$s\" успешно обновлён.</string>
-
-    <string-array name="subject_types">
-        <item>Лекция</item>
-        <item>Практика</item>
-        <item>Лабораторная</item>
-    </string-array>
 
     <string-array name="theme_entries">
         <item>Малиновая</item>
@@ -103,13 +113,24 @@
         <item>Светло-синяя</item>
         <item>Фиолетовая</item>
         <item>Бирюзовая</item>
+        <item>Тыквенная</item>
     </string-array>
-    <string name="theme_title">Тема</string>
+    <string name="theme_preference_title">Тема</string>
+
+    <string name="time_am">ДП</string>
+    <string-array name="time_format_entries">
+        <item>По-умолчаню (системный)</item>
+        <item>12 часов</item>
+        <item>24 часа</item>
+    </string-array>
+    <string name="time_format_preference_title">Формат времени</string>
+    <string name="time_pm">ПП</string>
 
     <string name="title_contact_info_block">Контакты</string>
+    <string name="title_course_setting_block">Курс</string>
+    <string name="title_instructor_setting_block">Инструктор</string>
     <string name="title_main_info_block">Основная информация</string>
     <string name="title_room_setting_block">Аудитория</string>
-    <string name="title_subject_setting_block">Предмет</string>
     <string name="title_time_setting_block">Время</string>
     <string name="title_type_setting_block">Тип занятия</string>
     <string name="title_types_choosing_block">Типы занятий</string>

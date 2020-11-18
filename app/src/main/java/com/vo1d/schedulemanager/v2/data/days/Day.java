@@ -19,7 +19,7 @@ import static androidx.room.ForeignKey.CASCADE;
                 @Index(value = {"id"}, unique = true),
                 @Index(value = {"weekId"})
         })
-public class Day implements IMyEntity {
+public class Day implements IMyEntity, Comparable<Day> {
 
     public final int order;
 
@@ -37,5 +37,10 @@ public class Day implements IMyEntity {
     public Day(DaysOfWeek name, int weekId) {
         this.order = name.ordinal();
         this.weekId = weekId;
+    }
+
+    @Override
+    public int compareTo(Day day) {
+        return this.order - day.order;
     }
 }

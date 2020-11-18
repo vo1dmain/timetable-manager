@@ -14,11 +14,10 @@ import java.util.concurrent.ExecutionException;
 public class ClassRepository extends BaseRepository<Class, ClassDao> {
 
     public ClassRepository(Application application) {
-        Database database = Database.getInstance(application);
-        dao = database.classDao();
+        super(Database.getInstance(application).classDao());
     }
 
-    ClassWithSubject findClassById2(int id) {
+    ClassWithCourse findClassById2(int id) {
         FindClassById2AsyncTask task = new FindClassById2AsyncTask(dao);
         task.execute(id);
         try {
@@ -28,7 +27,7 @@ public class ClassRepository extends BaseRepository<Class, ClassDao> {
         }
     }
 
-    LiveData<List<ClassWithSubject>> findAllClassesForADay2(int dayId) {
+    LiveData<List<ClassWithCourse>> findAllClassesForADay2(int dayId) {
         FindAllClassesForADay2AsyncTask task = new FindAllClassesForADay2AsyncTask(dao);
         task.execute(dayId);
         try {
@@ -67,7 +66,7 @@ public class ClassRepository extends BaseRepository<Class, ClassDao> {
         }
     }
 
-    private static final class FindClassById2AsyncTask extends AsyncTask<Integer, Void, ClassWithSubject> {
+    private static final class FindClassById2AsyncTask extends AsyncTask<Integer, Void, ClassWithCourse> {
 
         private final ClassDao dao;
 
@@ -76,12 +75,12 @@ public class ClassRepository extends BaseRepository<Class, ClassDao> {
         }
 
         @Override
-        protected ClassWithSubject doInBackground(Integer... integers) {
+        protected ClassWithCourse doInBackground(Integer... integers) {
             return dao.findClassById2(integers[0]);
         }
     }
 
-    private static final class FindAllClassesForADay2AsyncTask extends AsyncTask<Integer, Void, LiveData<List<ClassWithSubject>>> {
+    private static final class FindAllClassesForADay2AsyncTask extends AsyncTask<Integer, Void, LiveData<List<ClassWithCourse>>> {
         private final ClassDao dao;
 
         private FindAllClassesForADay2AsyncTask(ClassDao dao) {
@@ -89,7 +88,7 @@ public class ClassRepository extends BaseRepository<Class, ClassDao> {
         }
 
         @Override
-        protected LiveData<List<ClassWithSubject>> doInBackground(Integer... integers) {
+        protected LiveData<List<ClassWithCourse>> doInBackground(Integer... integers) {
             return dao.findAllClassesForADay2(integers[0]);
         }
     }

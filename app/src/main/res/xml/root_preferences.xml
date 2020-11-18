@@ -1,16 +1,30 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:divider="@null"
+    app:allowDividerAbove="false"
+    app:allowDividerBelow="false">
+    <PreferenceCategory app:title="@string/category_formatting_title">
+        <ListPreference
+            app:defaultValue="system"
+            app:entries="@array/time_format_entries"
+            app:entryValues="@array/time_format_values"
+            app:icon="@drawable/ic_outline_access_time"
+            app:key="@string/time_format_preference_key"
+            app:title="@string/time_format_preference_title"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
     <PreferenceCategory app:title="@string/category_title_appearance">
         <ListPreference
             app:defaultValue="deep_purple"
             app:entries="@array/theme_entries"
             app:entryValues="@array/theme_values"
-            app:icon="@drawable/ic_palette"
-            app:key="theme"
-            app:title="@string/theme_title"
+            app:icon="@drawable/ic_outline_palette"
+            app:key="@string/theme_preference_key"
+            app:title="@string/theme_preference_title"
             app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
     <Preference
-        app:icon="@drawable/ic_info"
+        app:icon="@drawable/ic_outline_info"
         app:key="about"
         app:title="@string/menu_about" />
 </PreferenceScreen>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/title_instructor_setting_block"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Overline" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/instructors_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:chipSpacingHorizontal="4dp"
+        app:singleLine="false"
+        app:singleSelection="true" />
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -14,8 +14,7 @@ import java.util.concurrent.ExecutionException;
 class DayRepository extends BaseRepository<Day, DayDao> {
 
     DayRepository(Application application) {
-        Database database = Database.getInstance(application);
-        dao = database.dayDao();
+        super(Database.getInstance(application).dayDao());
     }
 
     LiveData<List<Day>> getAll() {

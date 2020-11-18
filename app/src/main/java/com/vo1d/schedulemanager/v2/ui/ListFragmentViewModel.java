@@ -34,7 +34,7 @@ public abstract class ListFragmentViewModel<ItemType extends IMyEntity> extends 
     }
 
     public void clearSelection() {
-        Objects.requireNonNull(selectedItems.getValue()).clear();
+        selectedItems.postValue(new LinkedList<>());
     }
 
     public LiveData<List<ItemType>> getSelectedItems() {

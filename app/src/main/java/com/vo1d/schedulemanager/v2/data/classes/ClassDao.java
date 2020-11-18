@@ -17,13 +17,13 @@ public abstract class ClassDao implements IBaseDao<Class> {
 
     @Transaction
     @Query("SELECT * FROM class_table WHERE id=:id")
-    abstract ClassWithSubject findClassById2(int id);
+    abstract ClassWithCourse findClassById2(int id);
 
     @Transaction
-    @Query("SELECT * FROM class_table WHERE dayId=:dayId ORDER BY startTimeHour ASC, startTimeMinutes ASC")
-    abstract LiveData<List<ClassWithSubject>> findAllClassesForADay2(int dayId);
+    @Query("SELECT * FROM class_table WHERE dayId=:dayId ORDER BY time(startTime)")
+    abstract LiveData<List<ClassWithCourse>> findAllClassesForADay2(int dayId);
 
     @Transaction
-    @Query("SELECT * FROM class_table WHERE dayId=:dayId ORDER BY startTimeHour ASC, startTimeMinutes ASC")
+    @Query("SELECT * FROM class_table WHERE dayId=:dayId ORDER BY time(startTime)")
     abstract Class[] findAllClassesForADayAsArray(int dayId);
 }

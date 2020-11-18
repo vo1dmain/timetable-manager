@@ -86,4 +86,14 @@
         <item name="colorSecondaryVariant">@color/indigo_100_dark</item>
         <item name="colorOnSecondary">@color/color_control_black</item>
     </style>
+
+    <style name="Theme.ScheduleManager.Pumpkin" parent="Theme.ScheduleManager">
+        <item name="colorPrimary">@color/amber_900</item>
+        <item name="colorPrimaryVariant">@color/amber_900_light</item>
+        <item name="colorPrimaryDark">@color/amber_900_dark</item>
+        <item name="colorOnPrimary">@color/black_900</item>
+        <item name="colorSecondary">@color/orange_900</item>
+        <item name="colorSecondaryVariant">@color/orange_900_dark</item>
+        <item name="colorOnSecondary">@color/white_900</item>
+    </style>
 </resources>

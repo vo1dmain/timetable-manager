@@ -32,11 +32,11 @@ public class ClassViewModel extends AndroidViewModel {
         repository.deleteAll();
     }
 
-    public ClassWithSubject findClassById2(int id) {
+    public ClassWithCourse findClassById2(int id) {
         return repository.findClassById2(id);
     }
 
-    public LiveData<List<ClassWithSubject>> findAllClassesForADay2(int dayId) {
+    public LiveData<List<ClassWithCourse>> findAllClassesForADay2(int dayId) {
         return repository.findAllClassesForADay2(dayId);
     }
 

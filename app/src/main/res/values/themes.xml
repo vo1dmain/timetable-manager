@@ -5,6 +5,7 @@
         <item name="colorPrimaryDark">?attr/colorSurface</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
+        <item name="appBarLayoutStyle">@style/Widget.MaterialComponents.AppBarLayout.Surface</item>
     </style>
 
     <style name="Theme.ScheduleManager.Crimson" parent="Theme.ScheduleManager">
@@ -85,5 +86,15 @@
         <item name="colorSecondary">@color/indigo_100</item>
         <item name="colorSecondaryVariant">@color/indigo_100_dark</item>
         <item name="colorOnSecondary">@color/color_control_black</item>
+    </style>
+
+    <style name="Theme.ScheduleManager.Pumpkin" parent="Theme.ScheduleManager">
+        <item name="colorPrimary">@color/amber_900</item>
+        <item name="colorPrimaryVariant">@color/amber_900_light</item>
+        <item name="colorPrimaryDark">@color/amber_900_dark</item>
+        <item name="colorOnPrimary">@color/color_control_black</item>
+        <item name="colorSecondary">@color/orange_900</item>
+        <item name="colorSecondaryVariant">@color/orange_900_light</item>
+        <item name="colorOnSecondary">@color/color_control_white</item>
     </style>
 </resources>

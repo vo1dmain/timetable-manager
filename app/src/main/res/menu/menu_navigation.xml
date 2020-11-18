@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="nav_view">
+    tools:showIn="@id/bottom_navigation">
 
     <group
         android:id="@+id/main_sections"
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_schedule"
-            android:icon="@drawable/ic_event_note"
+            android:icon="@drawable/ic_outline_event_note"
             android:title="@string/menu_schedule" />
         <item
-            android:id="@+id/nav_subjects"
+            android:id="@+id/nav_courses"
             android:icon="@drawable/ic_list"
-            android:title="@string/menu_subjects" />
+            android:title="@string/menu_courses" />
         <item
-            android:id="@+id/nav_lecturers"
-            android:icon="@drawable/ic_person"
-            android:title="@string/menu_lecturers" />
+            android:id="@+id/nav_instructors"
+            android:icon="@drawable/ic_outline_people_alt"
+            android:title="@string/menu_instructors" />
 
         <item
             android:id="@+id/nav_preferences"
-            android:icon="@drawable/ic_settings"
+            android:icon="@drawable/ic_outline_settings"
             android:title="@string/fragment_label_settings" />
     </group>
 </menu>

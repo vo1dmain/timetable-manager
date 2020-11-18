@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    tools:context=".ui.about.AboutFragment">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -35,6 +37,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
+                android:clickable="true"
+                android:focusable="true"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                 android:textColor="?attr/colorSecondary" />
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -46,11 +50,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
-        android:gravity="center"
-        android:text="@string/developer_name"
-        android:drawableEnd="@drawable/ic_heart"
         android:drawablePadding="4dp"
         android:drawableTint="?attr/colorPrimary"
+        android:gravity="center"
+        android:text="@string/developer_name"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

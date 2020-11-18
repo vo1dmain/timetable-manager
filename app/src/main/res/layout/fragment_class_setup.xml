@@ -7,12 +7,14 @@
     android:paddingTop="8dp"
     android:paddingEnd="16dp">
 
-    <include layout="@layout/subject_setter_layout" />
+    <include layout="@layout/setter_layout_course" />
 
-    <include layout="@layout/type_setter_layout" />
+    <include layout="@layout/setter_layout_instructor" />
 
-    <include layout="@layout/room_setter_layout" />
+    <include layout="@layout/setter_layout_type" />
 
-    <include layout="@layout/time_setter_layout" />
+    <include layout="@layout/setter_layout_room" />
+
+    <include layout="@layout/setter_layout_time" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

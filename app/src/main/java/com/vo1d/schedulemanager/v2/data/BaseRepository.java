@@ -2,14 +2,30 @@ package com.vo1d.schedulemanager.v2.data;
 
 import android.os.AsyncTask;
 
+import java.util.concurrent.ExecutionException;
+
 
 @SuppressWarnings("unchecked")
 public abstract class BaseRepository<ItemType extends IMyEntity, DaoType extends IBaseDao<ItemType>> {
 
-    protected DaoType dao;
+    protected final DaoType dao;
+
+    protected BaseRepository(DaoType dao) {
+        this.dao = dao;
+    }
 
     public void insert(ItemType[] items) {
         new InsertAsyncTask<>(dao).execute(items);
+    }
+
+    public long insert(ItemType item) {
+        InsertReturnIdAsyncTask<ItemType, DaoType> task = new InsertReturnIdAsyncTask<>(dao);
+        task.execute(item);
+        try {
+            return task.get();
+        } catch (ExecutionException | InterruptedException e) {
+            return -1;
+        }
     }
 
     public void update(ItemType item) {
@@ -36,6 +52,21 @@ public abstract class BaseRepository<ItemType extends IMyEntity, DaoType extends
         }
     }
 
+    private static class InsertReturnIdAsyncTask<ItemType extends IMyEntity, DaoType extends IBaseDao<ItemType>>
+            extends AsyncTask<ItemType, Void, Long> {
+
+        private final DaoType dao;
+
+        private InsertReturnIdAsyncTask(DaoType dao) {
+            this.dao = dao;
+        }
+
+        @Override
+        protected Long doInBackground(ItemType[] items) {
+            return dao.insert(items[0]);
+        }
+    }
+
     private static class UpdateAsyncTask<ItemType extends IMyEntity, DaoType extends IBaseDao<ItemType>>
             extends AsyncTask<ItemType, Void, Void> {
 
@@ -46,8 +77,8 @@ public abstract class BaseRepository<ItemType extends IMyEntity, DaoType extends
         }
 
         @Override
-        protected Void doInBackground(ItemType[] subjects) {
-            dao.update(subjects[0]);
+        protected Void doInBackground(ItemType[] items) {
+            dao.update(items[0]);
             return null;
         }
     }
@@ -62,8 +93,8 @@ public abstract class BaseRepository<ItemType extends IMyEntity, DaoType extends
         }
 
         @Override
-        protected Void doInBackground(ItemType[] subjects) {
-            dao.delete(subjects);
+        protected Void doInBackground(ItemType[] items) {
+            dao.delete(items);
             return null;
         }
     }

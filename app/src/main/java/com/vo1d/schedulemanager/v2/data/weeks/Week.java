@@ -12,7 +12,7 @@ import com.vo1d.schedulemanager.v2.data.days.DaysOfWeek;
 import java.util.List;
 
 @Entity(tableName = "week_table", indices = {@Index(value = {"id"}, unique = true)})
-public class Week implements IMyEntity {
+public class Week implements IMyEntity, Comparable<Week> {
 
     @PrimaryKey(autoGenerate = true)
     public int id;
@@ -25,5 +25,10 @@ public class Week implements IMyEntity {
 
     public Week(String title) {
         this.title = title;
+    }
+
+    @Override
+    public int compareTo(Week week) {
+        return this.id - week.id;
     }
 }

@@ -1,9 +1,12 @@
 package com.vo1d.schedulemanager.v2.ui.classes.setup;
 
+import android.app.TimePickerDialog;
+import android.content.SharedPreferences;
+import android.icu.text.DateFormat;
+import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,7 +16,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,38 +23,52 @@ import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.preference.PreferenceManager;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
+import com.vo1d.schedulemanager.v2.MainActivity;
 import com.vo1d.schedulemanager.v2.R;
 import com.vo1d.schedulemanager.v2.data.classes.Class;
 import com.vo1d.schedulemanager.v2.data.classes.ClassViewModel;
-import com.vo1d.schedulemanager.v2.data.classes.ClassWithSubject;
-import com.vo1d.schedulemanager.v2.data.subjects.Subject;
-import com.vo1d.schedulemanager.v2.data.subjects.SubjectTypes;
-import com.vo1d.schedulemanager.v2.data.subjects.SubjectViewModel;
+import com.vo1d.schedulemanager.v2.data.classes.ClassWithCourse;
+import com.vo1d.schedulemanager.v2.data.courses.CourseTypes;
+import com.vo1d.schedulemanager.v2.data.courses.CourseViewModel;
+import com.vo1d.schedulemanager.v2.data.courses.CourseWithInstructors;
+import com.vo1d.schedulemanager.v2.data.instructors.InstructorMinimised;
+import com.vo1d.schedulemanager.v2.ui.TimeFormats;
+import com.vo1d.schedulemanager.v2.ui.settings.SettingsFragment;
 
+import java.text.ParseException;
 import java.util.Collections;
+import java.util.Date;
+import java.util.Objects;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class ClassSetupFragment extends Fragment {
-    private SubjectViewModel svm;
-    private ClassSetupViewModel csvm;
-    private ClassViewModel cvm;
 
+    private AppCompatSpinner courseSpinner;
+    private ArrayAdapter<CourseWithInstructors> coursesArrayAdapter;
+
+    private ChipGroup instructorsChipGroup;
     private ChipGroup typesChipGroup;
-    private AppCompatSpinner subjectSpinner;
-    private TimePicker startTimePicker;
-    private TimePicker endTimePicker;
+    private ClassSetupViewModel classSetupViewModel;
+    private ClassViewModel classViewModel;
+    private ClassWithCourse currentClass;
+    private CourseViewModel courseViewModel;
+    private CourseWithInstructors currentCourse;
+
+    private DateFormat defaultFormatter;
+    private SharedPreferences preferences;
+
     private TextInputEditText buildingInput;
     private TextInputEditText cabinetInput;
+    private TextInputEditText startTimeInput;
+    private TextInputEditText endTimeInput;
 
-    private ClassWithSubject current;
     private boolean isEditionMode = false;
     private int id = -1;
-    private ArrayAdapter<Subject> subjectsArrayAdapter;
-    private Subject currentSubject;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,10 +77,14 @@ public class ClassSetupFragment extends Fragment {
 
         ViewModelProvider provider = new ViewModelProvider(this);
 
-        csvm = provider.get(ClassSetupViewModel.class);
-        cvm = provider.get(ClassViewModel.class);
+        classSetupViewModel = provider.get(ClassSetupViewModel.class);
+        classViewModel = provider.get(ClassViewModel.class);
 
-        svm = new ViewModelProvider(requireActivity()).get(SubjectViewModel.class);
+        courseViewModel = new ViewModelProvider(requireActivity()).get(CourseViewModel.class);
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(
+                requireActivity().getApplicationContext()
+        );
     }
 
     @Override
@@ -78,92 +98,52 @@ public class ClassSetupFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        subjectsArrayAdapter = new ArrayAdapter<>(
+        defaultFormatter = DateFormat.getTimeInstance(Calendar.getInstance(), DateFormat.SHORT);
+
+        coursesArrayAdapter = new ArrayAdapter<>(
                 requireContext(),
                 android.R.layout.simple_spinner_item,
-                csvm.getSubjectsList()
+                classSetupViewModel.getCoursesList()
         );
 
-        svm.getAllSubjects().observe(getViewLifecycleOwner(), subjects -> {
-            csvm.getSubjectsList().addAll(subjects == null ? Collections.emptyList() : subjects);
-            subjectsArrayAdapter.notifyDataSetChanged();
+        courseViewModel.getAll().observe(getViewLifecycleOwner(), courses -> {
+            coursesArrayAdapter.addAll(courses == null ? Collections.emptyList() : courses);
+            coursesArrayAdapter.notifyDataSetChanged();
             if (isEditionMode) {
-                subjectSpinner.setSelection(subjectsArrayAdapter.getPosition(currentSubject));
+                courseSpinner.setSelection(coursesArrayAdapter.getPosition(currentCourse));
             }
         });
 
-        subjectSpinner = view.findViewById(R.id.subject_spinner);
+        courseSpinner = view.findViewById(R.id.course_spinner);
         typesChipGroup = view.findViewById(R.id.types_list);
+        instructorsChipGroup = view.findViewById(R.id.instructors_list);
 
-        startTimePicker = view.findViewById(R.id.start_time_picker);
-        endTimePicker = view.findViewById(R.id.end_time_picker);
+        startTimeInput = view.findViewById(R.id.start_time_input);
+        endTimeInput = view.findViewById(R.id.end_time_input);
         buildingInput = view.findViewById(R.id.audience_building_input);
         cabinetInput = view.findViewById(R.id.audience_cabinet_input);
-
-        startTimePicker.setIs24HourView(DateFormat.is24HourFormat(getContext()));
-        endTimePicker.setIs24HourView(DateFormat.is24HourFormat(getContext()));
-
-        subjectSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Object obj = parent.getItemAtPosition(position);
-                if (obj != null) {
-                    if (obj instanceof Subject) {
-                        csvm.setSubjectId(((Subject) obj).id);
-
-                        typesChipGroup.clearCheck();
-                        typesChipGroup.removeAllViewsInLayout();
-
-                        if (((Subject) obj).getSubjectTypes().length == 1) {
-                            SubjectTypes t = ((Subject) obj).getSubjectTypes()[0];
-                            Chip c = (Chip) LayoutInflater.from(requireContext())
-                                    .inflate(R.layout.chip_subject_type_choice, typesChipGroup, false);
-                            c.setText(t.toString());
-                            c.setClickable(false);
-                            c.setCheckable(true);
-                            c.setTag(t);
-                            typesChipGroup.addView(c);
-                            typesChipGroup.check(c.getId());
-                        } else {
-                            for (SubjectTypes t :
-                                    ((Subject) obj).getSubjectTypes()) {
-                                Chip c = (Chip) LayoutInflater.from(requireContext())
-                                        .inflate(R.layout.chip_subject_type_choice, typesChipGroup, false);
-                                c.setText(t.toString());
-                                c.setClickable(true);
-                                c.setCheckable(true);
-                                c.setTag(t);
-                                typesChipGroup.addView(c);
-                            }
-                        }
-
-                        if (isEditionMode) {
-                            if (current.aClass.getType() != null) {
-                                Chip c = typesChipGroup.findViewWithTag(current.aClass.getType()[0]);
-                                if (c != null) {
-                                    typesChipGroup.check(c.getId());
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                csvm.setSubjectId(-1);
-                csvm.setType(null);
-            }
-        });
 
         typesChipGroup.setOnCheckedChangeListener((group, checkedId) -> {
             Chip c = group.findViewById(checkedId);
             if (c != null) {
-                csvm.setType((SubjectTypes) c.getTag());
+                classSetupViewModel.setType((CourseTypes) c.getTag());
             } else {
-                csvm.setType(null);
+                classSetupViewModel.setType(null);
             }
         });
+
+        instructorsChipGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            Chip c = group.findViewById(checkedId);
+            if (c != null) {
+                classSetupViewModel.setInstructorId(((InstructorMinimised) c.getTag()).id);
+            } else {
+                classSetupViewModel.setInstructorId(-1);
+            }
+        });
+
+        startTimeInput.setOnClickListener(v -> openTimePickerDialog(startTimeInput));
+
+        endTimeInput.setOnClickListener(v -> openTimePickerDialog(endTimeInput));
 
         buildingInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -176,7 +156,7 @@ public class ClassSetupFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                csvm.setBuildingNumber(s.toString());
+                classSetupViewModel.setBuildingNumber(s.toString());
             }
         });
 
@@ -191,37 +171,49 @@ public class ClassSetupFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                csvm.setCabinetNumber(s.toString());
+                classSetupViewModel.setCabinetNumber(s.toString());
             }
         });
 
-        subjectsArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        coursesArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        subjectSpinner.setAdapter(subjectsArrayAdapter);
+        courseSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Object obj = parent.getItemAtPosition(position);
+                if (obj != null) {
+                    if (obj instanceof CourseWithInstructors) {
+                        CourseWithInstructors selected = (CourseWithInstructors) obj;
+                        classSetupViewModel.setCourseId(selected.course.id);
+                        setupTypesChipGroup(selected);
+                        setupInstructorsChipGroup(selected);
+                    }
+                }
+            }
 
-        startTimePicker.setOnTimeChangedListener(
-                (view1, hourOfDay, minute) -> endTimePicker.setHour(startTimePicker.getHour() + 1)
-        );
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                classSetupViewModel.setCourseId(-1);
+                classSetupViewModel.setType(null);
+                classSetupViewModel.setInstructorId(-1);
+            }
+        });
 
-        endTimePicker.setHour(startTimePicker.getHour() + 1);
-        endTimePicker.setMinute(startTimePicker.getMinute() + 30);
+        courseSpinner.setAdapter(coursesArrayAdapter);
 
         if (getArguments() != null) {
-            csvm.setDayId(getArguments().getInt("dayId"));
+            classSetupViewModel.setDayId(getArguments().getInt("dayId"));
             id = getArguments().getInt("classId");
 
             isEditionMode = id > 0;
             if (isEditionMode) {
-                current = cvm.findClassById2(id);
-                currentSubject = current.subject;
+                currentClass = classViewModel.findClassById2(id);
+                currentCourse = courseViewModel.findCourseById(currentClass.course.id);
 
-                buildingInput.setText(String.valueOf(current.aClass.audienceBuilding));
-                cabinetInput.setText(String.valueOf(current.aClass.audienceCabinet));
+                buildingInput.setText(String.valueOf(currentClass.aClass.audienceBuilding));
+                cabinetInput.setText(String.valueOf(currentClass.aClass.audienceCabinet));
 
-                startTimePicker.setHour(current.aClass.startTimeHour);
-                startTimePicker.setMinute(current.aClass.startTimeMinutes);
-                endTimePicker.setHour(current.aClass.endTimeHour);
-                endTimePicker.setMinute(current.aClass.endTimeMinutes);
+                setFormattedTime(currentClass.aClass.startTime, currentClass.aClass.endTime);
             }
         }
     }
@@ -233,7 +225,7 @@ public class ClassSetupFragment extends Fragment {
 
         MenuItem confirm = menu.findItem(R.id.confirm_setup_action);
 
-        csvm.canBeSaved().observe(getViewLifecycleOwner(), confirm::setEnabled);
+        classSetupViewModel.canBeSaved().observe(getViewLifecycleOwner(), confirm::setEnabled);
 
         confirm.setOnMenuItemClickListener(item -> {
             if (isEditionMode) {
@@ -251,32 +243,215 @@ public class ClassSetupFragment extends Fragment {
         });
     }
 
-    private void updateClass() {
-        current.aClass.subjectId = csvm.getSubjectId();
-        current.aClass.setType(csvm.getType());
-        current.aClass.audienceBuilding = csvm.getBuildingNumber();
-        current.aClass.audienceCabinet = csvm.getCabinetNumber();
-        current.aClass.startTimeHour = startTimePicker.getHour();
-        current.aClass.startTimeMinutes = startTimePicker.getMinute();
-        current.aClass.endTimeHour = endTimePicker.getHour();
-        current.aClass.endTimeMinutes = endTimePicker.getMinute();
+    private void setupInstructorsChipGroup(CourseWithInstructors selected) {
+        instructorsChipGroup.clearCheck();
+        instructorsChipGroup.removeAllViewsInLayout();
 
-        cvm.update(current.aClass);
+        if (selected.instructors.size() == 1) {
+            InstructorMinimised i = selected.instructors.get(0);
+            Chip c = (Chip) LayoutInflater.from(requireContext())
+                    .inflate(R.layout.chip_instructor_action, instructorsChipGroup, false);
+            c.setText(i.getShortName());
+            c.setClickable(false);
+            c.setCheckable(true);
+            c.setTag(i);
+            instructorsChipGroup.addView(c);
+            instructorsChipGroup.check(c.getId());
+        } else {
+            for (InstructorMinimised i : selected.instructors) {
+                Chip c = (Chip) LayoutInflater.from(requireContext())
+                        .inflate(R.layout.chip_instructor_action, instructorsChipGroup, false);
+                c.setText(i.getShortName());
+                c.setClickable(true);
+                c.setCheckable(true);
+                c.setTag(i);
+                instructorsChipGroup.addView(c);
+            }
+        }
+
+        if (isEditionMode) {
+            if (currentClass.instructor != null) {
+                Chip c = instructorsChipGroup.findViewWithTag(currentClass.instructor);
+                if (c != null) {
+                    instructorsChipGroup.check(c.getId());
+                }
+            }
+        }
+    }
+
+    private void setupTypesChipGroup(CourseWithInstructors selected) {
+        typesChipGroup.clearCheck();
+        typesChipGroup.removeAllViewsInLayout();
+
+        if (selected.course.getCourseTypes().length == 1) {
+            CourseTypes t = selected.course.getCourseTypes()[0];
+            Chip c = (Chip) LayoutInflater.from(requireContext())
+                    .inflate(R.layout.chip_course_type_choice, typesChipGroup, false);
+            c.setText(t.toString());
+            c.setClickable(false);
+            c.setCheckable(true);
+            c.setTag(t);
+            typesChipGroup.addView(c);
+            typesChipGroup.check(c.getId());
+        } else {
+            for (CourseTypes t : selected.course.getCourseTypes()) {
+                Chip c = (Chip) LayoutInflater.from(requireContext())
+                        .inflate(R.layout.chip_course_type_choice, typesChipGroup, false);
+                c.setText(t.toString());
+                c.setClickable(true);
+                c.setCheckable(true);
+                c.setTag(t);
+                typesChipGroup.addView(c);
+            }
+        }
+
+        if (isEditionMode) {
+            if (currentClass.aClass.getType() != null) {
+                Chip c = typesChipGroup.findViewWithTag(currentClass.aClass.getType()[0]);
+                if (c != null) {
+                    typesChipGroup.check(c.getId());
+                }
+            }
+        }
+    }
+
+    private void setFormattedTime(Date startTime, Date endTime) {
+        String startTimeString;
+        String endTimeString;
+
+        int timeFormatInt = preferences.getInt(SettingsFragment.timeFormatSharedKey, TimeFormats.system.ordinal());
+
+        TimeFormats format = TimeFormats.values()[timeFormatInt];
+        switch (format) {
+            case system:
+                startTimeString = defaultFormatter.format(startTime);
+                endTimeString = defaultFormatter.format(endTime);
+                break;
+            case f12Hour:
+                startTimeString = MainActivity.f12Hour.format(startTime);
+                endTimeString = MainActivity.f12Hour.format(endTime);
+                break;
+            case f24Hour:
+                startTimeString = MainActivity.f24Hour.format(startTime);
+                endTimeString = MainActivity.f24Hour.format(endTime);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + format);
+        }
+
+        startTimeInput.setText(startTimeString);
+        endTimeInput.setText(endTimeString);
+    }
+
+    private void openTimePickerDialog(TextInputEditText field) {
+        Calendar calendar = Calendar.getInstance();
+
+        String fieldContent = Objects.requireNonNull(field.getText()).toString();
+
+        int hour;
+        int minutes;
+        boolean is24HourFormat;
+
+        int timeFormatInt = preferences.getInt(SettingsFragment.timeFormatSharedKey, TimeFormats.system.ordinal());
+
+        TimeFormats format = TimeFormats.values()[timeFormatInt];
+
+        if (format == TimeFormats.system) {
+            is24HourFormat = android.text.format.DateFormat.is24HourFormat(requireActivity().getApplicationContext());
+        } else {
+            is24HourFormat = format == TimeFormats.f24Hour;
+        }
+
+        if (!fieldContent.isEmpty()) {
+            Date date;
+            try {
+                date = defaultFormatter.parse(fieldContent);
+            } catch (ParseException e) {
+                e.printStackTrace();
+                try {
+                    date = MainActivity.f12Hour.parse(fieldContent);
+                } catch (ParseException parseException) {
+                    parseException.printStackTrace();
+                    try {
+                        date = MainActivity.f24Hour.parse(fieldContent);
+                    } catch (ParseException exception) {
+                        exception.printStackTrace();
+                        date = new Date();
+                    }
+                }
+            }
+            String time = defaultFormatter.format(date);
+
+            int delIndex = time.indexOf(":");
+
+            String hourString = time.substring(0, delIndex);
+            String minuteString = time.substring(delIndex + 1, delIndex + 3);
+
+            hour = Integer.parseInt(hourString);
+            minutes = Integer.parseInt(minuteString);
+        } else {
+            hour = calendar.get(Calendar.HOUR_OF_DAY);
+            minutes = calendar.get(Calendar.MINUTE);
+        }
+
+        new TimePickerDialog(requireContext(),
+                (view1, hourOfDay, minuteOfDay) -> {
+                    String time = hourOfDay + ":" + minuteOfDay;
+                    Date newDate;
+                    try {
+                        newDate = defaultFormatter.parse(time);
+                        time = defaultFormatter.format(newDate);
+
+                        field.setText(time);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                },
+                hour,
+                minutes,
+                is24HourFormat).show();
+    }
+
+    private void updateClass() {
+        currentClass.aClass.courseId = classSetupViewModel.getCourseId();
+        currentClass.aClass.instructorId = classSetupViewModel.getInstructorId();
+        currentClass.aClass.setType(classSetupViewModel.getType());
+        currentClass.aClass.audienceBuilding = classSetupViewModel.getBuildingNumber();
+        currentClass.aClass.audienceCabinet = classSetupViewModel.getCabinetNumber();
+
+        String startTime = Objects.requireNonNull(startTimeInput.getText()).toString();
+        String endTime = Objects.requireNonNull(endTimeInput.getText()).toString();
+
+        try {
+            currentClass.aClass.startTime = defaultFormatter.parse(startTime);
+            currentClass.aClass.endTime = defaultFormatter.parse(endTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        classViewModel.update(currentClass.aClass);
     }
 
     private void addNewClass() {
         Class newClass = new Class(
-                csvm.getSubjectId(),
-                csvm.getDayId(),
-                csvm.getBuildingNumber(),
-                csvm.getCabinetNumber(),
-                csvm.getType()
+                classSetupViewModel.getCourseId(),
+                classSetupViewModel.getDayId(),
+                classSetupViewModel.getInstructorId(),
+                classSetupViewModel.getBuildingNumber(),
+                classSetupViewModel.getCabinetNumber(),
+                classSetupViewModel.getType()
         );
-        newClass.startTimeHour = startTimePicker.getHour();
-        newClass.startTimeMinutes = startTimePicker.getMinute();
-        newClass.endTimeHour = endTimePicker.getHour();
-        newClass.endTimeMinutes = endTimePicker.getMinute();
 
-        cvm.insert(newClass);
+        String startTime = Objects.requireNonNull(startTimeInput.getText()).toString();
+        String endTime = Objects.requireNonNull(endTimeInput.getText()).toString();
+
+        try {
+            newClass.startTime = defaultFormatter.parse(startTime);
+            newClass.endTime = defaultFormatter.parse(endTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        classViewModel.insert(newClass);
     }
 }

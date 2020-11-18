@@ -13,8 +13,7 @@ import java.util.concurrent.ExecutionException;
 
 class WeekRepository extends BaseRepository<Week, WeekDao> {
     WeekRepository(Application application) {
-        Database db = Database.getInstance(application);
-        dao = db.weekDao();
+        super(Database.getInstance(application).weekDao());
     }
 
     LiveData<List<WeekWithDays>> getAllWeeks() {

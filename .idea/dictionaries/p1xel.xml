@@ -4,7 +4,11 @@
       <w>cardview</w>
       <w>clvm</w>
       <w>csvm</w>
+      <w>ilvm</w>
+      <w>isvm</w>
       <w>lsvm</w>
+      <w>schedulemanager</w>
+      <w>sfvm</w>
       <w>slvm</w>
       <w>snackbar</w>
       <w>ssvm</w>

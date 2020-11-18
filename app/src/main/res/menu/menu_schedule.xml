@@ -3,13 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/start_edition_mode_action"
-        android:icon="@drawable/ic_edit"
+        android:icon="@drawable/ic_outline_edit"
         android:title="@string/action_edit_title"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/add_action"
+        android:id="@+id/add_day_action"
         android:icon="@drawable/ic_add"
-        android:title="@string/add_day"
+        android:title="@string/action_add_day_title"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/add_week_action"
+        android:title="@string/action_add_week_title"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/rename_week_action"
+        android:title="@string/action_rename_week_title"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/delete_this_week_action"
+        android:title="@string/action_delete_this_week_title"
+        app:showAsAction="never" />
 </menu>

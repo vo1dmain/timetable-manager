@@ -9,5 +9,11 @@
         <item>light_blue</item>
         <item>purple</item>
         <item>teal</item>
+        <item>pumpkin</item>
+    </string-array>
+    <string-array name="time_format_values">
+        <item>system</item>
+        <item>12-hour</item>
+        <item>24-hour</item>
     </string-array>
 </resources>

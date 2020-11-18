@@ -13,18 +13,20 @@ public class DaysOfWeekToStringConverter {
 
     @TypeConverter
     public String fromDaysOfWeek(List<DaysOfWeek> data) {
-        if (data.isEmpty()) {
-            return "";
-        }
+        if (data != null) {
+            if (data.isEmpty()) {
+                return "";
+            }
 
-        List<String> strings = new LinkedList<>();
+            List<String> strings = new LinkedList<>();
 
-        for (DaysOfWeek t :
-                data) {
-            strings.add(t.name());
-        }
+            for (DaysOfWeek t :
+                    data) {
+                strings.add(t.name());
+            }
 
-        return TextUtils.join(", ", strings);
+            return TextUtils.join(",", strings);
+        } else return "Monday,Tuesday,Wednesday,Thursday,Friday,Saturday";
     }
 
     @TypeConverter
@@ -36,11 +38,11 @@ public class DaysOfWeekToStringConverter {
         } else if (data.equals("")) {
             return types;
         }
-        String[] strings = data.split(", ");
+        String[] strings = data.split(",");
 
         for (String s :
                 strings) {
-            types.add(DaysOfWeek.valueOf(s));
+            types.add(DaysOfWeek.valueOf(s.trim()));
         }
 
         return types;
