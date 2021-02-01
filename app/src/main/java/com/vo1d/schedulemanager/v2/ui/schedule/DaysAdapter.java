@@ -48,14 +48,15 @@ class DaysAdapter extends FragmentStateAdapter {
     }
 
     public void submitList(List<Day> days) {
-        this.days = days;
-        fragments.clear();
-        ids.clear();
-        for (Day day :
-                this.days) {
-            ids.add(day.id);
+        if (days != this.days) {
+            this.days = days;
+            fragments.clear();
+            ids.clear();
+            for (Day day : this.days) {
+                ids.add(day.id);
+            }
+            notifyDataSetChanged();
         }
-        notifyDataSetChanged();
     }
 
     public void startEditionModeOnTab(int tabIndex) {

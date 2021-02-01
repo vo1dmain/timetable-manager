@@ -83,15 +83,16 @@
     <string name="instructor_avatar_hint">Instructor\'s avatar</string>
 
     <string name="menu_about">About</string>
-    <string name="menu_courses">courses</string>
+    <string name="menu_courses">Courses</string>
     <string name="menu_instructors">Instructors</string>
     <string name="menu_schedule">Schedule</string>
 
     <string name="placeholder_classes">There are no classes this day.</string>
     <string name="placeholder_courses">There are no courses yet.</string>
     <string name="placeholder_instructors">There are no instructors yet.</string>
-    <string name="placeholder_schedule">There are no study days this week yet.</string>
+    <string name="placeholder_schedule">There are no study weeks yet.</string>
     <string name="placeholder_search">Nothing found.</string>
+    <string name="placeholder_week">There are no study days this week yet.</string>
 
     <string name="selection_count">Selected: %1$d</string>
 

@@ -62,7 +62,9 @@ public class ScheduleFragment extends Fragment {
     private LinearLayout tabStrip;
 
     private MaterialTextView weekIsEmptyTextView;
+    private MaterialTextView scheduleIsEmptyTextView;
     private MenuItem actionAddDay;
+    private MenuItem actionAddWeek;
     private MenuItem actionDeleteWeek;
     private MenuItem actionEdit;
     private MenuItem actionRenameWeek;
@@ -112,7 +114,8 @@ public class ScheduleFragment extends Fragment {
 
         TabLayout tabLayout = view.findViewById(R.id.tabs);
         vp2 = view.findViewById(R.id.view_pager);
-        weekIsEmptyTextView = view.findViewById(R.id.schedule_placeholder);
+        weekIsEmptyTextView = view.findViewById(R.id.week_placeholder);
+        scheduleIsEmptyTextView = view.findViewById(R.id.schedule_placeholder);
 
         Spinner weeksSpinner = ((MainActivity) requireActivity()).weeksSpinner;
 
@@ -150,24 +153,30 @@ public class ScheduleFragment extends Fragment {
         weeksSpinner.setAdapter(weeksAdapter);
 
         wvm.getAllWeeks().observe(getViewLifecycleOwner(), weeks -> {
-            weeksAdapter.clear();
-            if (weeks.size() > 1) {
-                weeksAdapter.addAll(weeks);
-                weeksAdapter.sort(weekComparator);
-                weeksAdapter.notifyDataSetChanged();
-                weeksSpinner.setVisibility(View.VISIBLE);
+            if (weeks.size() > 0) {
+                weeksAdapter.clear();
+                scheduleIsEmptyTextView.setVisibility(View.GONE);
+                if (weeks.size() > 1) {
+                    weeksAdapter.addAll(weeks);
+                    weeksAdapter.sort(weekComparator);
+                    weeksAdapter.notifyDataSetChanged();
+                    weeksSpinner.setVisibility(View.VISIBLE);
+                } else {
+                    weeksSpinner.setVisibility(View.GONE);
+                }
+
+                int currentWeekPosition = weeksSpinner.getSelectedItemPosition();
+                sfvm.setCurrentWeekLive(
+                        weeks.get(currentWeekPosition == AdapterView.INVALID_POSITION ?
+                                0 : currentWeekPosition == weeks.size() ?
+                                currentWeekPosition - 1 : currentWeekPosition
+                        )
+                );
             } else {
-                weeksSpinner.setVisibility(View.GONE);
+                weekIsEmptyTextView.setVisibility(View.GONE);
+                tabLayout.setVisibility(View.GONE);
+                scheduleIsEmptyTextView.setVisibility(View.VISIBLE);
             }
-
-            int currentWeekPosition = weeksSpinner.getSelectedItemPosition();
-
-            sfvm.setCurrentWeekLive(
-                    weeks.get(currentWeekPosition == -1 ?
-                            0 : currentWeekPosition == weeks.size() ?
-                            currentWeekPosition - 1 : currentWeekPosition
-                    )
-            );
         });
 
         sfvm.getCurrentWeekLive().observe(getViewLifecycleOwner(), week -> {
@@ -208,6 +217,7 @@ public class ScheduleFragment extends Fragment {
 
         actionAddDay = menu.findItem(R.id.add_day_action);
         actionEdit = menu.findItem(R.id.start_edition_mode_action);
+        actionAddWeek = menu.findItem(R.id.add_week_action);
         actionDeleteWeek = menu.findItem(R.id.delete_this_week_action);
         actionRenameWeek = menu.findItem(R.id.rename_week_action);
 
@@ -218,13 +228,19 @@ public class ScheduleFragment extends Fragment {
             actionDeleteWeek.setVisible(thereIsWeeks);
             actionRenameWeek.setVisible(thereIsWeeks);
             actionEdit.setVisible(thereIsWeeks);
+
+            if (!thereIsWeeks) {
+                actionAddWeek.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+            } else {
+                actionAddWeek.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+            }
         });
 
         sfvm.getCurrentWeekLive().observe(getViewLifecycleOwner(),
                 currentWeek -> actionEdit.setVisible(currentWeek.days.size() > 0));
 
         sfvm.getCurrentWeekLive().observe(getViewLifecycleOwner(),
-                currentWeek -> actionAddDay.setEnabled(!currentWeek.week.availableDays.isEmpty()));
+                currentWeek -> actionAddDay.setVisible(!currentWeek.week.availableDays.isEmpty()));
 
         super.onCreateOptionsMenu(menu, inflater);
     }

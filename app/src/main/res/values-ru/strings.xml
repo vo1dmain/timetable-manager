@@ -90,8 +90,9 @@
     <string name="placeholder_classes">Сегодня занятий нет.</string>
     <string name="placeholder_courses">Пока ни одного курса.</string>
     <string name="placeholder_instructors">Пока ни одного инструктора.</string>
-    <string name="placeholder_schedule">Пока ни одного учебного дня.</string>
+    <string name="placeholder_schedule">Пока никаких учебных недель.</string>
     <string name="placeholder_search">Ничего не найдено.</string>
+    <string name="placeholder_week">Пока ни одного учебного дня.</string>
 
     <string name="selection_count">Выбрано: %1$d</string>
 

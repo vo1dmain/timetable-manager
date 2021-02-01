@@ -16,6 +16,7 @@
     <item
         android:id="@+id/add_week_action"
         android:title="@string/action_add_week_title"
+        android:icon="@drawable/ic_outline_post_add"
         app:showAsAction="never" />
 
     <item
