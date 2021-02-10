@@ -1,6 +1,7 @@
 package com.vo1d.schedulemanager.v2.ui.dialogs;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -30,16 +31,25 @@ public class ConfirmationDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstance) {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireActivity());
         builder.setTitle(titleId)
-                .setPositiveButton(R.string.dialog_positive, (dialog, id) -> mListener.onDialogPositiveClick(this))
-                .setNegativeButton(R.string.dialog_negative, (dialog, id) -> mListener.onDialogNegativeClick(this))
+                .setPositiveButton(R.string.dialog_positive, (dialog, id) -> mListener.onPositiveClick())
+                .setNegativeButton(R.string.dialog_negative, (dialog, id) -> mListener.onNegativeClick(this))
                 .setMessage(message);
 
         return builder.create();
     }
 
-    public interface DialogListener {
-        void onDialogPositiveClick(DialogFragment dialog);
+    @Override
+    public void onDismiss(@NonNull DialogInterface dialog) {
+        super.onDismiss(dialog);
+        mListener.onDismiss();
+    }
 
-        void onDialogNegativeClick(DialogFragment dialog);
+    public interface DialogListener {
+        void onPositiveClick();
+
+        void onNegativeClick(DialogFragment dialog);
+
+        default void onDismiss() {
+        }
     }
 }

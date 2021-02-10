@@ -3,9 +3,7 @@ package com.vo1d.schedulemanager.v2.data.courseinstructor;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
-import androidx.room.Query;
 import androidx.room.Transaction;
-import androidx.room.Update;
 
 import com.vo1d.schedulemanager.v2.data.IBaseDao;
 
@@ -16,11 +14,15 @@ public interface CourseInstructorDao extends IBaseDao<CourseInstructor> {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(CourseInstructor... pairs);
 
-    @Transaction
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    void update(CourseInstructor... pairs);
+// --Commented out by Inspection START (10.02.2021 15:34):
+//    @Transaction
+//    @Update(onConflict = OnConflictStrategy.REPLACE)
+//    void update(CourseInstructor... pairs);
+// --Commented out by Inspection STOP (10.02.2021 15:34)
 
-    @Transaction
-    @Query("DELETE FROM course_instructor_table")
-    void deleteAll();
+// --Commented out by Inspection START (10.02.2021 15:22):
+//    @Transaction
+//    @Query("DELETE FROM course_instructor_table")
+//    void deleteAll();
+// --Commented out by Inspection STOP (10.02.2021 15:22)
 }

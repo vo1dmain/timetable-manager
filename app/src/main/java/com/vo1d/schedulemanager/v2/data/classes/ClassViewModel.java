@@ -28,9 +28,11 @@ public class ClassViewModel extends AndroidViewModel {
         repository.delete(c);
     }
 
-    public void deleteAll() {
-        repository.deleteAll();
-    }
+// --Commented out by Inspection START (10.02.2021 15:21):
+//    public void deleteAll() {
+//        repository.deleteAll();
+//    }
+// --Commented out by Inspection STOP (10.02.2021 15:21)
 
     public ClassWithCourse findClassById2(int id) {
         return repository.findClassById2(id);

@@ -144,7 +144,7 @@ public class ClassesListFragment extends Fragment {
 
         listener = new ConfirmationDialog.DialogListener() {
             @Override
-            public void onDialogPositiveClick(DialogFragment dialog) {
+            public void onPositiveClick() {
 
                 Snackbar s = Snackbar.make(recyclerView, snackbarMes, Snackbar.LENGTH_LONG);
                 Class[] classes = clvm.getSelectedItemsAsClassArray(new Class[0]);
@@ -157,7 +157,7 @@ public class ClassesListFragment extends Fragment {
             }
 
             @Override
-            public void onDialogNegativeClick(DialogFragment dialog) {
+            public void onNegativeClick(DialogFragment dialog) {
                 dialog.dismiss();
             }
         };

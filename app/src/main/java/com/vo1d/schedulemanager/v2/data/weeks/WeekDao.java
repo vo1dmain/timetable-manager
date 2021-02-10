@@ -15,7 +15,9 @@ public abstract class WeekDao implements IBaseDao<Week> {
     @Query("SELECT * FROM week_table ORDER BY title ASC")
     abstract LiveData<List<WeekWithDays>> getAll();
 
-    @Transaction
-    @Query("SELECT * FROM week_table WHERE id = :id")
-    abstract LiveData<WeekWithDays> findWeekById(int id);
+// --Commented out by Inspection START (10.02.2021 15:30):
+//    @Transaction
+//    @Query("SELECT * FROM week_table WHERE id = :id")
+//    abstract LiveData<WeekWithDays> findWeekById(int id);
+// --Commented out by Inspection STOP (10.02.2021 15:30)
 }

@@ -1,6 +1,7 @@
 package com.vo1d.schedulemanager.v2.ui.dialogs;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -67,9 +68,17 @@ public class TextInputDialog extends DialogFragment {
         return d;
     }
 
+    @Override
+    public void onDismiss(@NonNull DialogInterface dialog) {
+        super.onDismiss(dialog);
+        mListener.onDismiss();
+    }
+
     public interface Listener {
         void onPositiveClick(DialogFragment dialog);
 
         void onNegativeClick(DialogFragment dialog);
+
+        void onDismiss();
     }
 }

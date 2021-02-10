@@ -27,7 +27,7 @@ public class Day implements IMyEntity, Comparable<Day> {
     public int id;
 
     @ColumnInfo(defaultValue = "1")
-    public int weekId;
+    public final int weekId;
 
     public Day(int order, int weekId) {
         this.order = order;

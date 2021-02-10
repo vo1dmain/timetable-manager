@@ -37,7 +37,7 @@ public class Class implements IMyEntity {
     @ColumnInfo(defaultValue = "0")
     public int instructorId;
     public int courseId;
-    public int dayId;
+    public final int dayId;
     public int audienceBuilding;
     public int audienceCabinet;
 

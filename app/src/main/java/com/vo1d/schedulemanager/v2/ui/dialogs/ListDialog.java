@@ -42,7 +42,15 @@ public class ListDialog extends DialogFragment {
         return builder.create();
     }
 
+    @Override
+    public void onDismiss(@NonNull DialogInterface dialog) {
+        super.onDismiss(dialog);
+        mListener.onDismiss();
+    }
+
     public interface DialogListener {
         void onItemSelect(DialogInterface dialog, int itemNumber);
+
+        void onDismiss();
     }
 }

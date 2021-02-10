@@ -1,6 +1,5 @@
 package com.vo1d.schedulemanager.v2.ui.classes.setup;
 
-import android.app.TimePickerDialog;
 import android.content.SharedPreferences;
 import android.icu.text.DateFormat;
 import android.icu.util.Calendar;
@@ -28,6 +27,8 @@ import androidx.preference.PreferenceManager;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.timepicker.MaterialTimePicker;
+import com.google.android.material.timepicker.TimeFormat;
 import com.vo1d.schedulemanager.v2.MainActivity;
 import com.vo1d.schedulemanager.v2.R;
 import com.vo1d.schedulemanager.v2.data.classes.Class;
@@ -394,22 +395,26 @@ public class ClassSetupFragment extends Fragment {
             minutes = calendar.get(Calendar.MINUTE);
         }
 
-        new TimePickerDialog(requireContext(),
-                (view1, hourOfDay, minuteOfDay) -> {
-                    String time = hourOfDay + ":" + minuteOfDay;
-                    Date newDate;
-                    try {
-                        newDate = defaultFormatter.parse(time);
-                        time = defaultFormatter.format(newDate);
+        MaterialTimePicker timePicker = new MaterialTimePicker.Builder()
+                .setTimeFormat(is24HourFormat ? TimeFormat.CLOCK_24H : TimeFormat.CLOCK_12H)
+                .setHour(hour)
+                .setMinute(minutes)
+                .build();
 
-                        field.setText(time);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                },
-                hour,
-                minutes,
-                is24HourFormat).show();
+        timePicker.addOnPositiveButtonClickListener(v -> {
+            String time = timePicker.getHour() + ":" + timePicker.getMinute();
+            Date newDate;
+            try {
+                newDate = defaultFormatter.parse(time);
+                time = defaultFormatter.format(newDate);
+
+                field.setText(time);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        });
+
+        timePicker.showNow(getParentFragmentManager(), "time picker dialog");
     }
 
     private void updateClass() {

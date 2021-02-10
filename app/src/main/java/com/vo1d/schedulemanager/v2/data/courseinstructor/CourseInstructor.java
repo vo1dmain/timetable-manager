@@ -28,8 +28,8 @@ import com.vo1d.schedulemanager.v2.data.instructors.Instructor;
                 )
         })
 public class CourseInstructor implements IMyEntity {
-    public int courseId;
-    public int instructorId;
+    public final int courseId;
+    public final int instructorId;
 
     public CourseInstructor(int courseId, int instructorId) {
         this.courseId = courseId;

@@ -279,7 +279,7 @@ public class InstructorsListFragment extends Fragment {
 
         ConfirmationDialog.DialogListener listener = new ConfirmationDialog.DialogListener() {
             @Override
-            public void onDialogPositiveClick(DialogFragment dialog) {
+            public void onPositiveClick() {
                 Snackbar s = Snackbar.make(recyclerView, R.string.snackbar_message_all_deleted, 2750);
 
                 InstructorWithJunctions[] backupArray = ivm.getAllAsList().toArray(new InstructorWithJunctions[0]);
@@ -292,7 +292,7 @@ public class InstructorsListFragment extends Fragment {
             }
 
             @Override
-            public void onDialogNegativeClick(DialogFragment dialog) {
+            public void onNegativeClick(DialogFragment dialog) {
                 dialog.dismiss();
             }
         };
@@ -321,7 +321,7 @@ public class InstructorsListFragment extends Fragment {
 
         ConfirmationDialog.DialogListener listener = new ConfirmationDialog.DialogListener() {
             @Override
-            public void onDialogPositiveClick(DialogFragment dialog) {
+            public void onPositiveClick() {
                 Snackbar s = Snackbar.make(recyclerView, snackbarMes, 2750);
 
                 InstructorWithJunctions[] data = ilvm.getSelectedItemsAsArray(new InstructorWithJunctions[0]);
@@ -336,7 +336,7 @@ public class InstructorsListFragment extends Fragment {
             }
 
             @Override
-            public void onDialogNegativeClick(DialogFragment dialog) {
+            public void onNegativeClick(DialogFragment dialog) {
                 dialog.dismiss();
             }
         };

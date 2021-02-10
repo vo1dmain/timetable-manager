@@ -15,7 +15,7 @@ import java.util.Objects;
 
 public abstract class ListFragmentViewModel<ItemType extends IMyEntity> extends AndroidViewModel {
 
-    protected MutableLiveData<List<ItemType>> selectedItems = new MutableLiveData<>(new LinkedList<>());
+    protected final MutableLiveData<List<ItemType>> selectedItems = new MutableLiveData<>(new LinkedList<>());
 
     public ListFragmentViewModel(@NonNull Application application) {
         super(application);

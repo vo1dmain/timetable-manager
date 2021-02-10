@@ -1,7 +1,6 @@
 package com.vo1d.schedulemanager.v2.data.courseinstructor;
 
 import android.app.Application;
-import android.os.AsyncTask;
 
 import com.vo1d.schedulemanager.v2.data.BaseRepository;
 import com.vo1d.schedulemanager.v2.data.Database;
@@ -12,22 +11,26 @@ public class CourseInstructorRepository extends BaseRepository<CourseInstructor,
         super(Database.getInstance(application).courseInstructorDao());
     }
 
-    public void update(CourseInstructor... junctions) {
-        new UpdateManyAsyncTask(dao).execute(junctions);
-    }
+// --Commented out by Inspection START (10.02.2021 15:22):
+//    public void update(CourseInstructor... junctions) {
+//        new UpdateManyAsyncTask(dao).execute(junctions);
+//    }
+// --Commented out by Inspection STOP (10.02.2021 15:22)
 
-    private static class UpdateManyAsyncTask extends AsyncTask<CourseInstructor, Void, Void> {
-
-        private final CourseInstructorDao dao;
-
-        public UpdateManyAsyncTask(CourseInstructorDao dao) {
-            this.dao = dao;
-        }
-
-        @Override
-        protected Void doInBackground(CourseInstructor... junctions) {
-            dao.update(junctions);
-            return null;
-        }
-    }
+// --Commented out by Inspection START (10.02.2021 15:33):
+//    private static class UpdateManyAsyncTask extends AsyncTask<CourseInstructor, Void, Void> {
+//
+//        private final CourseInstructorDao dao;
+//
+//        public UpdateManyAsyncTask(CourseInstructorDao dao) {
+//            this.dao = dao;
+//        }
+//
+//        @Override
+//        protected Void doInBackground(CourseInstructor... junctions) {
+//            dao.update(junctions);
+//            return null;
+//        }
+//    }
+// --Commented out by Inspection STOP (10.02.2021 15:33)
 }

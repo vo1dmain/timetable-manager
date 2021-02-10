@@ -47,25 +47,30 @@ public class ClassRepository extends BaseRepository<Class, ClassDao> {
         }
     }
 
-    void deleteAll() {
-        new DeleteAllAsyncTask(dao).execute();
-    }
+// --Commented out by Inspection START (10.02.2021 15:35):
+//    void deleteAll() {
+//        new DeleteAllAsyncTask(dao).execute();
+//    }
+// --Commented out by Inspection STOP (10.02.2021 15:35)
 
-    private static final class DeleteAllAsyncTask extends AsyncTask<Void, Void, Void> {
-
-        private final ClassDao dao;
-
-        private DeleteAllAsyncTask(ClassDao dao) {
-            this.dao = dao;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            dao.deleteAll();
-            return null;
-        }
-    }
-
+    // --Commented out by Inspection START (10.02.2021 15:35):
+//    private static final class DeleteAllAsyncTask extends AsyncTask<Void, Void, Void> {
+//
+//        private final ClassDao dao;
+//
+//
+//        private DeleteAllAsyncTask(ClassDao dao) {
+//            this.dao = dao;
+//        }
+//
+//
+//        @Override
+//        protected Void doInBackground(Void... voids) {
+//            dao.deleteAll();
+//            return null;
+//        }
+//    }
+// --Commented out by Inspection STOP (10.02.2021 15:35)
     private static final class FindClassById2AsyncTask extends AsyncTask<Integer, Void, ClassWithCourse> {
 
         private final ClassDao dao;

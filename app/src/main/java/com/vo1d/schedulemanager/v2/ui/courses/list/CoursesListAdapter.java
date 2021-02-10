@@ -167,7 +167,6 @@ class CoursesListAdapter extends ListAdapter<CourseWithInstructors, CoursesListA
                 }
             });
 
-
             tracker.addObserver(new SelectionTracker.SelectionObserver<Long>() {
                 @Override
                 public void onSelectionChanged() {

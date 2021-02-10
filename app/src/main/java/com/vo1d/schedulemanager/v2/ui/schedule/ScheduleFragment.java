@@ -1,5 +1,6 @@
 package com.vo1d.schedulemanager.v2.ui.schedule;
 
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.icu.util.Calendar;
 import android.os.Bundle;
@@ -163,6 +164,7 @@ public class ScheduleFragment extends Fragment {
                     weeksSpinner.setVisibility(View.VISIBLE);
                 } else {
                     weeksSpinner.setVisibility(View.GONE);
+                    ((MainActivity) requireActivity()).getSupportActionBar().setTitle(weeks.get(0).week.title);
                 }
 
                 int currentWeekPosition = weeksSpinner.getSelectedItemPosition();
@@ -176,6 +178,7 @@ public class ScheduleFragment extends Fragment {
                 weekIsEmptyTextView.setVisibility(View.GONE);
                 tabLayout.setVisibility(View.GONE);
                 scheduleIsEmptyTextView.setVisibility(View.VISIBLE);
+                ((MainActivity) requireActivity()).getSupportActionBar().setTitle(R.string.menu_schedule);
             }
         });
 
@@ -227,10 +230,9 @@ public class ScheduleFragment extends Fragment {
             actionAddDay.setVisible(thereIsWeeks);
             actionDeleteWeek.setVisible(thereIsWeeks);
             actionRenameWeek.setVisible(thereIsWeeks);
-            actionEdit.setVisible(thereIsWeeks);
 
             if (!thereIsWeeks) {
-                actionAddWeek.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+                actionAddWeek.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
             } else {
                 actionAddWeek.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
             }
@@ -327,8 +329,15 @@ public class ScheduleFragment extends Fragment {
             public void onNegativeClick(DialogFragment dialog) {
                 dialog.dismiss();
             }
+
+            @Override
+            public void onDismiss() {
+                actionRenameWeek.setEnabled(true);
+            }
         });
         dialog.setText(sfvm.getCurrentWeek().week.title);
+
+        actionRenameWeek.setEnabled(false);
 
         dialog.show(getParentFragmentManager(), "Week edition");
     }
@@ -356,7 +365,14 @@ public class ScheduleFragment extends Fragment {
             public void onNegativeClick(DialogFragment dialog) {
                 dialog.dismiss();
             }
+
+            @Override
+            public void onDismiss() {
+                actionAddWeek.setEnabled(true);
+            }
         }).show(getParentFragmentManager(), "Week creation");
+
+        actionAddWeek.setEnabled(false);
     }
 
     private void openConfirmationDialog(ConfirmationScenario scenario) {
@@ -373,12 +389,21 @@ public class ScheduleFragment extends Fragment {
     }
 
     private void openSelectionDialog(List<DaysOfWeek> availableDays) {
-        new ListDialog(R.string.dialog_title_select_day, availableDays, (dialog, itemNumber) -> {
-            dvm.insert(new Day(availableDays.get(itemNumber), sfvm.getCurrentWeek().week.id));
-            availableDays.remove(itemNumber);
-            wvm.update(sfvm.getCurrentWeek().week);
-        })
-                .show(getParentFragmentManager(), "Select day dialog");
+        new ListDialog(R.string.dialog_title_select_day, availableDays, new ListDialog.DialogListener() {
+            @Override
+            public void onItemSelect(DialogInterface dialog, int itemNumber) {
+                dvm.insert(new Day(availableDays.get(itemNumber), sfvm.getCurrentWeek().week.id));
+                availableDays.remove(itemNumber);
+                wvm.update(sfvm.getCurrentWeek().week);
+            }
+
+            @Override
+            public void onDismiss() {
+                actionAddDay.setEnabled(true);
+            }
+        }).show(getParentFragmentManager(), "Select day dialog");
+
+        actionAddDay.setEnabled(false);
     }
 
     private ConfirmationDialog setupDeleteDayDialog() {
@@ -390,7 +415,7 @@ public class ScheduleFragment extends Fragment {
 
         ConfirmationDialog.DialogListener listener = new ConfirmationDialog.DialogListener() {
             @Override
-            public void onDialogPositiveClick(DialogFragment dialog) {
+            public void onPositiveClick() {
                 Snackbar s = Snackbar.make(requireView(), snackbarMes, Snackbar.LENGTH_LONG);
 
                 Day dayToDelete = sfvm.getDayToDelete();
@@ -404,7 +429,7 @@ public class ScheduleFragment extends Fragment {
             }
 
             @Override
-            public void onDialogNegativeClick(DialogFragment dialog) {
+            public void onNegativeClick(DialogFragment dialog) {
                 dialog.dismiss();
             }
         };
@@ -424,7 +449,7 @@ public class ScheduleFragment extends Fragment {
 
         ConfirmationDialog.DialogListener listener = new ConfirmationDialog.DialogListener() {
             @Override
-            public void onDialogPositiveClick(DialogFragment dialog) {
+            public void onPositiveClick() {
                 Snackbar s = Snackbar.make(requireView(), snackbarMes, Snackbar.LENGTH_LONG);
 
                 WeekWithDays weekToDelete = sfvm.getCurrentWeek();
@@ -442,14 +467,20 @@ public class ScheduleFragment extends Fragment {
             }
 
             @Override
-            public void onDialogNegativeClick(DialogFragment dialog) {
+            public void onNegativeClick(DialogFragment dialog) {
                 dialog.dismiss();
+            }
+
+            @Override
+            public void onDismiss() {
+                actionDeleteWeek.setEnabled(true);
             }
         };
 
         ConfirmationDialog dialog = new ConfirmationDialog(titleId, message);
         dialog.setDialogListener(listener);
 
+        actionDeleteWeek.setEnabled(false);
         return dialog;
     }
 

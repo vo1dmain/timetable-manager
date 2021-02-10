@@ -101,6 +101,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             case "pumpkin":
                 edit.putInt(themeSharedKey, R.style.Theme_ScheduleManager_Pumpkin);
                 break;
+            default:
+                return false;
         }
         edit.apply();
         requireActivity().recreate();
@@ -121,12 +123,15 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             case "24-hour":
                 edit.putInt(timeFormatSharedKey, TimeFormats.f24Hour.ordinal());
                 break;
+            default:
+                return false;
         }
 
         edit.apply();
         return true;
     }
 
+    @SuppressWarnings("SameReturnValue")
     private boolean openAboutFragment() {
         Navigation.findNavController(requireView()).navigate(R.id.nav_about);
         return true;

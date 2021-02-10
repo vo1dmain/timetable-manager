@@ -211,7 +211,7 @@ public class CoursesListFragment extends Fragment {
 
         ConfirmationDialog.DialogListener listener = new ConfirmationDialog.DialogListener() {
             @Override
-            public void onDialogPositiveClick(DialogFragment dialog) {
+            public void onPositiveClick() {
                 Snackbar s = Snackbar.make(recyclerView, R.string.snackbar_message_all_deleted, 2750);
 
                 CourseWithInstructors[] backupArray = adapter.getCurrentList().toArray(new CourseWithInstructors[0]);
@@ -224,7 +224,7 @@ public class CoursesListFragment extends Fragment {
             }
 
             @Override
-            public void onDialogNegativeClick(DialogFragment dialog) {
+            public void onNegativeClick(DialogFragment dialog) {
                 dialog.dismiss();
             }
         };
@@ -253,7 +253,7 @@ public class CoursesListFragment extends Fragment {
 
         ConfirmationDialog.DialogListener listener = new ConfirmationDialog.DialogListener() {
             @Override
-            public void onDialogPositiveClick(DialogFragment dialog) {
+            public void onPositiveClick() {
                 Snackbar s = Snackbar.make(recyclerView, snackbarMes, 2750);
 
                 CourseWithInstructors[] array = listViewModel.getSelectedItemsAsArray(new CourseWithInstructors[0]);
@@ -268,7 +268,7 @@ public class CoursesListFragment extends Fragment {
             }
 
             @Override
-            public void onDialogNegativeClick(DialogFragment dialog) {
+            public void onNegativeClick(DialogFragment dialog) {
                 dialog.dismiss();
             }
         };

@@ -35,7 +35,9 @@ public class WeekViewModel extends AndroidViewModel {
         return allWeeks;
     }
 
-    public LiveData<WeekWithDays> findWeekById(int id) {
-        return repository.findWeekById(id);
-    }
+// --Commented out by Inspection START (10.02.2021 15:16):
+//    public LiveData<WeekWithDays> findWeekById(int id) {
+//        return repository.findWeekById(id);
+//    }
+// --Commented out by Inspection STOP (10.02.2021 15:16)
 }
