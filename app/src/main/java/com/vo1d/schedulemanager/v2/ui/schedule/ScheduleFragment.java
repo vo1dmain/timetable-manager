@@ -39,6 +39,7 @@ import com.vo1d.schedulemanager.v2.data.days.DaysViewModel;
 import com.vo1d.schedulemanager.v2.data.weeks.Week;
 import com.vo1d.schedulemanager.v2.data.weeks.WeekViewModel;
 import com.vo1d.schedulemanager.v2.data.weeks.WeekWithDays;
+import com.vo1d.schedulemanager.v2.ui.classes.list.ClassesListFragment;
 import com.vo1d.schedulemanager.v2.ui.dialogs.ConfirmationDialog;
 import com.vo1d.schedulemanager.v2.ui.dialogs.ListDialog;
 import com.vo1d.schedulemanager.v2.ui.dialogs.TextInputDialog;
@@ -164,7 +165,10 @@ public class ScheduleFragment extends Fragment {
                     weeksSpinner.setVisibility(View.VISIBLE);
                 } else {
                     weeksSpinner.setVisibility(View.GONE);
-                    ((MainActivity) requireActivity()).getSupportActionBar().setTitle(weeks.get(0).week.title);
+                    Objects.requireNonNull((
+                            (MainActivity) requireActivity())
+                            .getSupportActionBar()
+                    ).setTitle(weeks.get(0).week.title);
                 }
 
                 int currentWeekPosition = weeksSpinner.getSelectedItemPosition();
@@ -178,7 +182,9 @@ public class ScheduleFragment extends Fragment {
                 weekIsEmptyTextView.setVisibility(View.GONE);
                 tabLayout.setVisibility(View.GONE);
                 scheduleIsEmptyTextView.setVisibility(View.VISIBLE);
-                ((MainActivity) requireActivity()).getSupportActionBar().setTitle(R.string.menu_schedule);
+                Objects.requireNonNull(
+                        ((MainActivity) requireActivity()).getSupportActionBar()
+                ).setTitle(R.string.menu_schedule);
             }
         });
 
@@ -251,7 +257,12 @@ public class ScheduleFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.start_edition_mode_action) {
-            adapter.startEditionModeOnTab(vp2.getCurrentItem());
+            ClassesListFragment f = (ClassesListFragment) getChildFragmentManager()
+                    .findFragmentByTag("f" + adapter.getItemId(vp2.getCurrentItem()));
+
+            if (f != null) {
+                f.startEditionMode();
+            }
             return true;
         } else if (id == R.id.add_day_action) {
             openSelectionDialog(sfvm.getCurrentWeek().week.availableDays);

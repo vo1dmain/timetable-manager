@@ -2,12 +2,18 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "d182b8f1c2b3fb23624825be30a5cb87",
+    "identityHash": "619ccde0342b243152d8a34aea59e445",
     "entities": [
       {
         "tableName": "day_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `order` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`order` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `weekId` INTEGER NOT NULL DEFAULT 1, FOREIGN KEY(`weekId`) REFERENCES `week_table`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
+          {
+            "fieldPath": "order",
+            "columnName": "order",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
           {
             "fieldPath": "id",
             "columnName": "id",
@@ -15,10 +21,11 @@
             "notNull": true
           },
           {
-            "fieldPath": "order",
-            "columnName": "order",
+            "fieldPath": "weekId",
+            "columnName": "weekId",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "1"
           }
         ],
         "primaryKey": {
@@ -35,13 +42,33 @@
               "id"
             ],
             "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_day_table_id` ON `${TABLE_NAME}` (`id`)"
+          },
+          {
+            "name": "index_day_table_weekId",
+            "unique": false,
+            "columnNames": [
+              "weekId"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_day_table_weekId` ON `${TABLE_NAME}` (`weekId`)"
           }
         ],
-        "foreignKeys": []
+        "foreignKeys": [
+          {
+            "table": "week_table",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "weekId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       },
       {
-        "tableName": "subject_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT, `lecturerName` TEXT, `subjectTypes` TEXT)",
+        "tableName": "course_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT, `courseTypes` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -56,14 +83,8 @@
             "notNull": false
           },
           {
-            "fieldPath": "lecturerName",
-            "columnName": "lecturerName",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "subjectTypes",
-            "columnName": "subjectTypes",
+            "fieldPath": "courseTypes",
+            "columnName": "courseTypes",
             "affinity": "TEXT",
             "notNull": false
           }
@@ -76,19 +97,19 @@
         },
         "indices": [
           {
-            "name": "index_subject_table_id",
+            "name": "index_course_table_id",
             "unique": true,
             "columnNames": [
               "id"
             ],
-            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_subject_table_id` ON `${TABLE_NAME}` (`id`)"
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_course_table_id` ON `${TABLE_NAME}` (`id`)"
           }
         ],
         "foreignKeys": []
       },
       {
         "tableName": "class_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `subjectId` INTEGER NOT NULL, `dayId` INTEGER NOT NULL, `startTime` INTEGER NOT NULL, `audienceBuilding` INTEGER NOT NULL, `audienceCabinet` INTEGER NOT NULL, `endTimeHour` INTEGER NOT NULL, `endTimeMinutes` INTEGER NOT NULL, `startTimeHour` INTEGER NOT NULL, `startTimeMinutes` INTEGER NOT NULL, `type` TEXT, FOREIGN KEY(`subjectId`) REFERENCES `subject_table`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`dayId`) REFERENCES `day_table`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `instructorId` INTEGER NOT NULL DEFAULT 0, `courseId` INTEGER NOT NULL, `dayId` INTEGER NOT NULL, `audienceBuilding` INTEGER NOT NULL, `audienceCabinet` INTEGER NOT NULL, `startTime` TEXT DEFAULT '00:00', `endTime` TEXT DEFAULT '00:00', `type` TEXT, FOREIGN KEY(`courseId`) REFERENCES `course_table`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`dayId`) REFERENCES `day_table`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -97,20 +118,21 @@
             "notNull": true
           },
           {
-            "fieldPath": "subjectId",
-            "columnName": "subjectId",
+            "fieldPath": "instructorId",
+            "columnName": "instructorId",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "courseId",
+            "columnName": "courseId",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
             "fieldPath": "dayId",
             "columnName": "dayId",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "startTime",
-            "columnName": "startTime",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -127,28 +149,18 @@
             "notNull": true
           },
           {
-            "fieldPath": "endTimeHour",
-            "columnName": "endTimeHour",
-            "affinity": "INTEGER",
-            "notNull": true
+            "fieldPath": "startTime",
+            "columnName": "startTime",
+            "affinity": "TEXT",
+            "notNull": false,
+            "defaultValue": "'00:00'"
           },
           {
-            "fieldPath": "endTimeMinutes",
-            "columnName": "endTimeMinutes",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "startTimeHour",
-            "columnName": "startTimeHour",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "startTimeMinutes",
-            "columnName": "startTimeMinutes",
-            "affinity": "INTEGER",
-            "notNull": true
+            "fieldPath": "endTime",
+            "columnName": "endTime",
+            "affinity": "TEXT",
+            "notNull": false,
+            "defaultValue": "'00:00'"
           },
           {
             "fieldPath": "type",
@@ -181,21 +193,29 @@
             "createSql": "CREATE INDEX IF NOT EXISTS `index_class_table_dayId` ON `${TABLE_NAME}` (`dayId`)"
           },
           {
-            "name": "index_class_table_subjectId",
+            "name": "index_class_table_courseId",
             "unique": false,
             "columnNames": [
-              "subjectId"
+              "courseId"
             ],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_class_table_subjectId` ON `${TABLE_NAME}` (`subjectId`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_class_table_courseId` ON `${TABLE_NAME}` (`courseId`)"
+          },
+          {
+            "name": "index_class_table_instructorId",
+            "unique": false,
+            "columnNames": [
+              "instructorId"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_class_table_instructorId` ON `${TABLE_NAME}` (`instructorId`)"
           }
         ],
         "foreignKeys": [
           {
-            "table": "subject_table",
+            "table": "course_table",
             "onDelete": "CASCADE",
             "onUpdate": "NO ACTION",
             "columns": [
-              "subjectId"
+              "courseId"
             ],
             "referencedColumns": [
               "id"
@@ -213,12 +233,174 @@
             ]
           }
         ]
+      },
+      {
+        "tableName": "instructor_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `firstName` TEXT, `middleName` TEXT, `lastName` TEXT, `phoneNumber` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "firstName",
+            "columnName": "firstName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "middleName",
+            "columnName": "middleName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "lastName",
+            "columnName": "lastName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "phoneNumber",
+            "columnName": "phoneNumber",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_instructor_table_id",
+            "unique": true,
+            "columnNames": [
+              "id"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_instructor_table_id` ON `${TABLE_NAME}` (`id`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "week_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT, `availableDays` TEXT DEFAULT 'Monday,Tuesday,Wednesday,Thursday,Friday,Saturday')",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "availableDays",
+            "columnName": "availableDays",
+            "affinity": "TEXT",
+            "notNull": false,
+            "defaultValue": "'Monday,Tuesday,Wednesday,Thursday,Friday,Saturday'"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_week_table_id",
+            "unique": true,
+            "columnNames": [
+              "id"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_week_table_id` ON `${TABLE_NAME}` (`id`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "course_instructor_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`courseId` INTEGER NOT NULL, `instructorId` INTEGER NOT NULL, PRIMARY KEY(`courseId`, `instructorId`), FOREIGN KEY(`courseId`) REFERENCES `course_table`(`id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`instructorId`) REFERENCES `instructor_table`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "courseId",
+            "columnName": "courseId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "instructorId",
+            "columnName": "instructorId",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "courseId",
+            "instructorId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_course_instructor_table_courseId",
+            "unique": false,
+            "columnNames": [
+              "courseId"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_course_instructor_table_courseId` ON `${TABLE_NAME}` (`courseId`)"
+          },
+          {
+            "name": "index_course_instructor_table_instructorId",
+            "unique": false,
+            "columnNames": [
+              "instructorId"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_course_instructor_table_instructorId` ON `${TABLE_NAME}` (`instructorId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "course_table",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "courseId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "instructor_table",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "instructorId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd182b8f1c2b3fb23624825be30a5cb87')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '619ccde0342b243152d8a34aea59e445')"
     ]
   }
 }

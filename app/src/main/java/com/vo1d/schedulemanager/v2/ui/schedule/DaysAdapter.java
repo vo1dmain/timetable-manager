@@ -7,15 +7,10 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.vo1d.schedulemanager.v2.data.days.Day;
 import com.vo1d.schedulemanager.v2.ui.classes.list.ClassesListFragment;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 class DaysAdapter extends FragmentStateAdapter {
-
-    private final Map<Integer, ClassesListFragment> fragments = new HashMap<>();
     private final List<Integer> ids = new LinkedList<>();
     private List<Day> days = new LinkedList<>();
 
@@ -32,9 +27,7 @@ class DaysAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         int id = days.get(position).id;
-        ClassesListFragment fragment = new ClassesListFragment(id);
-        fragments.put(position, fragment);
-        return fragment;
+        return new ClassesListFragment(id);
     }
 
     @Override
@@ -50,16 +43,11 @@ class DaysAdapter extends FragmentStateAdapter {
     public void submitList(List<Day> days) {
         if (days != this.days) {
             this.days = days;
-            fragments.clear();
             ids.clear();
             for (Day day : this.days) {
                 ids.add(day.id);
             }
             notifyDataSetChanged();
         }
-    }
-
-    public void startEditionModeOnTab(int tabIndex) {
-        Objects.requireNonNull(fragments.get(tabIndex)).startEditionMode();
     }
 }

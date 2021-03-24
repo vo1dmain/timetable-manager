@@ -10,27 +10,27 @@ import com.vo1d.schedulemanager.v2.data.IBaseDao;
 import java.util.List;
 
 @Dao
-public abstract class InstructorDao implements IBaseDao<Instructor> {
+public interface InstructorDao extends IBaseDao<Instructor> {
 
     @Transaction
     @Query("DELETE FROM instructor_table")
-    abstract void deleteAll();
+    void deleteAll();
 
     @Transaction
     @Query("SELECT * FROM instructor_table WHERE id=:id")
-    abstract InstructorWithJunctions findById(int id);
+    InstructorWithJunctions findById(int id);
 
     @Transaction
     @Query("SELECT * FROM instructor_table ORDER BY lastName ASC, middleName ASC, firstName ASC")
-    abstract LiveData<List<InstructorWithJunctions>> getAll();
+    LiveData<List<InstructorWithJunctions>> getAll();
 
     @Transaction
     @Query("SELECT * FROM instructor_table ORDER BY lastName ASC, middleName ASC, firstName ASC")
-    abstract List<InstructorWithJunctions> getAllAsList();
+    List<InstructorWithJunctions> getAllAsList();
 
     @Transaction
     @Query("SELECT `id`, `firstName`, `middleName`, `lastName` FROM instructor_table ORDER BY lastName ASC, middleName ASC, firstName ASC")
-    abstract List<InstructorMinimised> getAllMinimisedAsList();
+    List<InstructorMinimised> getAllMinimisedAsList();
 
     @Transaction
     @Query("SELECT * FROM instructor_table " +
@@ -38,5 +38,5 @@ public abstract class InstructorDao implements IBaseDao<Instructor> {
             "OR (middleName LIKE :filter || '%') " +
             "OR (firstName LIKE :filter || '%')" +
             "ORDER BY lastName ASC, middleName ASC, firstName ASC")
-    abstract List<InstructorWithJunctions> getFiltered(String filter);
+    List<InstructorWithJunctions> getFiltered(String filter);
 }

@@ -41,6 +41,7 @@ import com.vo1d.schedulemanager.v2.data.instructors.InstructorMinimised;
 import com.vo1d.schedulemanager.v2.ui.TimeFormats;
 import com.vo1d.schedulemanager.v2.ui.settings.SettingsFragment;
 
+import java.sql.Time;
 import java.text.ParseException;
 import java.util.Collections;
 import java.util.Date;
@@ -364,29 +365,28 @@ public class ClassSetupFragment extends Fragment {
         }
 
         if (!fieldContent.isEmpty()) {
-            Date date;
+            Time time = new Time(0);
             try {
-                date = defaultFormatter.parse(fieldContent);
+                time.setTime(defaultFormatter.parse(fieldContent).getTime());
             } catch (ParseException e) {
                 e.printStackTrace();
                 try {
-                    date = MainActivity.f12Hour.parse(fieldContent);
+                    time.setTime(MainActivity.f12Hour.parse(fieldContent).getTime());
                 } catch (ParseException parseException) {
                     parseException.printStackTrace();
                     try {
-                        date = MainActivity.f24Hour.parse(fieldContent);
+                        time.setTime(MainActivity.f24Hour.parse(fieldContent).getTime());
                     } catch (ParseException exception) {
                         exception.printStackTrace();
-                        date = new Date();
                     }
                 }
             }
-            String time = defaultFormatter.format(date);
+            String timeString = defaultFormatter.format(time);
 
-            int delIndex = time.indexOf(":");
+            int delIndex = timeString.indexOf(":");
 
-            String hourString = time.substring(0, delIndex);
-            String minuteString = time.substring(delIndex + 1, delIndex + 3);
+            String hourString = timeString.substring(0, delIndex);
+            String minuteString = timeString.substring(delIndex + 1, delIndex + 3);
 
             hour = Integer.parseInt(hourString);
             minutes = Integer.parseInt(minuteString);
@@ -403,10 +403,10 @@ public class ClassSetupFragment extends Fragment {
 
         timePicker.addOnPositiveButtonClickListener(v -> {
             String time = timePicker.getHour() + ":" + timePicker.getMinute();
-            Date newDate;
+            Time newTime = new Time(0);
             try {
-                newDate = defaultFormatter.parse(time);
-                time = defaultFormatter.format(newDate);
+                newTime.setTime(MainActivity.f24Hour.parse(time).getTime());
+                time = defaultFormatter.format(newTime);
 
                 field.setText(time);
             } catch (ParseException e) {
