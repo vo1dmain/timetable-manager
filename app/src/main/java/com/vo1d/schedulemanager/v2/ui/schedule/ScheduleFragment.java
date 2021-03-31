@@ -51,8 +51,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
+import static android.view.ContextMenu.ContextMenuInfo;
 import static com.vo1d.schedulemanager.v2.MainActivity.getActionMode;
-
 
 public class ScheduleFragment extends Fragment {
     private final Comparator<WeekWithDays> weekComparator;
@@ -119,7 +119,7 @@ public class ScheduleFragment extends Fragment {
         weekIsEmptyTextView = view.findViewById(R.id.week_placeholder);
         scheduleIsEmptyTextView = view.findViewById(R.id.schedule_placeholder);
 
-        Spinner weeksSpinner = ((MainActivity) requireActivity()).weeksSpinner;
+        Spinner weeksSpinner = ((MainActivity) requireActivity()).getWeeksSpinner();
 
         tabStrip = (LinearLayout) tabLayout.getChildAt(0);
 
@@ -274,7 +274,7 @@ public class ScheduleFragment extends Fragment {
             openEditionDialog();
             return true;
         } else if (id == R.id.delete_this_week_action) {
-            openConfirmationDialog(ConfirmationScenario.DeleteWeek);
+            openConfirmationDialog(ConfirmScenario.DeleteWeek);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -291,7 +291,7 @@ public class ScheduleFragment extends Fragment {
     @Override
     public void onCreateContextMenu(@NonNull ContextMenu menu,
                                     @NonNull View v,
-                                    @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+                                    @Nullable ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         requireActivity().getMenuInflater().inflate(R.menu.menu_tab_context, menu);
 
@@ -308,7 +308,7 @@ public class ScheduleFragment extends Fragment {
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.delete_day) {
-            openConfirmationDialog(ConfirmationScenario.DeleteDay);
+            openConfirmationDialog(ConfirmScenario.DeleteDay);
             return true;
         }
 
@@ -386,7 +386,7 @@ public class ScheduleFragment extends Fragment {
         actionAddWeek.setEnabled(false);
     }
 
-    private void openConfirmationDialog(ConfirmationScenario scenario) {
+    private void openConfirmationDialog(ConfirmScenario scenario) {
         switch (scenario) {
             case DeleteDay:
                 setupDeleteDayDialog().show(getParentFragmentManager(), "Delete day confirmation");
@@ -524,7 +524,7 @@ public class ScheduleFragment extends Fragment {
         wvm.update(currentWeek.week);
     }
 
-    private enum ConfirmationScenario {
+    private enum ConfirmScenario {
         DeleteDay,
         DeleteWeek
     }
