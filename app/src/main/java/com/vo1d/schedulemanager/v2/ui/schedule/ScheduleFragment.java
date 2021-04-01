@@ -105,6 +105,7 @@ public class ScheduleFragment extends Fragment {
         sfvm.setDaysNamesFull(resources.getStringArray(R.array.days_of_week_full));
     }
 
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_schedule, container, false);
