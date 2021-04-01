@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "619ccde0342b243152d8a34aea59e445",
+    "identityHash": "718c79fb2fcb65b79e0c79937aa62781",
     "entities": [
       {
         "tableName": "day_table",
@@ -236,7 +236,7 @@
       },
       {
         "tableName": "instructor_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `firstName` TEXT, `middleName` TEXT, `lastName` TEXT, `phoneNumber` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `firstName` TEXT, `middleName` TEXT, `lastName` TEXT, `email` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -263,8 +263,8 @@
             "notNull": false
           },
           {
-            "fieldPath": "phoneNumber",
-            "columnName": "phoneNumber",
+            "fieldPath": "email",
+            "columnName": "email",
             "affinity": "TEXT",
             "notNull": false
           }
@@ -400,7 +400,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '619ccde0342b243152d8a34aea59e445')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '718c79fb2fcb65b79e0c79937aa62781')"
     ]
   }
 }

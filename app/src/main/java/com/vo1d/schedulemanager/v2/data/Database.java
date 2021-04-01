@@ -76,10 +76,10 @@ public abstract class Database extends RoomDatabase {
         @Override
         protected Void doInBackground(Void... voids) {
             Week w = new Week("Week 1");
-            weekDao.insert(new Week[]{w});
+            int id = (int) weekDao.insert(w);
 
-            for (int i = 1; i <= 6; i++) {
-                Day d = new Day(i, w.id);
+            for (int i = 0; i < 6; i++) {
+                Day d = new Day(i, id);
                 dayDao.insert(new Day[]{d});
             }
             return null;

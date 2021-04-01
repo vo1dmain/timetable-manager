@@ -97,7 +97,7 @@ public class InstructorsListAdapter extends ListAdapter<InstructorWithJunctions,
         Instructor current = getItem(position).instructor;
 
         holder.name.setText(current.getFullName());
-        holder.phone.setText(current.phoneNumber);
+        holder.phone.setText(current.email);
         holder.firstChar.setText(String.valueOf(current.lastName.charAt(0)));
 
         holder.holderIsSet = true;

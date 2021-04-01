@@ -63,8 +63,7 @@ public class ScheduleFragment extends Fragment {
 
     private LinearLayout tabStrip;
 
-    private MaterialTextView weekIsEmptyTextView;
-    private MaterialTextView scheduleIsEmptyTextView;
+    private MaterialTextView messageTextView;
     private MenuItem actionAddDay;
     private MenuItem actionAddWeek;
     private MenuItem actionDeleteWeek;
@@ -141,8 +140,7 @@ public class ScheduleFragment extends Fragment {
 
         TabLayout tabLayout = view.findViewById(R.id.tabs);
         vp2 = view.findViewById(R.id.view_pager);
-        weekIsEmptyTextView = view.findViewById(R.id.week_placeholder);
-        scheduleIsEmptyTextView = view.findViewById(R.id.schedule_placeholder);
+        messageTextView = view.findViewById(R.id.message_view);
 
         Spinner weeksSpinner = ((MainActivity) requireActivity()).getWeeksSpinner();
 
@@ -182,7 +180,7 @@ public class ScheduleFragment extends Fragment {
         wvm.getAllWeeks().observe(getViewLifecycleOwner(), weeks -> {
             if (weeks.size() > 0) {
                 weeksAdapter.clear();
-                scheduleIsEmptyTextView.setVisibility(View.GONE);
+                messageTextView.setVisibility(View.GONE);
                 if (weeks.size() > 1) {
                     weeksAdapter.addAll(weeks);
                     weeksAdapter.sort(weekComparator);
@@ -204,9 +202,9 @@ public class ScheduleFragment extends Fragment {
                         )
                 );
             } else {
-                weekIsEmptyTextView.setVisibility(View.GONE);
                 tabLayout.setVisibility(View.GONE);
-                scheduleIsEmptyTextView.setVisibility(View.VISIBLE);
+                messageTextView.setVisibility(View.VISIBLE);
+                messageTextView.setText(R.string.message_schedule_is_empty);
                 Objects.requireNonNull(
                         ((MainActivity) requireActivity()).getSupportActionBar()
                 ).setTitle(R.string.menu_schedule);
@@ -218,7 +216,7 @@ public class ScheduleFragment extends Fragment {
 
                 tabLayout.setVisibility(View.VISIBLE);
                 vp2.setVisibility(View.VISIBLE);
-                weekIsEmptyTextView.setVisibility(View.GONE);
+                messageTextView.setVisibility(View.GONE);
 
                 Collections.sort(week.days);
                 adapter.submitList(week.days);
@@ -232,7 +230,8 @@ public class ScheduleFragment extends Fragment {
             } else {
                 tabLayout.setVisibility(View.GONE);
                 vp2.setVisibility(View.GONE);
-                weekIsEmptyTextView.setVisibility(View.VISIBLE);
+                messageTextView.setVisibility(View.VISIBLE);
+                messageTextView.setText(R.string.placeholder_week);
             }
         });
 

@@ -71,11 +71,11 @@
     <string name="hint_audience_cabinet">Cabinet №</string>
     <string name="hint_course_name">Course name</string>
     <string name="hint_end_time">End time</string>
+    <string name="hint_instructor_email">Email</string>
     <string name="hint_instructor_first_name">First name</string>
     <string name="hint_instructor_last_name">Last name</string>
     <string name="hint_instructor_middle_name">Middle name</string>
     <string name="hint_instructor_name">Instructor name</string>
-    <string name="hint_instructor_phone">Phone number</string>
     <string name="hint_new_week_title">Week title</string>
     <string name="hint_set_instructors">Instructors</string>
     <string name="hint_start_time">Start time</string>
@@ -87,10 +87,11 @@
     <string name="menu_instructors">Instructors</string>
     <string name="menu_schedule">Schedule</string>
 
+    <string name="message_schedule_is_empty">There are no study weeks yet.</string>
+
     <string name="placeholder_classes">There are no classes this day.</string>
     <string name="placeholder_courses">There are no courses yet.</string>
     <string name="placeholder_instructors">There are no instructors yet.</string>
-    <string name="placeholder_schedule">There are no study weeks yet.</string>
     <string name="placeholder_search">Nothing found.</string>
     <string name="placeholder_week">There are no study days this week yet.</string>
 

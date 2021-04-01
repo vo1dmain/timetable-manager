@@ -19,13 +19,13 @@ public class Instructor implements IMyEntity {
     public String firstName;
     public String middleName;
     public String lastName;
-    public String phoneNumber;
+    public String email;
 
-    public Instructor(String firstName, String middleName, String lastName, String phoneNumber) {
+    public Instructor(String firstName, String middleName, String lastName, String email) {
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
-        this.phoneNumber = phoneNumber == null ? "null" : phoneNumber;
+        this.email = email == null ? "null" : email;
     }
 
     @Override
@@ -37,12 +37,12 @@ public class Instructor implements IMyEntity {
                 firstName.equals(instructor.firstName) &&
                 middleName.equals(instructor.middleName) &&
                 lastName.equals(instructor.lastName) &&
-                phoneNumber.equals(instructor.phoneNumber);
+                email.equals(instructor.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, middleName, lastName, phoneNumber);
+        return Objects.hash(id, firstName, middleName, lastName, email);
     }
 
     public String getShortName() {

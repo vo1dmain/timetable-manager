@@ -57,7 +57,7 @@ public class InstructorSetupFragment extends Fragment {
         firstNameInput = view.findViewById(R.id.first_name_input);
         middleNameInput = view.findViewById(R.id.middle_name_input);
         lastNameInput = view.findViewById(R.id.last_name_input);
-        phoneInput = view.findViewById(R.id.phone_input);
+        phoneInput = view.findViewById(R.id.email_input);
 
         firstNameInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -116,7 +116,7 @@ public class InstructorSetupFragment extends Fragment {
                 firstNameInput.setText(current.firstName);
                 middleNameInput.setText(current.middleName);
                 lastNameInput.setText(current.lastName);
-                phoneInput.setText(current.phoneNumber);
+                phoneInput.setText(current.email);
             }
         }
     }
@@ -158,7 +158,7 @@ public class InstructorSetupFragment extends Fragment {
         current.firstName = Objects.requireNonNull(firstNameInput.getText()).toString().trim();
         current.middleName = Objects.requireNonNull(middleNameInput.getText()).toString().trim();
         current.lastName = Objects.requireNonNull(lastNameInput.getText()).toString().trim();
-        current.phoneNumber = Objects.requireNonNull(phoneInput.getText()).toString().trim();
+        current.email = Objects.requireNonNull(phoneInput.getText()).toString().trim();
 
         ivm.update(current);
     }

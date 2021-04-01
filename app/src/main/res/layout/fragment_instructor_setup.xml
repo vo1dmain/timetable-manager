@@ -84,13 +84,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:hintEnabled="true"
-        app:startIconDrawable="@drawable/ic_outline_phone">
+        app:startIconDrawable="@drawable/ic_outline_email">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/phone_input"
+            android:id="@+id/email_input"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="@string/hint_instructor_phone"
+            android:hint="@string/hint_instructor_email"
             android:imeOptions="actionDone"
             android:inputType="phone"
             android:maxLength="16"

@@ -10,6 +10,8 @@ import androidx.lifecycle.MutableLiveData;
 import com.vo1d.schedulemanager.v2.data.days.Day;
 import com.vo1d.schedulemanager.v2.data.weeks.WeekWithDays;
 
+import java.util.Objects;
+
 public class ScheduleFragmentViewModel extends AndroidViewModel {
     private final MutableLiveData<WeekWithDays> currentWeekLive = new MutableLiveData<>();
     private Day dayToDelete;
@@ -59,7 +61,8 @@ public class ScheduleFragmentViewModel extends AndroidViewModel {
     }
 
     public String getDayNameForPosition(int position) {
-        return daysNamesShort[currentWeekLive.getValue().days.get(position).order];
+        return daysNamesShort[Objects.requireNonNull(currentWeekLive.getValue())
+                .days.get(position).order];
     }
 
     public WeekWithDays getCurrentWeek() {

@@ -71,11 +71,11 @@
     <string name="hint_audience_cabinet">Кабинет №</string>
     <string name="hint_course_name">Название курса</string>
     <string name="hint_end_time">Окончание</string>
+    <string name="hint_instructor_email">Электронная почта</string>
     <string name="hint_instructor_first_name">Имя</string>
     <string name="hint_instructor_last_name">Фамилия</string>
     <string name="hint_instructor_middle_name">Отчество</string>
     <string name="hint_instructor_name">Имя инструктора</string>
-    <string name="hint_instructor_phone">Номер телефона</string>
     <string name="hint_new_week_title">Название недели</string>
     <string name="hint_set_instructors">Инструкторы</string>
     <string name="hint_start_time">Начало</string>
@@ -87,10 +87,11 @@
     <string name="menu_instructors">Инструкторы</string>
     <string name="menu_schedule">Расписание</string>
 
+    <string name="message_schedule_is_empty">Пока никаких учебных недель.</string>
+
     <string name="placeholder_classes">Сегодня занятий нет.</string>
     <string name="placeholder_courses">Пока ни одного курса.</string>
     <string name="placeholder_instructors">Пока ни одного инструктора.</string>
-    <string name="placeholder_schedule">Пока никаких учебных недель.</string>
     <string name="placeholder_search">Ничего не найдено.</string>
     <string name="placeholder_week">Пока ни одного учебного дня.</string>
 
