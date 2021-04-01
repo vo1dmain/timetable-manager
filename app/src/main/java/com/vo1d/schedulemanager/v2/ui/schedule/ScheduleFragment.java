@@ -87,22 +87,46 @@ public class ScheduleFragment extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        //Вызов базовой версии метода.
         super.onCreate(savedInstanceState);
+
+        //Сообщение о том, что данный фрагмент задаёт
+        //меню действий при помощи метода onCreateOptionsMenu().
         setHasOptionsMenu(true);
 
+        //Получение ссылки на провайдер модели представления
+        //родительского Activity.
         ViewModelProvider provider = new ViewModelProvider(requireActivity());
+
+        //Получение ссылки на экземпляры необходимых моделей представления,
+        //принадлежащих родительской Activity.
         wvm = provider.get(WeekViewModel.class);
         dvm = provider.get(DaysViewModel.class);
         cvm = provider.get(ClassViewModel.class);
 
-        sfvm = new ViewModelProvider(this).get(ScheduleFragmentViewModel.class);
+        //Получение ссылки на экземпляр модели представления,
+        //принадлежащей текущему фрагменту.
+        sfvm = new ViewModelProvider(this)
+                .get(ScheduleFragmentViewModel.class);
 
+        //Получение ссылки на экземпляр системного календаря
         Calendar calendar = Calendar.getInstance();
+
+        //Установка номера текущего дня недели в соответствие с системой.
+        //Номер скорректирован на 2, поскольку в расписание невозможно
+        //добавить воскресенье и по-умолчанию нумерация дней недели
+        //в календаре соответствует американской неделе.
         sfvm.setCurrentDayNumber(calendar.get(Calendar.DAY_OF_WEEK) - 2);
 
+        //Получение ссылки на ресурсы приложения.
         resources = requireActivity().getResources();
-        sfvm.setDaysNamesShort(resources.getStringArray(R.array.days_of_week_short));
-        sfvm.setDaysNamesFull(resources.getStringArray(R.array.days_of_week_full));
+
+        //Запись коротких названий дней недель во ViewModel фрагмента.
+        sfvm.setDaysNamesShort(resources
+                .getStringArray(R.array.days_of_week_short));
+        //Запись полных названий дней недель во ViewModel фрагмента.
+        sfvm.setDaysNamesFull(resources
+                .getStringArray(R.array.days_of_week_full));
     }
 
     @Override
