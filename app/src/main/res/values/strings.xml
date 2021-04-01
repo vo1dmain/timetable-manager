@@ -49,14 +49,12 @@
 
     <string name="dialog_message_delete_all">All items will be permanently deleted.</string>
     <string name="dialog_message_delete_day">Day \"%1$s\" and all its classes will be permanently deleted.</string>
-    <string name="dialog_message_delete_one">This action cannot be undone.</string>
     <string name="dialog_message_delete_selected">Selected items (%1$d) will be permanently deleted.</string>
     <string name="dialog_message_delete_week">Week \"%1$s\" and all its content will be permanently deleted.</string>
     <string name="dialog_negative">Cancel</string>
     <string name="dialog_positive">OK</string>
     <string name="dialog_title_delete_multiple_items">Delete items?</string>
     <string name="dialog_title_delete_one">Delete this item?</string>
-    <string name="dialog_title_placeholder">Are you sure?</string>
     <string name="dialog_title_select_day">Add new day</string>
 
     <string name="fragment_label_class_creation">New class</string>
@@ -75,12 +73,9 @@
     <string name="hint_instructor_first_name">First name</string>
     <string name="hint_instructor_last_name">Last name</string>
     <string name="hint_instructor_middle_name">Middle name</string>
-    <string name="hint_instructor_name">Instructor name</string>
     <string name="hint_new_week_title">Week title</string>
     <string name="hint_set_instructors">Instructors</string>
     <string name="hint_start_time">Start time</string>
-
-    <string name="instructor_avatar_hint">Instructor\'s avatar</string>
 
     <string name="menu_about">About</string>
     <string name="menu_courses">Courses</string>
@@ -100,10 +95,8 @@
     <string name="snackbar_action_undone">Undo</string>
     <string name="snackbar_message_all_deleted">All items has been deleted.</string>
     <string name="snackbar_message_creation_success">New items has been added: %1$s.</string>
-    <string name="snackbar_message_delete_failure">Failed to delete the \"%1$s\" item.</string>
     <string name="snackbar_message_delete_success">Item \"%1$s\" has been deleted.</string>
     <string name="snackbar_message_selected_deleted">Items deleted: %1$d</string>
-    <string name="snackbar_message_update_failure">Failed to update \"%1$s\" item.</string>
     <string name="snackbar_message_update_success">Item \"%1$s\" has been successfully updated.</string>
 
     <string-array name="theme_entries">

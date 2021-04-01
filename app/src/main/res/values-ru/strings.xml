@@ -49,14 +49,12 @@
 
     <string name="dialog_message_delete_all">Все элементы будут удалены навсегда.</string>
     <string name="dialog_message_delete_day">День \"%1$s\" и все занятия в нём будут удалены навсегда.</string>
-    <string name="dialog_message_delete_one">Это действие невозможно будет отменить.</string>
     <string name="dialog_message_delete_selected">Выбранные элементы (%1$d) будут удалены навсегда.</string>
     <string name="dialog_message_delete_week">Неделя \"%1$s\" и всё её содержимое будут удалены навсегда.</string>
     <string name="dialog_negative">Отмена</string>
     <string name="dialog_positive">ОК</string>
     <string name="dialog_title_delete_multiple_items">Удалить элементы?</string>
     <string name="dialog_title_delete_one">Удалить этот элемент?</string>
-    <string name="dialog_title_placeholder">Вы уверены?</string>
     <string name="dialog_title_select_day">Добавить день</string>
 
     <string name="fragment_label_class_creation">Новое занятие</string>
@@ -75,12 +73,9 @@
     <string name="hint_instructor_first_name">Имя</string>
     <string name="hint_instructor_last_name">Фамилия</string>
     <string name="hint_instructor_middle_name">Отчество</string>
-    <string name="hint_instructor_name">Имя инструктора</string>
     <string name="hint_new_week_title">Название недели</string>
     <string name="hint_set_instructors">Инструкторы</string>
     <string name="hint_start_time">Начало</string>
-
-    <string name="instructor_avatar_hint">Аватар инструктора</string>
 
     <string name="menu_about">О приложении</string>
     <string name="menu_courses">Курсы</string>
@@ -100,10 +95,8 @@
     <string name="snackbar_action_undone">Отмена</string>
     <string name="snackbar_message_all_deleted">Все элементы удалены.</string>
     <string name="snackbar_message_creation_success">Добавлен новый элемент: %1$s.</string>
-    <string name="snackbar_message_delete_failure">Не удалось удалить элемент \"%1$s\".</string>
     <string name="snackbar_message_delete_success">Элемент \"%1$s\" удалён.</string>
     <string name="snackbar_message_selected_deleted">Элементов удалено: %1$d</string>
-    <string name="snackbar_message_update_failure">Не удалось обновить элемент \"%1$s\".</string>
     <string name="snackbar_message_update_success">Элемент \"%1$s\" успешно обновлён.</string>
 
     <string-array name="theme_entries">
