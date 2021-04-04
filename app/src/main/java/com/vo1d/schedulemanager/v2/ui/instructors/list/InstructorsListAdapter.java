@@ -111,7 +111,7 @@ public class InstructorsListAdapter extends ListAdapter<InstructorWithJunctions,
         void onSelectionChanged(InstructorWithJunctions instructor, boolean isChecked);
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    protected class ViewHolder extends RecyclerView.ViewHolder {
 
         private final MaterialCardView card;
         private final TextView name;
