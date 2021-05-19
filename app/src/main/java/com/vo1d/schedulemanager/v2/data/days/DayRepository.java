@@ -3,12 +3,12 @@ package com.vo1d.schedulemanager.v2.data.days;
 import android.app.Application;
 
 import com.vo1d.schedulemanager.v2.data.BaseRepository;
-import com.vo1d.schedulemanager.v2.data.Database;
+import com.vo1d.schedulemanager.v2.data.ScheduleDb;
 
 class DayRepository extends BaseRepository<Day, DayDao> {
 
     DayRepository(Application application) {
-        super(Database.getInstance(application).dayDao());
+        super(ScheduleDb.getInstance(application).dayDao());
     }
 
 // --Commented out by Inspection START (10.02.2021 15:22):

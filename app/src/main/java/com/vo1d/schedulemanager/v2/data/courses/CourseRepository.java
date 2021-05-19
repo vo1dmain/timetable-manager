@@ -6,7 +6,7 @@ import android.os.AsyncTask;
 import androidx.lifecycle.LiveData;
 
 import com.vo1d.schedulemanager.v2.data.BaseRepository;
-import com.vo1d.schedulemanager.v2.data.Database;
+import com.vo1d.schedulemanager.v2.data.ScheduleDb;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -14,7 +14,7 @@ import java.util.concurrent.ExecutionException;
 public class CourseRepository extends BaseRepository<Course, CourseDao> {
 
     public CourseRepository(Application application) {
-        super(Database.getInstance(application).courseDao());
+        super(ScheduleDb.getInstance(application).courseDao());
     }
 
     void deleteAll() {

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
+import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
@@ -21,18 +22,18 @@ import com.vo1d.schedulemanager.v2.data.instructors.InstructorDao;
 import com.vo1d.schedulemanager.v2.data.weeks.Week;
 import com.vo1d.schedulemanager.v2.data.weeks.WeekDao;
 
-@androidx.room.Database(
+@Database(
         entities = {Day.class,
                 Course.class,
                 Class.class,
                 Instructor.class,
                 Week.class,
-                CourseInstructor.class
+                CourseInstructor.class,
         },
         version = 1)
-public abstract class Database extends RoomDatabase {
+public abstract class ScheduleDb extends RoomDatabase {
 
-    private static Database instance;
+    private static ScheduleDb instance;
     private static final Callback roomCallback = new Callback() {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
@@ -41,10 +42,10 @@ public abstract class Database extends RoomDatabase {
         }
     };
 
-    public static synchronized Database getInstance(Context context) {
+    public static synchronized ScheduleDb getInstance(Context context) {
         if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(),
-                    Database.class, "days_database")
+                    ScheduleDb.class, "days_database")
                     .addCallback(roomCallback)
                     .build();
         }
@@ -63,12 +64,13 @@ public abstract class Database extends RoomDatabase {
 
     public abstract CourseInstructorDao courseInstructorDao();
 
-    private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
+    private static class PopulateDbAsyncTask
+            extends AsyncTask<Void, Void, Void> {
 
         private final DayDao dayDao;
         private final WeekDao weekDao;
 
-        private PopulateDbAsyncTask(Database db) {
+        private PopulateDbAsyncTask(ScheduleDb db) {
             dayDao = db.dayDao();
             weekDao = db.weekDao();
         }

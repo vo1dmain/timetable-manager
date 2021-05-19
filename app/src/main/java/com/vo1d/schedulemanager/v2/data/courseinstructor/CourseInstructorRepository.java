@@ -3,12 +3,12 @@ package com.vo1d.schedulemanager.v2.data.courseinstructor;
 import android.app.Application;
 
 import com.vo1d.schedulemanager.v2.data.BaseRepository;
-import com.vo1d.schedulemanager.v2.data.Database;
+import com.vo1d.schedulemanager.v2.data.ScheduleDb;
 
 public class CourseInstructorRepository extends BaseRepository<CourseInstructor, CourseInstructorDao> {
 
     public CourseInstructorRepository(Application application) {
-        super(Database.getInstance(application).courseInstructorDao());
+        super(ScheduleDb.getInstance(application).courseInstructorDao());
     }
 
 // --Commented out by Inspection START (10.02.2021 15:22):

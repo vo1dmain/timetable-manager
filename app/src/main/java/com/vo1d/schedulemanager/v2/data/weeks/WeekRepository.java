@@ -6,14 +6,14 @@ import android.os.AsyncTask;
 import androidx.lifecycle.LiveData;
 
 import com.vo1d.schedulemanager.v2.data.BaseRepository;
-import com.vo1d.schedulemanager.v2.data.Database;
+import com.vo1d.schedulemanager.v2.data.ScheduleDb;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 class WeekRepository extends BaseRepository<Week, WeekDao> {
     WeekRepository(Application application) {
-        super(Database.getInstance(application).weekDao());
+        super(ScheduleDb.getInstance(application).weekDao());
     }
 
     LiveData<List<WeekWithDays>> getAllWeeks() {
