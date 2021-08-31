@@ -11,12 +11,6 @@ import java.util.List;
 
 @Dao
 public abstract class ClassDao implements IBaseDao<Class> {
-// --Commented out by Inspection START (10.02.2021 15:37):
-//    @Transaction
-//    @Query("DELETE FROM class_table")
-//    abstract void deleteAll();
-// --Commented out by Inspection STOP (10.02.2021 15:37)
-
     @Transaction
     @Query("SELECT * FROM class_table WHERE id=:id")
     abstract ClassWithCourse findClassById2(int id);

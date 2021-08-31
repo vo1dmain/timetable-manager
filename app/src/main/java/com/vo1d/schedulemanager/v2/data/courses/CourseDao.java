@@ -21,7 +21,9 @@ public interface CourseDao extends IBaseDao<Course> {
     LiveData<List<CourseWithInstructors>> getAll();
 
     @Transaction
-    @Query("SELECT * FROM course_table WHERE title LIKE '%' || :filter || '%' ORDER BY title ASC")
+    @Query("SELECT * FROM course_table " +
+            "WHERE title LIKE '%' || :filter || '%'" +
+            "ORDER BY title ASC")
     List<CourseWithInstructors> getFiltered(String filter);
 
     @Transaction

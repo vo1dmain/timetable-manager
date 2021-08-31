@@ -1,5 +1,7 @@
 package com.vo1d.schedulemanager.v2.data.classes;
 
+import static androidx.room.ForeignKey.CASCADE;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -17,12 +19,16 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
 
-import static androidx.room.ForeignKey.CASCADE;
-
 @Entity(tableName = "class_table",
         foreignKeys = {
-                @ForeignKey(entity = Course.class, parentColumns = "id", childColumns = "courseId", onDelete = CASCADE),
-                @ForeignKey(entity = Day.class, parentColumns = "id", childColumns = "dayId", onDelete = CASCADE)
+                @ForeignKey(entity = Course.class,
+                        parentColumns = "id",
+                        childColumns = "courseId",
+                        onDelete = CASCADE),
+                @ForeignKey(entity = Day.class,
+                        parentColumns = "id",
+                        childColumns = "dayId",
+                        onDelete = CASCADE)
         },
         indices = {
                 @Index(value = "id", unique = true),
