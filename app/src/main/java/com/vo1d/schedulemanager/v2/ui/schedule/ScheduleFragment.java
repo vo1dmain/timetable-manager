@@ -1,5 +1,8 @@
 package com.vo1d.schedulemanager.v2.ui.schedule;
 
+import static android.view.ContextMenu.ContextMenuInfo;
+import static com.vo1d.schedulemanager.v2.MainActivity.getActionMode;
+
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.icu.util.Calendar;
@@ -51,9 +54,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-import static android.view.ContextMenu.ContextMenuInfo;
-import static com.vo1d.schedulemanager.v2.MainActivity.getActionMode;
-
 public class ScheduleFragment extends Fragment {
     private final Comparator<WeekWithDays> weekComparator;
     private ArrayAdapter<WeekWithDays> weeksAdapter;
@@ -81,7 +81,7 @@ public class ScheduleFragment extends Fragment {
 
     public ScheduleFragment() {
         super();
-        weekComparator = (o1, o2) -> o1.week.compareTo(o2.week);
+        weekComparator = Comparator.comparing(o -> o.week);
     }
 
     @Override

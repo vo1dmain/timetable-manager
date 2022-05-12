@@ -13,22 +13,22 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class ListFragmentViewModel<ItemType extends IMyEntity> extends AndroidViewModel {
+public abstract class ListFragmentViewModel<T extends IMyEntity> extends AndroidViewModel {
 
-    protected final MutableLiveData<List<ItemType>> selectedItems = new MutableLiveData<>(new LinkedList<>());
+    protected final MutableLiveData<List<T>> selectedItems = new MutableLiveData<>(new LinkedList<>());
 
     public ListFragmentViewModel(@NonNull Application application) {
         super(application);
     }
 
-    public void addToSelection(ItemType item) {
-        List<ItemType> list = Objects.requireNonNull(selectedItems.getValue());
+    public void addToSelection(T item) {
+        List<T> list = Objects.requireNonNull(selectedItems.getValue());
         list.add(item);
         selectedItems.postValue(list);
     }
 
-    public void removeFromSelection(ItemType item) {
-        List<ItemType> list = Objects.requireNonNull(selectedItems.getValue());
+    public void removeFromSelection(T item) {
+        List<T> list = Objects.requireNonNull(selectedItems.getValue());
         list.remove(item);
         selectedItems.postValue(list);
     }
@@ -37,11 +37,11 @@ public abstract class ListFragmentViewModel<ItemType extends IMyEntity> extends 
         selectedItems.postValue(new LinkedList<>());
     }
 
-    public LiveData<List<ItemType>> getSelectedItems() {
+    public LiveData<List<T>> getSelectedItems() {
         return selectedItems;
     }
 
-    public ItemType[] getSelectedItemsAsArray(@NonNull ItemType[] array) {
+    public T[] getSelectedItemsAsArray(@NonNull T[] array) {
         return Objects.requireNonNull(selectedItems.getValue()).toArray(array);
     }
 }
