@@ -2,101 +2,117 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@+id/nav_schedule">
+    app:startDestination="@+id/nav_timetable">
 
     <fragment
-        android:id="@+id/nav_schedule"
-        android:name="com.vo1d.schedulemanager.v2.ui.schedule.ScheduleFragment"
-        android:label="@string/menu_schedule"
-        tools:layout="@layout/fragment_schedule">
+        android:id="@+id/nav_timetable"
+        android:name="ru.vo1d.timetablemanager.ui.sections.timetable.TimetableFragment"
+        android:label="@string/menu_timetable"
+        tools:layout="@layout/fragment_timetable">
         <action
-            android:id="@+id/add_class"
-            app:destination="@id/nav_class_creation">
-            <argument
-                android:name="dayId"
-                app:argType="integer" />
-        </action>
+            android:id="@+id/add_session"
+            app:destination="@id/nav_session_creation" />
         <action
-            android:id="@+id/edit_class"
-            app:destination="@id/nav_class_edition">
-            <argument
-                android:name="classId"
-                android:defaultValue="-1"
-                app:argType="integer" />
-        </action>
+            android:id="@+id/edit_session"
+            app:destination="@id/nav_session_edition" />
     </fragment>
     <fragment
-        android:id="@+id/nav_courses"
-        android:name="com.vo1d.schedulemanager.v2.ui.courses.list.CoursesListFragment"
+        android:id="@+id/nav_subjects"
+        android:name="ru.vo1d.timetablemanager.ui.sections.subjects.list.SubjectsListFragment"
         android:label="@string/menu_courses"
-        tools:layout="@layout/fragment_courses_list">
+        tools:layout="@layout/fragment_subjects_list">
         <action
-            android:id="@+id/edit_course"
-            app:destination="@id/nav_course_edition">
-            <argument
-                android:name="courseId"
-                android:defaultValue="-1"
-                app:argType="integer" />
-        </action>
+            android:id="@+id/edit_subject"
+            app:destination="@id/nav_subject_edition" />
         <action
-            android:id="@+id/add_course"
-            app:destination="@id/nav_course_creation" />
+            android:id="@+id/add_subject"
+            app:destination="@id/nav_subject_creation" />
     </fragment>
     <fragment
         android:id="@+id/nav_instructors"
-        android:name="com.vo1d.schedulemanager.v2.ui.instructors.list.InstructorsListFragment"
+        android:name="ru.vo1d.timetablemanager.ui.sections.instructors.list.InstructorsListFragment"
         android:label="@string/menu_instructors"
         tools:layout="@layout/fragment_instructors_list">
         <action
             android:id="@+id/edit_instructor"
-            app:destination="@id/nav_instructor_edition">
-            <argument
-                android:name="instructorId"
-                android:defaultValue="-1"
-                app:argType="integer" />
-        </action>
+            app:destination="@id/nav_instructor_edition" />
         <action
             android:id="@+id/add_instructor"
             app:destination="@id/nav_instructor_creation" />
     </fragment>
+
     <fragment
         android:id="@+id/nav_about"
-        android:name="com.vo1d.schedulemanager.v2.ui.about.AboutFragment"
+        android:name="ru.vo1d.timetablemanager.ui.sections.about.AboutFragment"
         android:label="@string/menu_about"
         tools:layout="@layout/fragment_about" />
+
     <fragment
-        android:id="@+id/nav_course_creation"
-        android:name="com.vo1d.schedulemanager.v2.ui.courses.setup.CourseSetupFragment"
+        android:id="@+id/nav_subject_creation"
+        android:name="ru.vo1d.timetablemanager.ui.sections.subjects.setup.SubjectSetupFragment"
         android:label="@string/fragment_label_course_creation"
-        tools:layout="@layout/fragment_course_setup" />
+        tools:layout="@layout/fragment_subject_setup" />
+
     <fragment
-        android:id="@+id/nav_course_edition"
-        android:name="com.vo1d.schedulemanager.v2.ui.courses.setup.CourseSetupFragment"
+        android:id="@+id/nav_subject_edition"
+        android:name="ru.vo1d.timetablemanager.ui.sections.subjects.setup.SubjectSetupFragment"
         android:label="@string/fragment_label_course_edition"
-        tools:layout="@layout/fragment_course_setup" />
+        tools:layout="@layout/fragment_subject_setup" />
+
     <fragment
         android:id="@+id/nav_instructor_creation"
-        android:name="com.vo1d.schedulemanager.v2.ui.instructors.setup.InstructorSetupFragment"
+        android:name="ru.vo1d.timetablemanager.ui.sections.instructors.setup.InstructorSetupFragment"
         android:label="@string/fragment_label_instructor_creation"
         tools:layout="@layout/fragment_instructor_setup" />
+
     <fragment
         android:id="@+id/nav_instructor_edition"
-        android:name="com.vo1d.schedulemanager.v2.ui.instructors.setup.InstructorSetupFragment"
+        android:name="ru.vo1d.timetablemanager.ui.sections.instructors.setup.InstructorSetupFragment"
         android:label="@string/fragment_label_instructor_edition"
         tools:layout="@layout/fragment_instructor_setup" />
+
     <fragment
-        android:id="@+id/nav_class_creation"
-        android:name="com.vo1d.schedulemanager.v2.ui.classes.setup.ClassSetupFragment"
+        android:id="@+id/nav_session_creation"
+        android:name="ru.vo1d.timetablemanager.ui.sections.timetable.sessions.setup.SessionSetupFragment"
         android:label="@string/fragment_label_class_creation"
-        tools:layout="@layout/fragment_class_setup" />
+        tools:layout="@layout/fragment_session_setup">
+        <argument
+            android:name="week_id"
+            android:defaultValue="-1"
+            app:argType="integer"
+            app:nullable="false" />
+        <argument
+            android:name="day"
+            android:defaultValue="MONDAY"
+            app:argType="java.time.DayOfWeek"
+            app:nullable="false" />
+    </fragment>
+
     <fragment
-        android:id="@+id/nav_class_edition"
-        android:name="com.vo1d.schedulemanager.v2.ui.classes.setup.ClassSetupFragment"
+        android:id="@+id/nav_session_edition"
+        android:name="ru.vo1d.timetablemanager.ui.sections.timetable.sessions.edit.SessionEditFragment"
         android:label="@string/fragment_label_class_edition"
-        tools:layout="@layout/fragment_course_setup" />
+        tools:layout="@layout/fragment_subject_setup">
+        <argument
+            android:name="week_id"
+            android:defaultValue="-1"
+            app:argType="integer"
+            app:nullable="false" />
+        <argument
+            android:name="day"
+            android:defaultValue="MONDAY"
+            app:argType="java.time.DayOfWeek"
+            app:nullable="false" />
+        <argument
+            android:name="session_id"
+            android:defaultValue="-1"
+            app:argType="integer"
+            app:nullable="false" />
+    </fragment>
+
     <fragment
         android:id="@+id/nav_preferences"
-        android:name="com.vo1d.schedulemanager.v2.ui.settings.SettingsFragment"
+        android:name="ru.vo1d.timetablemanager.ui.sections.settings.SettingsFragment"
         android:label="@string/fragment_label_settings" />
 
 </navigation>

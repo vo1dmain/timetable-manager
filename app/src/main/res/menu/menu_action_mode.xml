@@ -5,13 +5,13 @@
     tools:ignore="AlwaysShowAction">
 
     <item
-        android:id="@+id/delete_selected"
+        android:id="@+id/action_delete_selected"
         android:icon="@drawable/ic_outline_delete"
         android:title="@string/action_delete_item_title"
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/select_all"
+        android:id="@+id/action_select_all"
         android:icon="@drawable/ic_outline_select_all"
         android:title="@string/action_select_all_title"
         app:showAsAction="always" />

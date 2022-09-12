@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/confirm_setup_action"
+        android:id="@+id/action_submit"
         android:enabled="false"
         android:icon="@drawable/ic_check_mark"
         android:title="@string/action_confirm_creation_title"
