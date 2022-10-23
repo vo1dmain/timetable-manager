@@ -41,12 +41,13 @@ import ru.vo1d.timetablemanager.data.entities.weeks.Week
     indices = [
         Index(value = ["id"], unique = true),
         Index(value = ["subjectId"]),
-        Index(value = ["instructorId"])
+        Index(value = ["instructorId"]),
+        Index(value = ["weekId"])
     ]
 )
 data class Session(
-    @PrimaryKey(autoGenerate = true)
-    override val id: Int = DEFAULT_ID,
+    @field:PrimaryKey(autoGenerate = true)
+    val id: Int = DEFAULT_ID,
     val subjectId: Int,
     val instructorId: Int,
     val weekId: Int,
@@ -55,4 +56,4 @@ data class Session(
     val type: SessionType,
     val startTime: LocalTime,
     val endTime: LocalTime
-) : DatabaseEntity<Int>
+) : DatabaseEntity
