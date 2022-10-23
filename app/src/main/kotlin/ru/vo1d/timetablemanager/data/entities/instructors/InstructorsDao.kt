@@ -13,23 +13,20 @@ interface InstructorsDao : BaseDao<Instructor> {
     val all: Flow<List<Instructor>>
 
 
-    @Transaction
     @Query(
-        """SELECT * FROM instructors WHERE (lastName LIKE :filter || '%')
-        OR (middleName LIKE :filter || '%') 
-        OR (firstName LIKE :filter || '%')
-        ORDER BY lastName ASC, middleName ASC, firstName ASC"""
+        """SELECT * FROM instructors AS i
+           INNER JOIN instructors_fts AS fts ON fts.rowId == i.id
+           WHERE instructors_fts MATCH :filter
+           ORDER BY lastName ASC, middleName ASC, firstName ASC"""
     )
-    fun getFiltered(filter: String): Flow<List<Instructor>>
+    fun find(filter: String): Flow<List<Instructor>>
 
     @Transaction
     @Query(
-        """SELECT * FROM instructors AS i
+        """SELECT i.* FROM instructors AS i
         INNER JOIN subject_instructors AS si ON i.id = si.instructorId
         WHERE si.subjectId = :subjectId
-        GROUP BY i.id
-        ORDER BY lastName ASC, middleName ASC, firstName ASC
-    """
+        GROUP BY i.id ORDER BY lastName ASC, middleName ASC, firstName ASC"""
     )
     fun findForSubject(subjectId: Int): Flow<List<Instructor>>
 

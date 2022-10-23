@@ -12,7 +12,7 @@ class InstructorsRepository(application: Application) :
 
 
     fun getFiltered(filter: String) =
-        dao.getFiltered(filter)
+        dao.find(filter)
 
     fun findForSubject(subjectId: Int) =
         dao.findForSubject(subjectId)
