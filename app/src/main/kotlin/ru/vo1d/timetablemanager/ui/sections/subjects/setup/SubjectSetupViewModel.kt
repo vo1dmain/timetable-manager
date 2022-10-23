@@ -20,9 +20,11 @@ internal class SubjectSetupViewModel(application: Application) : AndroidViewMode
     private val instructorIsSet = MutableStateFlow(false)
     private val typeIsSelected = MutableStateFlow(false)
 
+
     val canBeSaved = combine(titleIsSet, instructorIsSet, typeIsSelected) { states ->
         states.all { it }
     }
+
 
     fun selectType(type: SessionType) {
         _selectedTypes.update { it.apply { add(type) } }
