@@ -80,7 +80,7 @@ class SessionEditFragment : SessionSetupFragment() {
             return null
         }
 
-        private inline fun <T> ArrayAdapter<T>.findIndex(predicate: (T) -> Boolean): Int {
+        internal inline fun <T> ArrayAdapter<T>.findIndex(predicate: (T) -> Boolean): Int {
             for (index in 0 until count) {
                 val item = getItem(index) ?: return -1
                 if (predicate(item)) return index

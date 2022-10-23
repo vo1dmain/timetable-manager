@@ -25,9 +25,15 @@ open class SessionSetupViewModel(application: Application) :
     private val instructorsRepo = InstructorsRepository(application)
 
 
+    @Suppress("PropertyName")
     protected val _subjectId = MutableStateFlow(INVALID_ID)
+
+    @Suppress("PropertyName")
     protected val _instructorId = MutableStateFlow(INVALID_ID)
+
+    @Suppress("PropertyName")
     protected val _selectedType = MutableStateFlow(SessionType.None)
+
     private val _buildingNumber = MutableStateFlow("")
     private val _roomNumber = MutableStateFlow("")
     private val _startTime = MutableStateFlow(nowTime().toLocalTime())
@@ -128,7 +134,7 @@ open class SessionSetupViewModel(application: Application) :
 
 
     companion object {
-        private fun nowTime() = Clock.System.now()
-        private fun Instant.toLocalTime() = toLocalDateTime(TimeZone.currentSystemDefault()).time
+        internal fun nowTime() = Clock.System.now()
+        internal fun Instant.toLocalTime() = toLocalDateTime(TimeZone.currentSystemDefault()).time
     }
 }
