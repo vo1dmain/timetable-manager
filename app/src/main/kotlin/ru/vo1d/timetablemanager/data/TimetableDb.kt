@@ -23,6 +23,7 @@ import ru.vo1d.timetablemanager.data.entities.weeks.WeeksDao
         Subject::class,
         Session::class,
         Instructor::class,
+        InstructorFts::class,
         SubjectInstructor::class,
         Week::class
     ],
