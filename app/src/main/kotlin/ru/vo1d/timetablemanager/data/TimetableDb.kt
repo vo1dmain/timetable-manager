@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import ru.vo1d.timetablemanager.data.converters.Converters
 import ru.vo1d.timetablemanager.data.entities.instructors.Instructor
+import ru.vo1d.timetablemanager.data.entities.instructors.InstructorFts
 import ru.vo1d.timetablemanager.data.entities.instructors.InstructorsDao
 import ru.vo1d.timetablemanager.data.entities.sessions.Session
 import ru.vo1d.timetablemanager.data.entities.sessions.SessionsDao
@@ -15,7 +16,7 @@ import ru.vo1d.timetablemanager.data.entities.subjectinstructors.SubjectInstruct
 import ru.vo1d.timetablemanager.data.entities.subjects.Subject
 import ru.vo1d.timetablemanager.data.entities.subjects.SubjectsDao
 import ru.vo1d.timetablemanager.data.entities.weeks.Week
-import ru.vo1d.timetablemanager.data.entities.weeks.WeekDao
+import ru.vo1d.timetablemanager.data.entities.weeks.WeeksDao
 
 @Database(
     entities = [
@@ -29,11 +30,11 @@ import ru.vo1d.timetablemanager.data.entities.weeks.WeekDao
 )
 @TypeConverters(Converters::class)
 abstract class TimetableDb : RoomDatabase() {
-    abstract fun courseDao(): SubjectsDao
-    abstract fun classDao(): SessionsDao
-    abstract fun instructorDao(): InstructorsDao
-    abstract fun subjectInstructorDao(): SubjectInstructorsDao
-    abstract fun weekDao(): WeekDao
+    abstract fun subjectsDao(): SubjectsDao
+    abstract fun sessionsDao(): SessionsDao
+    abstract fun instructorsDao(): InstructorsDao
+    abstract fun subjectInstructorsDao(): SubjectInstructorsDao
+    abstract fun weeksDao(): WeeksDao
 
     companion object {
         private lateinit var db: TimetableDb
