@@ -18,7 +18,7 @@ class SessionsListFragment() : Fragment(R.layout.fragment_sessions_list) {
     private lateinit var day: DayOfWeek
 
 
-    constructor(dayOfWeek: DayOfWeek) : this() {
+    constructor(weekId: Int, dayOfWeek: DayOfWeek) : this() {
         day = dayOfWeek
     }
 
