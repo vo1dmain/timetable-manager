@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import ru.vo1d.timetablemanager.R
 import ru.vo1d.timetablemanager.databinding.FragmentSubjectSetupBinding
 
@@ -22,5 +24,7 @@ internal class SubjectSetupFragment : Fragment(R.layout.fragment_subject_setup) 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentSubjectSetupBinding.bind(view)
+
+        binding.toolbar.setupWithNavController(findNavController())
     }
 }
