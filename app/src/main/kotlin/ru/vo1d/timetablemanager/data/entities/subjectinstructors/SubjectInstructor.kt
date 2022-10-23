@@ -28,6 +28,4 @@ import ru.vo1d.timetablemanager.data.entities.subjects.Subject
         )
     ]
 )
-data class SubjectInstructor(val subjectId: Int, val instructorId: Int) : DatabaseEntity<Unit> {
-    override val id = Unit
-}
+data class SubjectInstructor(val subjectId: Int, val instructorId: Int) : DatabaseEntity

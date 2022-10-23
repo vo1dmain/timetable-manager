@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.Flow
 import ru.vo1d.timetablemanager.data.BaseDao
 
 @Dao
-interface InstructorsDao : BaseDao<Int, Instructor> {
-    @get:Transaction
+interface InstructorsDao : BaseDao<Instructor> {
+
     @get:Query("SELECT * FROM instructors ORDER BY lastName ASC, middleName ASC, firstName ASC")
     val all: Flow<List<Instructor>>
 

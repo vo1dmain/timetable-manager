@@ -5,9 +5,9 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy.IGNORE
 import androidx.room.Update
 
-interface BaseDao<PK, T : DatabaseEntity<PK>> {
+interface BaseDao<T : DatabaseEntity> {
     @Insert(onConflict = IGNORE)
-    suspend fun insert(items: T): PK
+    suspend fun insert(item: T): Long
 
     @Insert(onConflict = IGNORE)
     suspend fun insert(vararg items: T)

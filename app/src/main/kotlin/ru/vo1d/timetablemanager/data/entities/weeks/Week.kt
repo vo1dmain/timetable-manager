@@ -7,7 +7,7 @@ import ru.vo1d.timetablemanager.data.DatabaseEntity.Companion.DEFAULT_ID
 
 @Entity(tableName = "weeks")
 data class Week(
-    @PrimaryKey(autoGenerate = true)
-    override val id: Int = DEFAULT_ID,
+    @field:PrimaryKey(autoGenerate = true)
+    val id: Int = DEFAULT_ID,
     val title: String
-) : DatabaseEntity<Int>
+) : DatabaseEntity

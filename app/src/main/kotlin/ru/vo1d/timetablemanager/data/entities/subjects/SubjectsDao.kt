@@ -7,7 +7,7 @@ import ru.vo1d.timetablemanager.data.BaseDao
 import ru.vo1d.timetablemanager.data.entities.sessions.SessionType
 
 @Dao
-interface SubjectsDao : BaseDao<Int, Subject> {
+interface SubjectsDao : BaseDao<Subject> {
     @get:Query("SELECT * FROM subjects ORDER BY title ASC")
     val all: Flow<List<Subject>>
 
