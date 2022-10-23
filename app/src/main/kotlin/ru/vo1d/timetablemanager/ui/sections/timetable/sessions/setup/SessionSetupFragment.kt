@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
-import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -20,7 +19,6 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
-import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -33,6 +31,9 @@ import ru.vo1d.timetablemanager.data.entities.subjects.Subject
 import ru.vo1d.timetablemanager.databinding.ChipInstructorActionBinding
 import ru.vo1d.timetablemanager.databinding.ChipSessionTypeChoiceBinding
 import ru.vo1d.timetablemanager.databinding.FragmentSessionSetupBinding
+import ru.vo1d.timetablemanager.ui.utils.extensions.afterTextChanged
+import ru.vo1d.timetablemanager.ui.utils.extensions.cast
+import ru.vo1d.timetablemanager.ui.utils.extensions.onItemChipSelected
 
 
 open class SessionSetupFragment : Fragment(R.layout.fragment_session_setup) {
@@ -46,11 +47,13 @@ open class SessionSetupFragment : Fragment(R.layout.fragment_session_setup) {
     private var _binding: FragmentSessionSetupBinding? = null
     protected val binding get() = _binding!!
 
-    protected val subjectsAdapter = ArrayAdapter(
-        requireContext(),
-        android.R.layout.simple_spinner_item,
-        emptyList<Subject>()
-    )
+    protected val subjectsAdapter by lazy {
+        ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            emptyList<Subject>()
+        )
+    }
 
     protected open val viewModel by viewModels<SessionSetupViewModel>()
 
@@ -152,12 +155,8 @@ open class SessionSetupFragment : Fragment(R.layout.fragment_session_setup) {
         if (isSet.not()) return
 
         binding.place.root.isVisible = true
-        scope.launch {
-            viewModel.buildingNumber.collectLatest(binding.place.buildingInput::setText)
-        }
-        scope.launch {
-            viewModel.roomNumber.collectLatest(binding.place.roomInput::setText)
-        }
+        scope.launch { viewModel.buildingNumber.collectLatest(binding.place.buildingInput::setText) }
+        scope.launch { viewModel.roomNumber.collectLatest(binding.place.roomInput::setText) }
     }
 
     private fun onPlaceIsSet(isSet: Boolean, scope: CoroutineScope) {
@@ -197,10 +196,9 @@ open class SessionSetupFragment : Fragment(R.layout.fragment_session_setup) {
         val localizedNames = resources.getStringArray(R.array.session_types)
 
         types.forEach {
-            binding.type.list.addItemChip(
-                it,
-                ChipSessionTypeChoiceBinding::inflate
-            ) { localizedNames[it.ordinal] }
+            binding.type.list.addItemChip(it, ChipSessionTypeChoiceBinding::inflate) {
+                localizedNames[it.ordinal]
+            }
         }
     }
 
@@ -210,13 +208,15 @@ open class SessionSetupFragment : Fragment(R.layout.fragment_session_setup) {
         inflater: (LayoutInflater, ViewGroup, Boolean) -> B,
         textSupplier: () -> String
     ) where B : ViewBinding {
-        val chip = inflater(layoutInflater, this, false).root as Chip
-        chip.apply {
-            text = textSupplier()
-            isClickable = true
-            isCheckable = true
-            tag = item
-        }
+        val chip = inflater(layoutInflater, this, false)
+            .root
+            .cast<View, Chip>()
+            .apply {
+                text = textSupplier()
+                isClickable = true
+                isCheckable = true
+                tag = item
+            }
         addView(chip)
     }
 
@@ -228,19 +228,5 @@ open class SessionSetupFragment : Fragment(R.layout.fragment_session_setup) {
         }
 
         override fun onNothingSelected(parent: AdapterView<*>) = Unit
-    }
-
-
-    companion object {
-        private inline fun <reified I> ChipGroup.onItemChipSelected(crossinline callback: (I?) -> Unit) {
-            setOnCheckedStateChangeListener { _, checked ->
-                val selectedChip = findViewById<Chip>(checked.first())
-                val item = selectedChip?.tag as? I
-                callback(item)
-            }
-        }
-
-        private inline fun TextInputEditText.afterTextChanged(crossinline action: (String) -> Unit) =
-            doAfterTextChanged { action(it?.toString() ?: return@doAfterTextChanged) }
     }
 }

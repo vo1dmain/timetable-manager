@@ -35,15 +35,9 @@ class SessionEditFragment : SessionSetupFragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    viewModel.subjectId.collectLatest(::onSubjectIdSet)
-                }
-                launch {
-                    viewModel.instructorId.collectLatest(::onInstructorIdSet)
-                }
-                launch {
-                    viewModel.selectedType.collectLatest(::onTypeSelected)
-                }
+                launch { viewModel.subjectId.collectLatest(::onSubjectIdSet) }
+                launch { viewModel.instructorId.collectLatest(::onInstructorIdSet) }
+                launch { viewModel.selectedType.collectLatest(::onTypeSelected) }
             }
         }
     }
@@ -59,7 +53,7 @@ class SessionEditFragment : SessionSetupFragment() {
 
         val chip = binding.instructor.list.findViewByPredicate<Chip> {
             val tag = it.tag
-            (tag is Instructor) && (tag.id == id)
+            tag is Instructor && tag.id == id
         } ?: return
 
         binding.instructor.list.check(chip.id)
