@@ -75,7 +75,7 @@
     <string name="menu_instructors">Instructors</string>
     <string name="menu_timetable">Timetable</string>
 
-    <string name="message_is_empty">There\'s nothing yet.</string>
+    <string name="message_is_empty">There\'s nothing yet</string>
     <string name="message_nothing_found">Nothing found</string>
 
     <string name="place_distant">Distant</string>

@@ -75,7 +75,7 @@
     <string name="menu_instructors">Преподаватели</string>
     <string name="menu_timetable">Расписание</string>
 
-    <string name="message_is_empty">Пока ни одного предмета.</string>
+    <string name="message_is_empty">Здесь пока ничего</string>
     <string name="message_nothing_found">Ничего не найдено</string>
 
     <string name="place_distant">Дистанционно</string>
