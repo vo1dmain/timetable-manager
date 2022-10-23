@@ -1,7 +1,9 @@
 package ru.vo1d.timetablemanager.data.converters
 
 import androidx.room.TypeConverter
+import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalTime
+import kotlinx.datetime.isoDayNumber
 import ru.vo1d.timetablemanager.data.entities.sessions.SessionType
 
 class Converters {
@@ -20,4 +22,12 @@ class Converters {
     @TypeConverter
     fun toTypesList(types: String) =
         types.split(",").map(SessionType::valueOf)
+
+    @TypeConverter
+    fun fromDayOfWeek(day: DayOfWeek) =
+        day.isoDayNumber
+
+    @TypeConverter
+    fun toDayOfWeek(isoDayNumber: Int) =
+        DayOfWeek(isoDayNumber)
 }
