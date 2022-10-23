@@ -5,32 +5,35 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
-import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import ru.vo1d.timetablemanager.R
 import ru.vo1d.timetablemanager.databinding.DialogCreateBinding
+import ru.vo1d.timetablemanager.ui.utils.extensions.afterTextChanged
 
 class TextInputDialog(
     private val text: String,
-    private val listener: Listener
+    private val onPositiveClick: (DialogFragment) -> Unit,
+    private val onNegativeClick: (DialogFragment) -> Unit = {},
+    private val onDismiss: () -> Unit = {}
 ) : DialogFragment() {
 
     override fun onCreateDialog(savedInstance: Bundle?): Dialog {
         val binding = DialogCreateBinding.inflate(layoutInflater, null, false)
         val dialog = MaterialAlertDialogBuilder(requireActivity())
             .setView(binding.root)
-            .setPositiveButton(R.string.dialog_positive) { _, _ -> listener.onPositiveClick(this) }
-            .setNegativeButton(R.string.dialog_negative) { _, _ -> listener.onNegativeClick(this) }
+            .setPositiveButton(R.string.dialog_positive) { _, _ -> onPositiveClick(this) }
+            .setNegativeButton(R.string.dialog_negative) { _, _ -> onNegativeClick(this) }
             .create()
 
-        dialog.setOnShowListener { dialog ->
-            (dialog as AlertDialog)
+        dialog.setOnShowListener { dialogInterface ->
+            if (dialogInterface !is AlertDialog) return@setOnShowListener
 
-            dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = false
-            binding.newWeekTitle.doAfterTextChanged {
-                dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled =
-                    it.toString().trim().isNotEmpty()
+            val positiveButton = dialogInterface.getButton(AlertDialog.BUTTON_POSITIVE)
+
+            positiveButton.isEnabled = false
+            binding.newWeekTitle.afterTextChanged {
+                positiveButton.isEnabled = it.trim().isNotEmpty()
             }
             binding.newWeekTitle.setText(text)
         }
@@ -40,13 +43,6 @@ class TextInputDialog(
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        listener.onDismiss()
-    }
-
-
-    interface Listener {
-        fun onPositiveClick(dialog: DialogFragment)
-        fun onNegativeClick(dialog: DialogFragment)
-        fun onDismiss()
+        onDismiss()
     }
 }
