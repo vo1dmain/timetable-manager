@@ -13,7 +13,7 @@ import ru.vo1d.timetablemanager.ui.utils.SelectableListViewModel
 
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class SessionsViewModel(application: Application) :
-    SelectableListViewModel<Int, Session, SessionsDao>(application) {
+    SelectableListViewModel<Session, SessionsDao>(application) {
     override val repo = SessionsRepository(application)
 
     private val day = MutableStateFlow(DayOfWeek.MONDAY)
