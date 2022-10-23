@@ -1,7 +1,6 @@
 package ru.vo1d.timetablemanager
 
 import android.os.Bundle
-import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.navigation.fragment.NavHostFragment
@@ -25,7 +24,6 @@ internal class MainActivity : AppCompatActivity() {
         navigationView.setupWithNavController(navController)
         navController.addOnDestinationChangedListener { _, _, _ ->
             actionMode?.finish()
-            hideKeyboard()
         }
     }
 
@@ -37,13 +35,6 @@ internal class MainActivity : AppCompatActivity() {
                 R.style.Theme_TimetableManager_Cyan
             )
         setTheme(themeId)
-    }
-
-    private fun hideKeyboard() {
-        getSystemService(InputMethodManager::class.java)?.let {
-            val token = window.decorView.windowToken
-            it.hideSoftInputFromWindow(token, 0)
-        }
     }
 
 
