@@ -5,8 +5,8 @@ import kotlinx.datetime.DayOfWeek
 import ru.vo1d.timetablemanager.data.BaseRepository
 import ru.vo1d.timetablemanager.data.TimetableDb
 
-class SessionsRepository(application: Application) : BaseRepository<Int, Session, SessionsDao>() {
-    override val dao = TimetableDb.instance(application).classDao()
+class SessionsRepository(application: Application) : BaseRepository<Session, SessionsDao>() {
+    override val dao = TimetableDb.instance(application).sessionsDao()
 
     fun findAllForDay(day: DayOfWeek) =
         dao.findAllForDay(day)

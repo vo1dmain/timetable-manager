@@ -4,8 +4,8 @@ import android.app.Application
 import ru.vo1d.timetablemanager.data.BaseRepository
 import ru.vo1d.timetablemanager.data.TimetableDb
 
-class SubjectsRepository(application: Application) : BaseRepository<Int, Subject, SubjectsDao>() {
-    override val dao = TimetableDb.instance(application).courseDao()
+class SubjectsRepository(application: Application) : BaseRepository<Subject, SubjectsDao>() {
+    override val dao = TimetableDb.instance(application).subjectsDao()
 
     val all by lazy { dao.all }
 

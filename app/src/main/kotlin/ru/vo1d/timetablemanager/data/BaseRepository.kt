@@ -1,7 +1,7 @@
 package ru.vo1d.timetablemanager.data
 
 
-abstract class BaseRepository<PK, I : DatabaseEntity<PK>, D : BaseDao<PK, I>> {
+abstract class BaseRepository<I : DatabaseEntity, D : BaseDao<I>> {
     protected abstract val dao: D
 
     suspend fun insert(item: I) =

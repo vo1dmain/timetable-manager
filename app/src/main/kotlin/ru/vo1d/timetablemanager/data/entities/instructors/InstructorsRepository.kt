@@ -5,8 +5,8 @@ import ru.vo1d.timetablemanager.data.BaseRepository
 import ru.vo1d.timetablemanager.data.TimetableDb
 
 class InstructorsRepository(application: Application) :
-    BaseRepository<Int, Instructor, InstructorsDao>() {
-    override val dao = TimetableDb.instance(application).instructorDao()
+    BaseRepository<Instructor, InstructorsDao>() {
+    override val dao = TimetableDb.instance(application).instructorsDao()
 
     val all get() = dao.all
 
