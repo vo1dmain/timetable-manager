@@ -2,6 +2,7 @@ package ru.vo1d.timetablemanager.ui.sections.subjects.list
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -13,14 +14,16 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.vo1d.timetablemanager.MainActivity
 import ru.vo1d.timetablemanager.R
+import ru.vo1d.timetablemanager.data.entities.subjects.Subject
 import ru.vo1d.timetablemanager.databinding.FragmentSubjectsListBinding
 
 internal class SubjectsListFragment : Fragment(R.layout.fragment_subjects_list) {
     private var _binding: FragmentSubjectsListBinding? = null
     private val binding get() = _binding!!
 
-    private val adapter by lazy { SubjectsListAdapter() }
+    private val addSubject = SubjectsListFragmentDirections.addSubject()
 
+    private val adapter by lazy { SubjectsListAdapter() }
     private val viewModel by viewModels<SubjectsListViewModel>()
 
 
@@ -40,12 +43,24 @@ internal class SubjectsListFragment : Fragment(R.layout.fragment_subjects_list) 
 
         binding.list.adapter = adapter
 
+        binding.actionAddSubject.setOnClickListener {
+            findNavController().navigate(addSubject)
+        }
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    viewModel.all.collectLatest(adapter::submitList)
+                    viewModel.all.collectLatest(::onSubjectsListLoaded)
                 }
             }
         }
+    }
+
+
+    private fun onSubjectsListLoaded(list: List<Subject>) {
+        adapter.submitList(list)
+
+        binding.messageIsEmpty.isVisible = list.isEmpty()
+        binding.list.isVisible = list.isNotEmpty()
     }
 }
