@@ -7,7 +7,7 @@ import ru.vo1d.timetablemanager.data.entities.instructors.InstructorsRepository
 import ru.vo1d.timetablemanager.ui.utils.SelectableListViewModel
 
 internal class InstructorsViewModel(application: Application) :
-    SelectableListViewModel<Int, Instructor, InstructorsDao>(application) {
+    SelectableListViewModel<Instructor, InstructorsDao>(application) {
     override val repo = InstructorsRepository(application)
 
     val all by lazy { repo.all }
