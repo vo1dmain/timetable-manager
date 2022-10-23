@@ -101,7 +101,9 @@ open class SessionSetupFragment : Fragment(R.layout.fragment_session_setup) {
         binding.instructor.list.onItemChipSelected<Instructor> {
             viewModel.setInstructorId(it?.id ?: DatabaseEntity.INVALID_ID)
         }
-        binding.type.list.onItemChipSelected<SessionType>(viewModel::setType)
+        binding.type.list.onItemChipSelected<SessionType> {
+            viewModel.setType(it ?: SessionType.None)
+        }
 
         buildingWatcher = binding.place.buildingInput.afterTextChanged(viewModel::setBuilding)
         roomWatcher = binding.place.roomInput.afterTextChanged(viewModel::setRoom)

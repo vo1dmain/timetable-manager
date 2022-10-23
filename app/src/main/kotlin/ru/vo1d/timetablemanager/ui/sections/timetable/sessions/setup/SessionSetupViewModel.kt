@@ -27,7 +27,7 @@ open class SessionSetupViewModel(application: Application) :
 
     protected val _subjectId = MutableStateFlow(INVALID_ID)
     protected val _instructorId = MutableStateFlow(INVALID_ID)
-    protected val _selectedType = MutableStateFlow<SessionType?>(null)
+    protected val _selectedType = MutableStateFlow(SessionType.None)
     private val _buildingNumber = MutableStateFlow("")
     private val _roomNumber = MutableStateFlow("")
     private val _startTime = MutableStateFlow(nowTime().toLocalTime())
@@ -40,7 +40,7 @@ open class SessionSetupViewModel(application: Application) :
 
     val subjectIsSet by lazy { _subjectId.mapLatest { it > INVALID_ID } }
     val instructorIsSet by lazy { _instructorId.mapLatest { it > INVALID_ID } }
-    val typeIsSet by lazy { _selectedType.mapLatest { it != null } }
+    val typeIsSet by lazy { _selectedType.mapLatest { true } }
     val placeIsSet by lazy {
         combine(_buildingNumber, _roomNumber) { states ->
             states.all { it.isNotBlank() && it.isNotEmpty() }
@@ -98,7 +98,7 @@ open class SessionSetupViewModel(application: Application) :
         _instructorId.update { id }
     }
 
-    fun setType(type: SessionType?) {
+    fun setType(type: SessionType) {
         _selectedType.update { type }
     }
 
@@ -120,7 +120,7 @@ open class SessionSetupViewModel(application: Application) :
             weekId = weekId,
             day = day,
             place = place,
-            type = _selectedType.value ?: SessionType.None,
+            type = _selectedType.value,
             startTime = _startTime.value,
             endTime = _endTime.value
         )
