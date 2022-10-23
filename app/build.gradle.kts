@@ -7,8 +7,8 @@ plugins {
 
 android {
     namespace = "ru.vo1d.timetablemanager"
-    compileSdk = 32
-    buildToolsVersion = "30.0.3"
+    compileSdk = 33
+    buildToolsVersion = "33.0.0"
 
     defaultConfig {
         applicationId = "ru.vo1d.timetablemanager"
@@ -39,8 +39,8 @@ android {
     }
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     buildFeatures {
@@ -53,13 +53,12 @@ val navigationVersion: String by project
 val roomVersion: String by project
 
 dependencies {
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.6")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.2.2")
 
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
 
-    implementation("com.google.android.material:material:1.6.1")
+    implementation("com.google.android.material:material:1.7.0")
 
-    implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
@@ -75,7 +74,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
 
-    implementation("androidx.fragment:fragment-ktx:1.5.2")
+    implementation("androidx.fragment:fragment-ktx:1.5.3")
     implementation("androidx.preference:preference-ktx:1.2.0")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 }

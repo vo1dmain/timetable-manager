@@ -9,7 +9,7 @@ pluginManagement {
     plugins {
         kotlin("android") version "1.7.10"
         kotlin("kapt") version "1.7.10"
-        id("com.android.application") version "7.2.2"
+        id("com.android.application") version "7.3.1"
         id("androidx.navigation.safeargs.kotlin") version navigationVersion
     }
 }
