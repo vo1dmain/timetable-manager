@@ -9,9 +9,9 @@ import ru.vo1d.timetablemanager.data.BaseDao
 import ru.vo1d.timetablemanager.data.BaseRepository
 import ru.vo1d.timetablemanager.data.DatabaseEntity
 
-internal abstract class SelectableListViewModel<PK, I, D>(application: Application) :
-    AndroidViewModel(application) where I : DatabaseEntity<PK>, D : BaseDao<PK, I> {
-    protected abstract val repo: BaseRepository<PK, I, D>
+internal abstract class SelectableListViewModel<I, D>(application: Application) :
+    AndroidViewModel(application) where I : DatabaseEntity, D : BaseDao<I> {
+    protected abstract val repo: BaseRepository<I, D>
 
     private val _selectedItems = MutableStateFlow(mutableListOf<I>())
     val selectedItems by lazy { _selectedItems.asStateFlow() }
