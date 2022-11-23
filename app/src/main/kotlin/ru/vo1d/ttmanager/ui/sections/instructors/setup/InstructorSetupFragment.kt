@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.vo1d.ttmanager.R
 import ru.vo1d.ttmanager.databinding.FragmentInstructorSetupBinding
-import ru.vo1d.ttmanager.ui.utils.extensions.afterTextChanged
+import ru.vo1d.ttmanager.ui.utils.extensions.doAfterTextChanged
 
 internal class InstructorSetupFragment : Fragment(R.layout.fragment_instructor_setup) {
     private var firstNameWatcher: TextWatcher? = null
@@ -59,10 +59,10 @@ internal class InstructorSetupFragment : Fragment(R.layout.fragment_instructor_s
         }
 
 
-        firstNameWatcher = binding.firstNameInput.afterTextChanged(viewModel::setFirstName)
-        middleNameWatcher = binding.middleNameInput.afterTextChanged(viewModel::setMiddleName)
-        lastNameWatcher = binding.lastNameInput.afterTextChanged(viewModel::setLastName)
-        emailWatcher = binding.emailInput.afterTextChanged(viewModel::setEmail)
+        firstNameWatcher = binding.firstNameInput.doAfterTextChanged(viewModel::setFirstName)
+        middleNameWatcher = binding.middleNameInput.doAfterTextChanged(viewModel::setMiddleName)
+        lastNameWatcher = binding.lastNameInput.doAfterTextChanged(viewModel::setLastName)
+        emailWatcher = binding.emailInput.doAfterTextChanged(viewModel::setEmail)
 
 
         viewLifecycleOwner.lifecycleScope.launch {

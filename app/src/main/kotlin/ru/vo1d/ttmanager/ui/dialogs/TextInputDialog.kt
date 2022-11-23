@@ -9,7 +9,7 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import ru.vo1d.ttmanager.R
 import ru.vo1d.ttmanager.databinding.DialogCreateBinding
-import ru.vo1d.ttmanager.ui.utils.extensions.afterTextChanged
+import ru.vo1d.ttmanager.ui.utils.extensions.doAfterTextChanged
 
 class TextInputDialog(
     private val text: String,
@@ -32,7 +32,7 @@ class TextInputDialog(
             val positiveButton = dialogInterface.getButton(AlertDialog.BUTTON_POSITIVE)
 
             positiveButton.isEnabled = false
-            binding.newWeekTitle.afterTextChanged {
+            binding.newWeekTitle.doAfterTextChanged {
                 positiveButton.isEnabled = it.trim().isNotEmpty()
             }
             binding.newWeekTitle.setText(text)

@@ -31,8 +31,8 @@ import ru.vo1d.ttmanager.data.entities.subjects.Subject
 import ru.vo1d.ttmanager.databinding.ChipInstructorActionBinding
 import ru.vo1d.ttmanager.databinding.ChipSessionTypeChoiceBinding
 import ru.vo1d.ttmanager.databinding.FragmentSessionSetupBinding
-import ru.vo1d.ttmanager.ui.utils.extensions.afterTextChanged
 import ru.vo1d.ttmanager.ui.utils.extensions.cast
+import ru.vo1d.ttmanager.ui.utils.extensions.doAfterTextChanged
 import ru.vo1d.ttmanager.ui.utils.extensions.onItemChipSelected
 
 
@@ -105,12 +105,12 @@ open class SessionSetupFragment : Fragment(R.layout.fragment_session_setup) {
             viewModel.setType(it ?: SessionType.None)
         }
 
-        buildingWatcher = binding.place.buildingInput.afterTextChanged(viewModel::setBuilding)
-        roomWatcher = binding.place.roomInput.afterTextChanged(viewModel::setRoom)
-        startTimeWatcher = binding.time.startTimeInput.afterTextChanged {
+        buildingWatcher = binding.place.buildingInput.doAfterTextChanged(viewModel::setBuilding)
+        roomWatcher = binding.place.roomInput.doAfterTextChanged(viewModel::setRoom)
+        startTimeWatcher = binding.time.startTimeInput.doAfterTextChanged {
             viewModel.setStartTime(LocalTime.parse(it))
         }
-        endTimeWatcher = binding.time.endTimeInput.afterTextChanged {
+        endTimeWatcher = binding.time.endTimeInput.doAfterTextChanged {
             viewModel.setEndTime(LocalTime.parse(it))
         }
 
