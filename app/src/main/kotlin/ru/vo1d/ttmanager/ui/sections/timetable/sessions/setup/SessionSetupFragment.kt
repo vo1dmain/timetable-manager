@@ -89,7 +89,9 @@ open class SessionSetupFragment : Fragment(R.layout.fragment_session_setup) {
 
         actionSubmit = binding.toolbar.menu.findItem(R.id.action_submit)
         actionSubmit.setOnMenuItemClickListener {
-            viewModel.submit()
+            viewModel.submit {
+                //TODO: добавить уведомление
+            }
             findNavController().navigateUp()
         }
 

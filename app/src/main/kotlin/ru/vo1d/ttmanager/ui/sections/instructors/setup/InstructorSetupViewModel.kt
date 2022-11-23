@@ -3,17 +3,22 @@ package ru.vo1d.ttmanager.ui.sections.instructors.setup
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.vo1d.ttmanager.data.entities.instructors.Instructor
 import ru.vo1d.ttmanager.data.entities.instructors.InstructorsRepository
+import ru.vo1d.ttmanager.ui.utils.SetupViewModel
 
 @OptIn(ExperimentalCoroutinesApi::class)
-internal class InstructorSetupViewModel(application: Application) : AndroidViewModel(application) {
+internal class InstructorSetupViewModel(application: Application) :
+    AndroidViewModel(application), SetupViewModel {
+
     private val repo = InstructorsRepository(application)
 
     private val firstName = MutableStateFlow("")
@@ -32,15 +37,12 @@ internal class InstructorSetupViewModel(application: Application) : AndroidViewM
     }
 
 
-    fun submit() {
+    override fun submit(onResult: (Boolean) -> Unit) {
         viewModelScope.launch {
-            val item = Instructor(
-                firstName = firstName.value.trim(),
-                middleName = middleName.value.trim(),
-                lastName = lastName.value.trim(),
-                email = email.value.trim()
-            )
-            repo.insert(item)
+            val result = trySubmit()
+            withContext(Dispatchers.Main) {
+                onResult(result)
+            }
         }
     }
 
@@ -55,4 +57,16 @@ internal class InstructorSetupViewModel(application: Application) : AndroidViewM
 
     fun setEmail(value: String) =
         email.update { value }
+
+    private suspend fun trySubmit() = try {
+        val item = Instructor(
+            firstName = firstName.value.trim(),
+            middleName = middleName.value.trim(),
+            lastName = lastName.value.trim(),
+            email = email.value.trim()
+        )
+        repo.insert(item) != -1L
+    } catch (e: Exception) {
+        false
+    }
 }

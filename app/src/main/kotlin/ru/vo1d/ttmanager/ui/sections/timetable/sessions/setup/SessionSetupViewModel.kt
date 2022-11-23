@@ -3,9 +3,11 @@ package ru.vo1d.ttmanager.ui.sections.timetable.sessions.setup
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.datetime.*
 import ru.vo1d.ttmanager.data.DatabaseEntity.Companion.DEFAULT_ID
 import ru.vo1d.ttmanager.data.DatabaseEntity.Companion.INVALID_ID
@@ -14,12 +16,14 @@ import ru.vo1d.ttmanager.data.entities.sessions.Session
 import ru.vo1d.ttmanager.data.entities.sessions.SessionType
 import ru.vo1d.ttmanager.data.entities.sessions.SessionsRepository
 import ru.vo1d.ttmanager.data.entities.subjects.SubjectsRepository
+import ru.vo1d.ttmanager.ui.utils.SetupViewModel
 import kotlin.properties.Delegates
 import kotlin.time.Duration.Companion.minutes
 
 @OptIn(ExperimentalCoroutinesApi::class)
 open class SessionSetupViewModel(application: Application) :
-    AndroidViewModel(application) {
+    AndroidViewModel(application), SetupViewModel {
+
     protected val sessionsRepo = SessionsRepository(application)
     private val subjectsRepo = SubjectsRepository(application)
     private val instructorsRepo = InstructorsRepository(application)
@@ -73,10 +77,12 @@ open class SessionSetupViewModel(application: Application) :
     val endTime by lazy { _endTime.asStateFlow() }
 
 
-    open fun submit() {
+    override fun submit(onResult: (Boolean) -> Unit) {
         viewModelScope.launch {
-            val item = buildItem()
-            sessionsRepo.insert(item)
+            val result = trySubmit()
+            withContext(Dispatchers.Main) {
+                onResult(result)
+            }
         }
     }
 
@@ -130,6 +136,14 @@ open class SessionSetupViewModel(application: Application) :
             startTime = _startTime.value,
             endTime = _endTime.value
         )
+    }
+
+    private suspend fun trySubmit() = try {
+        val item = buildItem()
+        val id = sessionsRepo.insert(item)
+        id != -1L
+    } catch (e: Exception) {
+        false
     }
 
 

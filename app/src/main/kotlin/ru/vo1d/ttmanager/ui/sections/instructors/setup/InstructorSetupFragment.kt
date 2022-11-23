@@ -54,7 +54,9 @@ internal class InstructorSetupFragment : Fragment(R.layout.fragment_instructor_s
 
         actionSubmit = binding.toolbar.menu.findItem(R.id.action_submit)
         actionSubmit.setOnMenuItemClickListener {
-            viewModel.submit()
+            viewModel.submit {
+                //TODO: добавить уведомление
+            }
             findNavController().navigateUp()
         }
 
