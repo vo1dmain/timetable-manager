@@ -21,9 +21,9 @@ internal class InstructorSetupViewModel(application: Application) : AndroidViewM
     private val lastName = MutableStateFlow("")
     private val email = MutableStateFlow("")
 
-    private val firstNameIsSet by lazy { firstName.mapLatest { it.isNotBlank() && it.isNotEmpty() } }
-    private val middleNameIsSet by lazy { middleName.mapLatest { it.isNotBlank() && it.isNotEmpty() } }
-    private val lastNameIsSet by lazy { lastName.mapLatest { it.isNotBlank() && it.isNotEmpty() } }
+    private val firstNameIsSet by lazy { firstName.mapLatest(String::isNotBlank) }
+    private val middleNameIsSet by lazy { middleName.mapLatest(String::isNotBlank) }
+    private val lastNameIsSet by lazy { lastName.mapLatest(String::isNotBlank) }
 
     val canBeSubmitted by lazy {
         combine(firstNameIsSet, middleNameIsSet, lastNameIsSet) { states ->
