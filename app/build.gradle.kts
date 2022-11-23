@@ -74,7 +74,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
 
-    implementation("androidx.fragment:fragment-ktx:1.5.3")
+    implementation("androidx.fragment:fragment-ktx:1.5.4")
     implementation("androidx.preference:preference-ktx:1.2.0")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 }
