@@ -2,41 +2,80 @@ package ru.vo1d.ttmanager.ui.sections.subjects.setup
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.vo1d.ttmanager.data.entities.instructors.Instructor
 import ru.vo1d.ttmanager.data.entities.sessions.SessionType
+import ru.vo1d.ttmanager.data.entities.subjectinstructors.SubjectInstructor
+import ru.vo1d.ttmanager.data.entities.subjects.Subject
+import ru.vo1d.ttmanager.data.entities.subjects.SubjectsRepository
+import ru.vo1d.ttmanager.ui.utils.SetupViewModel
 
-internal class SubjectSetupViewModel(application: Application) : AndroidViewModel(application) {
-    private val _selectedTypes = MutableStateFlow(mutableListOf<SessionType>())
-    val selectedTypes = _selectedTypes.asStateFlow()
+@OptIn(ExperimentalCoroutinesApi::class)
+internal class SubjectSetupViewModel(application: Application) :
+    AndroidViewModel(application), SetupViewModel {
 
-    private val _selectedInstructors = MutableStateFlow(mutableListOf<Instructor>())
-    val selectedInstructors = _selectedInstructors.asStateFlow()
+    private val repo = SubjectsRepository(application)
 
-    private val titleIsSet = MutableStateFlow(false)
-    private val instructorIsSet = MutableStateFlow(false)
-    private val typeIsSelected = MutableStateFlow(false)
+    private val title = MutableStateFlow("")
+    private val selectedInstructors = MutableStateFlow(mutableListOf<Instructor>())
+    private val selectedTypes = MutableStateFlow(mutableListOf<SessionType>())
+
+    private val titleIsSet by lazy { title.mapLatest(String::isNotBlank) }
+    private val instructorsAreSet by lazy { selectedInstructors.mapLatest(MutableList<Instructor>::isNotEmpty) }
+    private val typesAreSet by lazy { selectedTypes.mapLatest(MutableList<SessionType>::isNotEmpty) }
 
 
-    val canBeSaved = combine(titleIsSet, instructorIsSet, typeIsSelected) { states ->
+    val canBeSubmitted = combine(titleIsSet, instructorsAreSet, typesAreSet) { states ->
         states.all { it }
     }
 
-
-    fun selectType(type: SessionType) {
-        _selectedTypes.update { it.apply { add(type) } }
+    override fun submit(onResult: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            val result = trySubmit()
+            withContext(Dispatchers.Main) {
+                onResult(result)
+            }
+        }
     }
 
-    fun unselectType(type: SessionType) {
-        _selectedTypes.update { it.apply { remove(type) } }
-    }
+    fun setTitle(value: String) =
+        title.update { value }
 
-    fun selectInstructor(instructor: Instructor) {
-        _selectedInstructors.update { it.apply { add(instructor) } }
-    }
+    fun selectType(type: SessionType) =
+        selectedTypes.update { it.apply { add(type) } }
 
-    fun unselectInstructor(instructor: Instructor) {
-        _selectedInstructors.update { it.apply { remove(instructor) } }
+    fun unselectType(type: SessionType) =
+        selectedTypes.update { it.apply { remove(type) } }
+
+    fun selectInstructor(instructor: Instructor) =
+        selectedInstructors.update { it.apply { add(instructor) } }
+
+    fun unselectInstructor(instructor: Instructor) =
+        selectedInstructors.update { it.apply { remove(instructor) } }
+
+
+    private suspend fun trySubmit(): Boolean {
+        return try {
+            val item = Subject(
+                title = title.value.trim(),
+                types = selectedTypes.value
+            )
+            val id = repo.insert(item).toInt()
+
+            if (id == -1) return false
+
+            selectedInstructors.value.forEach {
+                val pair = SubjectInstructor(id, it.id)
+                repo.insertPair(pair)
+            }
+            true
+        } catch (e: Exception) {
+            false
+        }
     }
 }
