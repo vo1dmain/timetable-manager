@@ -96,7 +96,7 @@ internal class TimetableFragment : Fragment(R.layout.fragment_timetable) {
 
 
     companion object {
-        private inline fun AdapterView<*>.doOnItemSelected(
+        internal inline fun AdapterView<*>.doOnItemSelected(
             crossinline action: (AdapterView<*>, View, Int, Long) -> Unit
         ) {
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
