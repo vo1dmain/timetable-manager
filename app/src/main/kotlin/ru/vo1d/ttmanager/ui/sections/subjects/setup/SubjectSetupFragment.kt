@@ -1,0 +1,31 @@
+package ru.vo1d.ttmanager.ui.sections.subjects.setup
+
+import android.os.Bundle
+import android.view.View
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
+import kotlinx.coroutines.launch
+import ru.vo1d.ttmanager.R
+import ru.vo1d.ttmanager.databinding.FragmentSubjectSetupBinding
+
+internal class SubjectSetupFragment : Fragment(R.layout.fragment_subject_setup) {
+    private var _binding: FragmentSubjectSetupBinding? = null
+    private val binding get() = _binding!!
+
+    private val viewModel by viewModels<SubjectSetupViewModel>()
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentSubjectSetupBinding.bind(view)
+
+        binding.toolbar.setupWithNavController(findNavController())
+    }
+}

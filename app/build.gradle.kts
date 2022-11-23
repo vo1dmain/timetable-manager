@@ -6,12 +6,12 @@ plugins {
 }
 
 android {
-    namespace = "ru.vo1d.timetablemanager"
+    namespace = "ru.vo1d.ttmanager"
     compileSdk = 33
     buildToolsVersion = "33.0.0"
 
     defaultConfig {
-        applicationId = "ru.vo1d.timetablemanager"
+        applicationId = "ru.vo1d.ttmanager"
         minSdk = 24
         targetSdk = 33
         versionCode = 3

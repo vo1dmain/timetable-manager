@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/nav_timetable"
-        android:name="ru.vo1d.timetablemanager.ui.sections.timetable.TimetableFragment"
+        android:name="ru.vo1d.ttmanager.ui.sections.timetable.TimetableFragment"
         android:label="@string/menu_timetable"
         tools:layout="@layout/fragment_timetable">
         <action
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/nav_subjects"
-        android:name="ru.vo1d.timetablemanager.ui.sections.subjects.list.SubjectsListFragment"
+        android:name="ru.vo1d.ttmanager.ui.sections.subjects.list.SubjectsListFragment"
         android:label="@string/menu_courses"
         tools:layout="@layout/fragment_subjects_list">
         <action
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/nav_instructors"
-        android:name="ru.vo1d.timetablemanager.ui.sections.instructors.list.InstructorsListFragment"
+        android:name="ru.vo1d.ttmanager.ui.sections.instructors.list.InstructorsListFragment"
         android:label="@string/menu_instructors"
         tools:layout="@layout/fragment_instructors_list">
         <action
@@ -43,37 +43,37 @@
 
     <fragment
         android:id="@+id/nav_about"
-        android:name="ru.vo1d.timetablemanager.ui.sections.about.AboutFragment"
+        android:name="ru.vo1d.ttmanager.ui.sections.about.AboutFragment"
         android:label="@string/menu_about"
         tools:layout="@layout/fragment_about" />
 
     <fragment
         android:id="@+id/nav_subject_creation"
-        android:name="ru.vo1d.timetablemanager.ui.sections.subjects.setup.SubjectSetupFragment"
+        android:name="ru.vo1d.ttmanager.ui.sections.subjects.setup.SubjectSetupFragment"
         android:label="@string/fragment_label_course_creation"
         tools:layout="@layout/fragment_subject_setup" />
 
     <fragment
         android:id="@+id/nav_subject_edition"
-        android:name="ru.vo1d.timetablemanager.ui.sections.subjects.setup.SubjectSetupFragment"
+        android:name="ru.vo1d.ttmanager.ui.sections.subjects.setup.SubjectSetupFragment"
         android:label="@string/fragment_label_course_edition"
         tools:layout="@layout/fragment_subject_setup" />
 
     <fragment
         android:id="@+id/nav_instructor_creation"
-        android:name="ru.vo1d.timetablemanager.ui.sections.instructors.setup.InstructorSetupFragment"
+        android:name="ru.vo1d.ttmanager.ui.sections.instructors.setup.InstructorSetupFragment"
         android:label="@string/fragment_label_instructor_creation"
         tools:layout="@layout/fragment_instructor_setup" />
 
     <fragment
         android:id="@+id/nav_instructor_edition"
-        android:name="ru.vo1d.timetablemanager.ui.sections.instructors.setup.InstructorSetupFragment"
+        android:name="ru.vo1d.ttmanager.ui.sections.instructors.setup.InstructorSetupFragment"
         android:label="@string/fragment_label_instructor_edition"
         tools:layout="@layout/fragment_instructor_setup" />
 
     <fragment
         android:id="@+id/nav_session_creation"
-        android:name="ru.vo1d.timetablemanager.ui.sections.timetable.sessions.setup.SessionSetupFragment"
+        android:name="ru.vo1d.ttmanager.ui.sections.timetable.sessions.setup.SessionSetupFragment"
         android:label="@string/fragment_label_class_creation"
         tools:layout="@layout/fragment_session_setup">
         <argument
@@ -90,7 +90,7 @@
 
     <fragment
         android:id="@+id/nav_session_edition"
-        android:name="ru.vo1d.timetablemanager.ui.sections.timetable.sessions.edit.SessionEditFragment"
+        android:name="ru.vo1d.ttmanager.ui.sections.timetable.sessions.edit.SessionEditFragment"
         android:label="@string/fragment_label_class_edition"
         tools:layout="@layout/fragment_subject_setup">
         <argument
@@ -112,7 +112,7 @@
 
     <fragment
         android:id="@+id/nav_preferences"
-        android:name="ru.vo1d.timetablemanager.ui.sections.settings.SettingsFragment"
+        android:name="ru.vo1d.ttmanager.ui.sections.settings.SettingsFragment"
         android:label="@string/fragment_label_settings" />
 
 </navigation>
