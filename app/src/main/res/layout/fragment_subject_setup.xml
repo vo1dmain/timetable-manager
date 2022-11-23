@@ -24,9 +24,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingStart="16dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="16dp"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -38,7 +37,7 @@
             app:hintEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/course_title_input"
+                android:id="@+id/subject_title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/hint_subject_title"
@@ -53,19 +52,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_set_instructors"
-            android:paddingBottom="4dp"
             app:hintEnabled="true">
 
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/selected_instructors"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="38dp">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/selected_instructors"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:singleLine="true" />
+
+            </HorizontalScrollView>
 
             <androidx.appcompat.widget.AppCompatMultiAutoCompleteTextView
                 android:id="@+id/instructors_setup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
                 android:completionThreshold="1"
                 android:inputType="textPersonName"
                 android:maxLines="1"
@@ -76,10 +81,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/title_types_choosing_block"
+            android:layout_marginTop="8dp"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Overline" />
 
         <com.google.android.material.chip.ChipGroup
-            android:id="@+id/list"
+            android:id="@+id/types_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:chipSpacingHorizontal="4dp"
