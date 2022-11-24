@@ -6,15 +6,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.datetime.DayOfWeek
-import ru.vo1d.ttmanager.data.entities.sessions.Session
-import ru.vo1d.ttmanager.data.entities.sessions.SessionsDao
 import ru.vo1d.ttmanager.data.entities.sessions.SessionsRepository
-import ru.vo1d.ttmanager.ui.utils.SelectableListViewModel
+import ru.vo1d.ttmanager.ui.common.selection.SelectableListViewModel
 
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class SessionsViewModel(application: Application) :
-    SelectableListViewModel<Session, SessionsDao>(application) {
-    override val repo = SessionsRepository(application)
+    SelectableListViewModel<Long>(application) {
+    private val repo = SessionsRepository(application)
 
     private val day = MutableStateFlow(DayOfWeek.MONDAY)
 
