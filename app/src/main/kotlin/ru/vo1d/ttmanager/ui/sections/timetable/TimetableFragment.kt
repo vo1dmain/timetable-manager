@@ -2,7 +2,6 @@ package ru.vo1d.ttmanager.ui.sections.timetable
 
 import android.os.Bundle
 import android.view.View
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -21,6 +20,7 @@ import ru.vo1d.ttmanager.R
 import ru.vo1d.ttmanager.data.DatabaseEntity.Companion.INVALID_ID
 import ru.vo1d.ttmanager.data.entities.weeks.Week
 import ru.vo1d.ttmanager.databinding.FragmentTimetableBinding
+import ru.vo1d.ttmanager.ui.utils.extensions.doOnItemSelected
 
 internal class TimetableFragment : Fragment(R.layout.fragment_timetable) {
     private val daysNames by lazy { resources.getStringArray(R.array.days_of_week_short) }
@@ -92,23 +92,5 @@ internal class TimetableFragment : Fragment(R.layout.fragment_timetable) {
 
         binding.daysTabs.isVisible = list.isNotEmpty()
         binding.daysPager.isVisible = list.isNotEmpty()
-    }
-
-
-    companion object {
-        internal inline fun AdapterView<*>.doOnItemSelected(
-            crossinline action: (AdapterView<*>, View, Int, Long) -> Unit
-        ) {
-            onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View,
-                    position: Int,
-                    id: Long
-                ) = action(parent, view, position, id)
-
-                override fun onNothingSelected(parent: AdapterView<*>?) = Unit
-            }
-        }
     }
 }
