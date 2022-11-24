@@ -16,13 +16,13 @@ import ru.vo1d.ttmanager.data.entities.sessions.Session
 import ru.vo1d.ttmanager.data.entities.sessions.SessionType
 import ru.vo1d.ttmanager.data.entities.sessions.SessionsRepository
 import ru.vo1d.ttmanager.data.entities.subjects.SubjectsRepository
-import ru.vo1d.ttmanager.ui.utils.SetupViewModel
+import ru.vo1d.ttmanager.ui.common.Submitter
 import kotlin.properties.Delegates
 import kotlin.time.Duration.Companion.minutes
 
 @OptIn(ExperimentalCoroutinesApi::class)
 open class SessionSetupViewModel(application: Application) :
-    AndroidViewModel(application), SetupViewModel {
+    AndroidViewModel(application), Submitter {
 
     protected val sessionsRepo = SessionsRepository(application)
     private val subjectsRepo = SubjectsRepository(application)

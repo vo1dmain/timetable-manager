@@ -13,11 +13,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.vo1d.ttmanager.data.entities.instructors.Instructor
 import ru.vo1d.ttmanager.data.entities.instructors.InstructorsRepository
-import ru.vo1d.ttmanager.ui.utils.SetupViewModel
+import ru.vo1d.ttmanager.ui.common.Submitter
 
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class InstructorSetupViewModel(application: Application) :
-    AndroidViewModel(application), SetupViewModel {
+    AndroidViewModel(application), Submitter {
 
     private val repo = InstructorsRepository(application)
 

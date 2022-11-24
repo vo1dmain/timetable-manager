@@ -13,11 +13,11 @@ import ru.vo1d.ttmanager.data.entities.sessions.SessionType
 import ru.vo1d.ttmanager.data.entities.subjectinstructors.SubjectInstructor
 import ru.vo1d.ttmanager.data.entities.subjects.Subject
 import ru.vo1d.ttmanager.data.entities.subjects.SubjectsRepository
-import ru.vo1d.ttmanager.ui.utils.SetupViewModel
+import ru.vo1d.ttmanager.ui.common.Submitter
 
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class SubjectSetupViewModel(application: Application) :
-    AndroidViewModel(application), SetupViewModel {
+    AndroidViewModel(application), Submitter {
 
     private val repo = SubjectsRepository(application)
 
