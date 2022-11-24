@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:text="@string/action_add_instructor_title"
+        android:text="@string/action_add"
         app:icon="@drawable/ic_outline_person_add_alt" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

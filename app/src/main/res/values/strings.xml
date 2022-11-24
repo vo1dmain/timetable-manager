@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <resources>
+    <string name="action_add">Add</string>
     <string name="action_add_day_title">Add day</string>
     <string name="action_add_week_title">Add week</string>
     <string name="action_confirm_creation_title">Confirm</string>

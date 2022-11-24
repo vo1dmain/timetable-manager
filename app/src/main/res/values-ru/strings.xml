@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
+    <string name="action_add">Добавить</string>
     <string name="action_add_day_title">Добавить день</string>
     <string name="action_add_week_title">Добавить неделю</string>
     <string name="action_confirm_creation_title">Подтвердить</string>

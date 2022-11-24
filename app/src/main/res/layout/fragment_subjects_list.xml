@@ -52,8 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:contentDescription="@string/action_add_subject_title"
-        android:text="@string/action_add_subject_title"
+        android:text="@string/action_add"
         app:icon="@drawable/ic_add" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
