@@ -32,19 +32,14 @@ internal class TimetableFragment : Fragment(R.layout.fragment_timetable) {
 
     private var mediator: TabLayoutMediator? = null
 
-    private val daysAdapter by lazy { DaysAdapter(this) }
-    private val weeksAdapter by lazy {
-        ArrayAdapter(
-            requireContext(),
-            android.R.layout.simple_spinner_item,
-            mutableListOf<Week>()
-        )
-    }
+    private lateinit var daysAdapter: DaysAdapter
+    private lateinit var weeksAdapter: ArrayAdapter<Week>
 
 
     override fun onDestroyView() {
         super.onDestroyView()
         mediator?.detach()
+        mediator = null
         _binding = null
     }
 
@@ -57,12 +52,17 @@ internal class TimetableFragment : Fragment(R.layout.fragment_timetable) {
             MainActivity.appBarConfiguration
         )
 
-
         binding.weeksSpinner.doOnItemSelected { _, _, position, _ ->
             val id = weeksAdapter.getItem(position)?.id ?: INVALID_ID
             viewModel.selectWeek(id)
         }
 
+        daysAdapter = DaysAdapter(this)
+        weeksAdapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            mutableListOf<Week>()
+        )
 
         binding.weeksSpinner.adapter = weeksAdapter
         binding.daysPager.adapter = daysAdapter
