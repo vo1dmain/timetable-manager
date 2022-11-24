@@ -2,6 +2,7 @@
 <resources>
     <string name="action_add">Add</string>
     <string name="action_add_day_title">Add day</string>
+    <string name="action_add_session_title">Add session</string>
     <string name="action_add_week_title">Add week</string>
     <string name="action_confirm_creation_title">Confirm</string>
     <string name="action_delete_all_title">Delete all</string>
@@ -10,11 +11,7 @@
     <string name="action_edit_title">Edit</string>
     <string name="action_rename_week_title">Rename week</string>
     <string name="action_search_title">Search</string>
-    <string name="action_select_all_title">All</string>
-
-    <string name="action_add_instructor_title">Add instructor</string>
-    <string name="add_session">Add session</string>
-    <string name="action_add_subject_title">Add subject</string>
+    <string name="action_select_all_title">Select all</string>
 
     <string name="app_name">Timetable manager</string>
     <string name="app_version">Version:</string>
