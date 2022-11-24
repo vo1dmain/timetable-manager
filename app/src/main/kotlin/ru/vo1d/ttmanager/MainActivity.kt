@@ -10,7 +10,9 @@ import androidx.preference.PreferenceManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ru.vo1d.ttmanager.ui.sections.settings.SettingsFragment
 
-internal class MainActivity : AppCompatActivity() {
+internal class MainActivity : AppCompatActivity(), ActionModeOwner {
+    override var actionMode: ActionMode? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setThemeFromPreferences()
         super.onCreate(savedInstanceState)
@@ -45,7 +47,5 @@ internal class MainActivity : AppCompatActivity() {
             R.id.nav_instructors,
             R.id.nav_preferences
         ).build()
-
-        var actionMode: ActionMode? = null
     }
 }
