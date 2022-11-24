@@ -39,9 +39,9 @@
     </string-array>
 
     <string name="dialog_message_delete_all">All items will be permanently deleted.</string>
-    <string name="dialog_message_delete_day">Day \"%1$s\" and all its classes will be permanently deleted.</string>
+    <string name="dialog_message_delete_day">Day “%1$s” and all its classes will be permanently deleted.</string>
     <string name="dialog_message_delete_selected">Selected items (%1$d) will be permanently deleted.</string>
-    <string name="dialog_message_delete_week">Week \"%1$s\" and all its content will be permanently deleted.</string>
+    <string name="dialog_message_delete_week">Week “%1$s” and all its content will be permanently deleted.</string>
     <string name="dialog_negative">Cancel</string>
     <string name="dialog_positive">OK</string>
     <string name="dialog_title_delete_multiple_items">Delete items?</string>
@@ -91,9 +91,9 @@
     <string name="snackbar_action_undone">Undo</string>
     <string name="snackbar_message_all_deleted">All items has been deleted.</string>
     <string name="snackbar_message_creation_success">New items has been added: %1$s.</string>
-    <string name="snackbar_message_delete_success">Item \"%1$s\" has been deleted.</string>
+    <string name="snackbar_message_delete_success">Item “%1$s” has been deleted.</string>
     <string name="snackbar_message_selected_deleted">Items deleted: %1$d</string>
-    <string name="snackbar_message_update_success">Item \"%1$s\" has been successfully updated.</string>
+    <string name="snackbar_message_update_success">Item “%1$s” has been successfully updated.</string>
 
     <string-array name="theme_entries">
         <item>Crimson</item>

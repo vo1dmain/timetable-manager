@@ -91,9 +91,9 @@
     <string name="snackbar_action_undone">Отмена</string>
     <string name="snackbar_message_all_deleted">Все элементы удалены.</string>
     <string name="snackbar_message_creation_success">Добавлен новый элемент: %1$s.</string>
-    <string name="snackbar_message_delete_success">Элемент \"%1$s\" удалён.</string>
+    <string name="snackbar_message_delete_success">Элемент «%1$s» удалён.</string>
     <string name="snackbar_message_selected_deleted">Элементов удалено: %1$d</string>
-    <string name="snackbar_message_update_success">Элемент \"%1$s\" успешно обновлён.</string>
+    <string name="snackbar_message_update_success">Элемент «%1$s» успешно обновлён.</string>
 
     <string-array name="theme_entries">
         <item>Малиновая</item>
