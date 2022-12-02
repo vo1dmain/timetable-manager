@@ -16,10 +16,10 @@ interface InstructorsDao : BaseDao<Instructor> {
     @Query(
         """SELECT * FROM instructors AS i
            INNER JOIN instructors_fts AS fts ON fts.rowId == i.id
-           WHERE instructors_fts MATCH :filter
+           WHERE instructors_fts MATCH :query
            ORDER BY lastName ASC, middleName ASC, firstName ASC"""
     )
-    fun find(filter: String): Flow<List<Instructor>>
+    fun find(query: String): Flow<List<Instructor>>
 
     @Transaction
     @Query(
