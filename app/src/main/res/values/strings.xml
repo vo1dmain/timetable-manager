@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <resources>
     <string name="action_add">Add</string>
-    <string name="action_add_day_title">Add day</string>
-    <string name="action_add_session_title">Add session</string>
-    <string name="action_add_week_title">Add week</string>
-    <string name="action_confirm_creation_title">Confirm</string>
-    <string name="action_delete_all_title">Delete all</string>
-    <string name="action_delete_item_title">Delete</string>
-    <string name="action_delete_this_week_title">Delete this week</string>
-    <string name="action_edit_title">Edit</string>
-    <string name="action_rename_week_title">Rename week</string>
-    <string name="action_search_title">Search</string>
-    <string name="action_select_all_title">Select all</string>
+    <string name="action_add_day">Add day</string>
+    <string name="action_add_session">Add session</string>
+    <string name="action_add_week">Add week</string>
+    <string name="action_confirm">Confirm</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_delete_all">Delete all</string>
+    <string name="action_delete_this_week">Delete this week</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_rename_week">Rename week</string>
+    <string name="action_search">Search</string>
+    <string name="action_select_all">Select all</string>
+    <string name="action_undone">Undo</string>
 
     <string name="app_name">Timetable manager</string>
     <string name="app_version">Version:</string>
@@ -88,10 +89,10 @@
         <item>Laboratory</item>
     </string-array>
 
-    <string name="snackbar_action_undone">Undo</string>
-    <string name="snackbar_message_all_deleted">All items has been deleted.</string>
     <string name="snackbar_message_creation_success">New items has been added: %1$s.</string>
-    <string name="snackbar_message_delete_success">Item “%1$s” has been deleted.</string>
+    <string name="snackbar_message_delete_all_success">All items has been deleted.</string>
+    <string name="snackbar_message_delete_failure">Failed to delete items.</string>
+    <string name="snackbar_message_delete_item_success">Item “%1$s” has been deleted.</string>
     <string name="snackbar_message_selected_deleted">Items deleted: %1$d</string>
     <string name="snackbar_message_update_success">Item “%1$s” has been successfully updated.</string>
 

@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
     <string name="action_add">Добавить</string>
-    <string name="action_add_day_title">Добавить день</string>
-    <string name="action_add_session_title">Добавить занятие</string>
-    <string name="action_add_week_title">Добавить неделю</string>
-    <string name="action_confirm_creation_title">Подтвердить</string>
-    <string name="action_delete_all_title">Удалить все</string>
-    <string name="action_delete_item_title">Удалить</string>
-    <string name="action_delete_this_week_title">Удалить эту неделю</string>
-    <string name="action_edit_title">Изменить</string>
-    <string name="action_rename_week_title">Переименовать неделю</string>
-    <string name="action_search_title">Искать</string>
-    <string name="action_select_all_title">Выбрать все</string>
+    <string name="action_add_day">Добавить день</string>
+    <string name="action_add_session">Добавить занятие</string>
+    <string name="action_add_week">Добавить неделю</string>
+    <string name="action_confirm">Подтвердить</string>
+    <string name="action_delete">Удалить</string>
+    <string name="action_delete_all">Удалить все</string>
+    <string name="action_delete_this_week">Удалить эту неделю</string>
+    <string name="action_edit">Изменить</string>
+    <string name="action_rename_week">Переименовать неделю</string>
+    <string name="action_search">Искать</string>
+    <string name="action_select_all">Выбрать все</string>
+    <string name="action_undone">Отмена</string>
 
     <string name="app_name">Менеджер расписаний</string>
     <string name="app_version">Версия:</string>
@@ -88,10 +89,10 @@
         <item>Лабораторная</item>
     </string-array>
 
-    <string name="snackbar_action_undone">Отмена</string>
-    <string name="snackbar_message_all_deleted">Все элементы удалены.</string>
     <string name="snackbar_message_creation_success">Добавлен новый элемент: %1$s.</string>
-    <string name="snackbar_message_delete_success">Элемент «%1$s» удалён.</string>
+    <string name="snackbar_message_delete_all_success">Все элементы удалены.</string>
+    <string name="snackbar_message_delete_failure">Не удалось удалить элементы.</string>
+    <string name="snackbar_message_delete_item_success">Элемент «%1$s» удалён.</string>
     <string name="snackbar_message_selected_deleted">Элементов удалено: %1$d</string>
     <string name="snackbar_message_update_success">Элемент «%1$s» успешно обновлён.</string>
 
