@@ -11,8 +11,8 @@ class InstructorsRepository(application: Application) :
     val all get() = dao.all
 
 
-    fun getFiltered(filter: String) =
-        dao.find(filter)
+    fun find(query: String) =
+        dao.find(query)
 
     fun findForSubject(subjectId: Int) =
         dao.findForSubject(subjectId)
