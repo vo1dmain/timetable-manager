@@ -15,6 +15,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.selection.SelectionPredicates
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.vo1d.ttmanager.MainActivity
@@ -26,6 +27,7 @@ import ru.vo1d.ttmanager.ui.dialogs.ConfirmationDialog
 import ru.vo1d.ttmanager.ui.sections.instructors.list.selection.InstructorKeyProvider
 import ru.vo1d.ttmanager.ui.utils.extensions.activity
 import ru.vo1d.ttmanager.ui.utils.extensions.observe
+import ru.vo1d.ttmanager.ui.utils.extensions.selectionTracker
 import ru.vo1d.ttmanager.ui.utils.selectionModeCallback
 
 class InstructorsListFragment : Fragment(R.layout.fragment_instructors_list) {
@@ -39,7 +41,6 @@ class InstructorsListFragment : Fragment(R.layout.fragment_instructors_list) {
 
     private lateinit var actionDeleteAll: MenuItem
     private lateinit var adapter: InstructorsListAdapter
-    private lateinit var selectionTracker: SelectionTracker<Long>
     private lateinit var actionModeCallback: ActionMode.Callback
 
 
@@ -60,16 +61,32 @@ class InstructorsListFragment : Fragment(R.layout.fragment_instructors_list) {
 
         adapter = InstructorsListAdapter().apply {
             binding.list.adapter = this
-            tracker = createSelectionTracker(this)
+
+            viewModel.tracker = selectionTracker(
+                "instructors-list",
+                binding.list,
+                InstructorKeyProvider(this),
+                LongDetailsLookup(binding.list),
+                StorageStrategy.createLongStorage()
+            ) {
+                withSelectionPredicate(SelectionPredicates.createSelectAnything())
+            }.apply { observe(::onSelectionChanged) }
+
+            tracker = viewModel.tracker
         }
 
         actionModeCallback = selectionModeCallback(
-            selectionTracker,
+            viewModel.tracker,
             activity,
             { adapter.currentList.map { it.id.toLong() } },
             { _, _ -> binding.actionAddInstructor.hide(); true },
             onDestroy = { binding.actionAddInstructor.show() }
-        )
+        ) { _, item ->
+            when (item.itemId) {
+                R.id.action_delete_selected -> deleteSelected()
+            }
+            true
+        }
 
         binding.actionAddInstructor.setOnClickListener {
             findNavController().navigate(addInstructor)
@@ -104,7 +121,7 @@ class InstructorsListFragment : Fragment(R.layout.fragment_instructors_list) {
         ConfirmationDialog(
             R.string.dialog_title_delete_multiple_items,
             R.string.dialog_message_delete_all,
-            viewModel::deleteAll
+            ::deleteAll
         ).show(parentFragmentManager, "confirm_deletion_dialog")
     }
 
@@ -121,19 +138,22 @@ class InstructorsListFragment : Fragment(R.layout.fragment_instructors_list) {
     }
 
 
-    private fun createSelectionTracker(adapter: InstructorsListAdapter): SelectionTracker<Long> {
-        selectionTracker = SelectionTracker.Builder(
-            "instructors-list",
-            binding.list,
-            InstructorKeyProvider(adapter),
-            LongDetailsLookup(binding.list),
-            StorageStrategy.createLongStorage()
-        ).withSelectionPredicate(
-            SelectionPredicates.createSelectAnything()
-        ).build()
+    private fun deleteAll() {
+        viewModel.deleteAll {
+            val message = when (it) {
+                true -> R.string.snackbar_message_delete_all_success
+                false -> R.string.snackbar_message_delete_failure
+            }
+            Snackbar.make(requireView(), message, Snackbar.LENGTH_LONG)
+                .setAction(R.string.action_undone) {}
+                .setAnchorView(binding.actionAddInstructor)
+                .show()
+        }
+    }
 
-        selectionTracker.observe(::onSelectionChanged)
+    private fun deleteSelected() {
+        viewModel.deleteSelected {
 
-        return selectionTracker
+        }
     }
 }
