@@ -1,4 +1,5 @@
 pluginManagement {
+    includeBuild("build-tools")
     repositories {
         gradlePluginPortal()
         google()
@@ -7,7 +8,7 @@ pluginManagement {
 }
 
 plugins {
-    id("org.gradle.toolchains.foojay-resolver-convention") version ("0.8.0")
+    id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0"
 }
 
 dependencyResolutionManagement {
@@ -19,3 +20,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "timetable-manager"
 include(":app")
+
+include(":core:data")
+include(":core:datetime")
+include(":core:design")
+include(":core:preferences")

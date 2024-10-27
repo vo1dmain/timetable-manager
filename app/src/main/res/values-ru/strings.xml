@@ -22,23 +22,6 @@
 
     <string name="checkbox_title_is_distant">Дистанционно</string>
 
-    <string-array name="days_of_week_full">
-        <item>Понедельник</item>
-        <item>Вторник</item>
-        <item>Среда</item>
-        <item>Четверг</item>
-        <item>Пятница</item>
-        <item>Суббота</item>
-    </string-array>
-    <string-array name="days_of_week_short">
-        <item>ПН</item>
-        <item>ВТ</item>
-        <item>СР</item>
-        <item>ЧТ</item>
-        <item>ПТ</item>
-        <item>СБ</item>
-    </string-array>
-
     <string name="dialog_message_delete_all">Все элементы будут удалены навсегда.</string>
     <string name="dialog_message_delete_day">День «%1$s» и все занятия в нём будут удалены навсегда.</string>
     <string name="dialog_message_delete_selected">Выбранные элементы (%1$d) будут удалены навсегда.</string>
@@ -108,15 +91,6 @@
         <item>Тыквенная</item>
     </string-array>
     <string name="theme_preference_title">Тема</string>
-
-    <string name="time_am">ДП</string>
-    <string-array name="time_format_entries">
-        <item>По-умолчаню (системный)</item>
-        <item>12 часов</item>
-        <item>24 часа</item>
-    </string-array>
-    <string name="time_format_preference_title">Формат времени</string>
-    <string name="time_pm">ПП</string>
 
     <string name="title_contact_info_block">Контакты</string>
     <string name="title_instructor_setting_block">Преподаватель</string>

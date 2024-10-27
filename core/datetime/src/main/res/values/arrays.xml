@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="time_format_values">
+        <item>system</item>
+        <item>12-hour</item>
+        <item>24-hour</item>
+    </string-array>
+</resources>

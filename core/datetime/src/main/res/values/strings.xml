@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="days_of_week_full">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+    </string-array>
+    <string-array name="days_of_week_short">
+        <item>MON</item>
+        <item>TUE</item>
+        <item>WED</item>
+        <item>THU</item>
+        <item>FRI</item>
+        <item>SAT</item>
+    </string-array>
+
+    <string name="time_am">AM</string>
+    <string-array name="time_format_entries">
+        <item>Default (system-like)</item>
+        <item>12-hour</item>
+        <item>24-hour</item>
+    </string-array>
+    <string name="time_format_preference_title">Time format</string>
+    <string name="time_pm">PM</string>
+
+    <string name="time_format_preference_key" translatable="false">time format</string>
+</resources>

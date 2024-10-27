@@ -7,11 +7,16 @@ jdk = "17"
 
 androidGradlePlugin = "8.7.1"
 
+androidxActivity = "1.9.3"
 androidxLifecycle = "2.8.6"
 androidxNavigation = "2.8.3"
 androidxRoom = "2.6.1"
 
+appcompat = "1.6.1"
+
+composeBom = "2024.10.00"
 constraintlayout = "2.1.4"
+coreKtx = "1.10.1"
 
 datastorePreferences = "1.1.1"
 
@@ -29,14 +34,32 @@ preferenceKtx = "1.2.1"
 
 recyclerviewSelection = "1.1.0"
 
+junit = "4.13.2"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
+coreKtxVersion = "1.13.1"
+appcompatVersion = "1.7.0"
+
 [libraries]
+android-tools-build = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
+
 android-jdk-desugaring = { module = "com.android.tools:desugar_jdk_libs", version.ref = "jdkDesugaring" }
+
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidxActivity" }
+
+androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
+androidx-compose-material3 = { module = "androidx.compose.material3:material3" }
+androidx-compose-runtime-android = { module = "androidx.compose.runtime:runtime-android" }
 
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
 
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 
+androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
+
 androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentKtx" }
+
+androidx-junit = { module = "androidx.test.ext:junit", version.ref = "junitVersion" }
 
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidxLifecycle" }
 androidx-lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "androidxLifecycle" }
@@ -51,13 +74,23 @@ androidx-recyclerview-selection = { module = "androidx.recyclerview:recyclerview
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidxRoom" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "androidxRoom" }
 
+junit = { module = "junit:junit", version.ref = "junit" }
+
+kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
 
 material = { module = "com.google.android.material:material", version.ref = "material" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+
 androidx-navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "androidxNavigation" }
+
+buildtools-library = { id = "ru.vo1dmain.ttmanager.library", version = "unspecified" }
+
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 
 devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
