@@ -42,10 +42,14 @@ android {
         release {
             versionNameSuffix = "r"
             isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-project.pro")
+            isDebuggable = false
         }
         debug {
             versionNameSuffix = "d"
             isMinifyEnabled = false
+            isShrinkResources = false
             isDebuggable = true
         }
     }
