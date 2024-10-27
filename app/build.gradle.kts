@@ -1,80 +1,86 @@
 plugins {
-    kotlin("android")
-    kotlin("kapt")
-    id("com.android.application")
-    id("androidx.navigation.safeargs.kotlin")
+    alias(libs.plugins.kotlin.android) apply true
+    alias(libs.plugins.android.application) apply true
+    alias(libs.plugins.androidx.navigation.safeargs) apply true
+    alias(libs.plugins.devtools.ksp) apply true
+}
+
+kotlin {
+    jvmToolchain(libs.versions.jdk.get().toInt())
+
+    compilerOptions {
+        freeCompilerArgs = listOf("-Xstring-concat=inline")
+    }
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(libs.versions.jdk.get().toInt())
+    }
+}
+
+ksp {
+    arg("room.incremental", "true")
+    arg("room.schemaLocation", "$projectDir/schemas")
+    arg("room.expandProjection", "true")
 }
 
 android {
     namespace = "ru.vo1d.ttmanager"
-    compileSdk = 33
-    buildToolsVersion = "33.0.0"
+    compileSdk = libs.versions.compileSdk.get().toInt()
+    buildToolsVersion = libs.versions.buildTools.get()
 
     defaultConfig {
         applicationId = "ru.vo1d.ttmanager"
-        minSdk = 24
-        targetSdk = 33
-        versionCode = 3
-        versionName = "3.0.0"
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments += mapOf(
-                    "room.incremental" to "true",
-                    "room.schemaLocation" to "$projectDir/schemas",
-                    "room.expandProjection" to "true"
-                )
-            }
-        }
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
+        versionCode = 4
+        versionName = "0.1.0"
     }
 
     buildTypes {
-        getByName("debug") {
-            versionNameSuffix = "d"
-        }
-        getByName("release") {
+        release {
             versionNameSuffix = "r"
             isMinifyEnabled = true
+        }
+        debug {
+            versionNameSuffix = "d"
+            isMinifyEnabled = false
+            isDebuggable = true
         }
     }
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
     }
 
     buildFeatures {
+        buildConfig = true
         viewBinding = true
     }
 }
 
-val lifecycleVersion: String by project
-val navigationVersion: String by project
-val roomVersion: String by project
 
 dependencies {
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.2.2")
+    coreLibraryDesugaring(libs.android.jdk.desugaring)
 
-    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
+    implementation(libs.kotlinx.datetime)
 
-    implementation("com.google.android.material:material:1.7.0")
+    implementation(libs.material)
 
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
-    implementation("androidx.lifecycle:lifecycle-process:$lifecycleVersion")
-    implementation("androidx.lifecycle:lifecycle-service:$lifecycleVersion")
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
 
-    implementation("androidx.navigation:navigation-fragment-ktx:$navigationVersion")
-    implementation("androidx.navigation:navigation-ui-ktx:$navigationVersion")
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
 
-    kapt("androidx.room:room-compiler:$roomVersion")
-    implementation("androidx.room:room-ktx:$roomVersion")
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
 
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.recyclerview.selection)
 
-    implementation("androidx.fragment:fragment-ktx:1.5.4")
-    implementation("androidx.preference:preference-ktx:1.2.0")
-    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.preference.ktx)
+    implementation(libs.androidx.datastore.preferences)
 }

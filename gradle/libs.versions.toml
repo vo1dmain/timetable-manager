@@ -1,0 +1,64 @@
+[versions]
+minSdk = "24"
+targetSdk = "35"
+compileSdk = "35"
+buildTools = "35.0.0"
+jdk = "17"
+
+androidGradlePlugin = "8.7.1"
+
+androidxLifecycle = "2.8.6"
+androidxNavigation = "2.8.3"
+androidxRoom = "2.6.1"
+
+constraintlayout = "2.1.4"
+
+datastorePreferences = "1.1.1"
+
+fragmentKtx = "1.8.4"
+
+jdkDesugaring = "2.1.2"
+
+kotlin = "2.0.21"
+kotlinxDatetime = "0.6.1"
+ksp = "2.0.21-1.0.26"
+
+material = "1.12.0"
+
+preferenceKtx = "1.2.1"
+
+recyclerviewSelection = "1.1.0"
+
+[libraries]
+android-jdk-desugaring = { module = "com.android.tools:desugar_jdk_libs", version.ref = "jdkDesugaring" }
+
+androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
+
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
+
+androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentKtx" }
+
+androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidxLifecycle" }
+androidx-lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "androidxLifecycle" }
+androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidxLifecycle" }
+
+androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "androidxNavigation" }
+androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidxNavigation" }
+
+androidx-preference-ktx = { module = "androidx.preference:preference-ktx", version.ref = "preferenceKtx" }
+androidx-recyclerview-selection = { module = "androidx.recyclerview:recyclerview-selection", version.ref = "recyclerviewSelection" }
+
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidxRoom" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "androidxRoom" }
+
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
+
+material = { module = "com.google.android.material:material", version.ref = "material" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+androidx-navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "androidxNavigation" }
+
+devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

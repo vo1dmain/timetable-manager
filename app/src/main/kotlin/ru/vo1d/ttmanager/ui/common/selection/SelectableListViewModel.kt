@@ -8,4 +8,7 @@ internal abstract class SelectableListViewModel<K : Any>(application: Applicatio
     AndroidViewModel(application) {
 
     lateinit var tracker: SelectionTracker<K>
+
+
+//    abstract fun deleteSelected(onResult: (Boolean) -> Unit)
 }

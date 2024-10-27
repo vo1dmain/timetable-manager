@@ -10,7 +10,6 @@ class InstructorsRepository(application: Application) :
 
     val all get() = dao.all
 
-
     fun find(query: String) =
         dao.find(query)
 

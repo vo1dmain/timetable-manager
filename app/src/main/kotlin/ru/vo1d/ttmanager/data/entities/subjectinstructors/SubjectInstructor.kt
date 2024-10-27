@@ -2,7 +2,7 @@ package ru.vo1d.ttmanager.data.entities.subjectinstructors
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
-import androidx.room.ForeignKey.CASCADE
+import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.Index
 import ru.vo1d.ttmanager.data.DatabaseEntity
 import ru.vo1d.ttmanager.data.entities.instructors.Instructor

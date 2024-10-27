@@ -4,13 +4,16 @@ pluginManagement {
         google()
         mavenCentral()
     }
+}
 
-    val navigationVersion: String by settings
-    plugins {
-        kotlin("android") version "1.7.10"
-        kotlin("kapt") version "1.7.10"
-        id("com.android.application") version "7.3.1"
-        id("androidx.navigation.safeargs.kotlin") version navigationVersion
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version ("0.8.0")
+}
+
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
     }
 }
 

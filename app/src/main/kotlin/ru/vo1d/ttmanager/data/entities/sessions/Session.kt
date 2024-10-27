@@ -2,7 +2,7 @@ package ru.vo1d.ttmanager.data.entities.sessions
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
-import androidx.room.ForeignKey.CASCADE
+import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import kotlinx.datetime.DayOfWeek
