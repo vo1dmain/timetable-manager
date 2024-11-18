@@ -8,7 +8,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import ru.vo1dmain.ttmanager.ui.sections.settings.SettingsFragment
+import ru.vo1dmain.ttmanager.sections.settings.SettingsFragment
+import ru.vo1dmain.ttmanager.ui.ActionModeOwner
 import ru.vo1dmain.ttmanager.design.R as DesignR
 
 internal class MainActivity : AppCompatActivity(), ActionModeOwner {

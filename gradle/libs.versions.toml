@@ -7,22 +7,27 @@ jdk = "17"
 
 androidGradlePlugin = "8.7.2"
 
+androidJunit = "1.2.1"
+
 androidxActivity = "1.9.3"
-androidxLifecycle = "2.8.6"
-androidxNavigation = "2.8.3"
+androidxLifecycle = "2.8.7"
+androidxNavigation = "2.8.4"
 androidxRoom = "2.6.1"
 
-appcompat = "1.6.1"
+appcompat = "1.7.0"
 
-composeBom = "2024.10.00"
-constraintlayout = "2.1.4"
+composeBom = "2024.11.00"
+constraintlayout = "2.2.0"
 coreKtx = "1.10.1"
 
 datastorePreferences = "1.1.1"
 
-fragmentKtx = "1.8.4"
+espressoCore = "3.6.1"
 
-jdkDesugaring = "2.1.2"
+fragmentKtx = "1.8.5"
+
+jdkDesugaring = "2.1.3"
+junit = "4.13.2"
 
 kotlin = "2.0.21"
 kotlinxDatetime = "0.6.1"
@@ -34,18 +39,13 @@ preferenceKtx = "1.2.1"
 
 recyclerviewSelection = "1.1.0"
 
-junit = "4.13.2"
-junitVersion = "1.2.1"
-espressoCore = "3.6.1"
-coreKtxVersion = "1.13.1"
-appcompatVersion = "1.7.0"
-
 [libraries]
 android-tools-build = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
 
 android-jdk-desugaring = { module = "com.android.tools:desugar_jdk_libs", version.ref = "jdkDesugaring" }
 
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidxActivity" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 
 androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
 androidx-compose-material3 = { module = "androidx.compose.material3:material3" }
@@ -59,7 +59,7 @@ androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", vers
 
 androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentKtx" }
 
-androidx-junit = { module = "androidx.test.ext:junit", version.ref = "junitVersion" }
+androidx-junit = { module = "androidx.test.ext:junit", version.ref = "androidJunit" }
 
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidxLifecycle" }
 androidx-lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "androidxLifecycle" }

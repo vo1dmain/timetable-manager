@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_add">Add</string>
+    <string name="action_confirm">Confirm</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_delete_all">Delete all</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_search">Search</string>
+    <string name="action_select_all">Select all</string>
+    <string name="action_undone">Undo</string>
+
+    <string name="dialog_message_delete_all">All items will be permanently deleted.</string>
+    <string name="dialog_negative">Cancel</string>
+    <string name="dialog_positive">OK</string>
+    <string name="dialog_title_delete_multiple_items">Delete items?</string>
+    <string name="dialog_title_delete_one">Delete this item?</string>
+
+    <string name="message_is_empty">There\'s nothing yet</string>
+    <string name="message_nothing_found">Nothing found</string>
+
+    <string name="selection_count">Selected: %1$d</string>
+</resources>

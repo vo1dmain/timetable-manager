@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <resources>
-    <string name="action_add">Add</string>
     <string name="action_add_day">Add day</string>
     <string name="action_add_session">Add session</string>
     <string name="action_add_week">Add week</string>
-    <string name="action_confirm">Confirm</string>
-    <string name="action_delete">Delete</string>
-    <string name="action_delete_all">Delete all</string>
     <string name="action_delete_this_week">Delete this week</string>
-    <string name="action_edit">Edit</string>
     <string name="action_rename_week">Rename week</string>
-    <string name="action_search">Search</string>
-    <string name="action_select_all">Select all</string>
-    <string name="action_undone">Undo</string>
 
     <string name="app_name">Timetable manager</string>
     <string name="app_version">Version:</string>
@@ -22,14 +14,10 @@
 
     <string name="checkbox_title_is_distant">Is distant</string>
 
-    <string name="dialog_message_delete_all">All items will be permanently deleted.</string>
     <string name="dialog_message_delete_day">Day “%1$s” and all its classes will be permanently deleted.</string>
     <string name="dialog_message_delete_selected">Selected items (%1$d) will be permanently deleted.</string>
     <string name="dialog_message_delete_week">Week “%1$s” and all its content will be permanently deleted.</string>
-    <string name="dialog_negative">Cancel</string>
-    <string name="dialog_positive">OK</string>
-    <string name="dialog_title_delete_multiple_items">Delete items?</string>
-    <string name="dialog_title_delete_one">Delete this item?</string>
+
     <string name="dialog_title_select_day">Add new day</string>
 
     <string name="fragment_label_class_creation">New session</string>
@@ -57,13 +45,8 @@
     <string name="menu_instructors">Instructors</string>
     <string name="menu_timetable">Timetable</string>
 
-    <string name="message_is_empty">There\'s nothing yet</string>
-    <string name="message_nothing_found">Nothing found</string>
-
     <string name="place_distant">Distant</string>
     <string name="place_info">Room %1$s</string>
-
-    <string name="selection_count">Selected: %1$d</string>
 
     <string-array name="session_types">
         <item>None</item>

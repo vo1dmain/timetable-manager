@@ -56,18 +56,9 @@ android {
 dependencies {
     coreLibraryDesugaring(libs.android.jdk.desugaring)
     
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.lifecycle.livedata.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    
-    implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     
-    implementation(libs.androidx.constraintlayout)
-    implementation(libs.androidx.recyclerview.selection)
-    
-    implementation(libs.androidx.fragment.ktx)
-    
+    implementation(project(":core:ui"))
     implementation(project(":core:data"))
     implementation(project(":core:datetime"))
     implementation(project(":core:design"))

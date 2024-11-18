@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbars="none"
-    tools:context=".ui.sections.timetable.sessions.list.SessionsListFragment">
+    tools:context=".sections.timetable.sessions.list.SessionsListFragment">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/message_is_empty"
