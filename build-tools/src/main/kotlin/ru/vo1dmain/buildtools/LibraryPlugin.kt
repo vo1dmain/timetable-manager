@@ -48,11 +48,11 @@ class LibraryPlugin : Plugin<Project> {
             }
             
             dependencies {
-                coreLibraryDesugaring(libs.android.jdk.desugaring)
+                coreLibraryDesugaring(libs.android.tools.desugarJdkLibs)
                 testImplementation(libs.junit)
                 
-                androidTestImplementation(libs.androidx.junit)
-                androidTestImplementation(libs.androidx.espresso.core)
+                androidTestImplementation(libs.androidx.junitExt)
+                androidTestImplementation(libs.espresso.core)
             }
         }
     }

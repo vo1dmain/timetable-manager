@@ -3,7 +3,7 @@ package ru.vo1dmain.ttmanager.ui.selection
 import android.view.MotionEvent
 import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.widget.RecyclerView
-import ru.vo1dmain.ttmanager.ui.extensions.cast
+import ru.vo1dmain.ttmanager.utils.extensions.cast
 
 class LongDetailsLookup(private val recyclerView: RecyclerView) :
     ItemDetailsLookup<Long>() {

@@ -30,7 +30,6 @@ import ru.vo1dmain.ttmanager.data.entities.subjects.Subject
 import ru.vo1dmain.ttmanager.databinding.ChipInstructorActionBinding
 import ru.vo1dmain.ttmanager.databinding.ChipSessionTypeChoiceBinding
 import ru.vo1dmain.ttmanager.databinding.FragmentSessionSetupBinding
-import ru.vo1dmain.ttmanager.ui.extensions.cast
 import ru.vo1dmain.ttmanager.ui.extensions.doAfterTextChanged
 import ru.vo1dmain.ttmanager.ui.extensions.onItemChipSelected
 
@@ -213,15 +212,12 @@ open class SessionSetupFragment : Fragment(R.layout.fragment_session_setup) {
         inflater: (LayoutInflater, ViewGroup, Boolean) -> B,
         textSupplier: () -> String
     ) where B : ViewBinding {
-        val chip = inflater(layoutInflater, this, false)
-            .root
-            .cast<View, Chip>()
-            .apply {
-                text = textSupplier()
-                isClickable = true
-                isCheckable = true
-                tag = item
-            }
+        val chip = (inflater(layoutInflater, this, false).root as Chip).apply {
+            text = textSupplier()
+            isClickable = true
+            isCheckable = true
+            tag = item
+        }
         addView(chip)
     }
     

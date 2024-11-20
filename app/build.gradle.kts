@@ -1,8 +1,8 @@
 plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.android.application)
-    alias(libs.plugins.androidx.navigation.safeargs)
-    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.navigation.safeargs)
+    alias(libs.plugins.kotlin.compose)
 }
 
 kotlin {
@@ -54,9 +54,9 @@ android {
 
 
 dependencies {
-    coreLibraryDesugaring(libs.android.jdk.desugaring)
+    coreLibraryDesugaring(libs.android.tools.desugarJdkLibs)
     
-    implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.navigation.ui.ktx)
     
     implementation(project(":core:ui"))
     implementation(project(":core:data"))

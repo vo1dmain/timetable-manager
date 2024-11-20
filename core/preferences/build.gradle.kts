@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.buildtools.library)
-    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
@@ -18,6 +18,6 @@ android {
 dependencies {
     implementation(project(":core:datetime"))
     
-    api(libs.androidx.preference.ktx)
-    api(libs.androidx.datastore.preferences)
+    api(libs.preference.ktx)
+    api(libs.datastore.preferences)
 }

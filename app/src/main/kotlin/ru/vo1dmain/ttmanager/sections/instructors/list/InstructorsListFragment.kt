@@ -27,9 +27,9 @@ import ru.vo1dmain.ttmanager.sections.instructors.list.selection.InstructorKeyPr
 import ru.vo1dmain.ttmanager.ui.dialogs.ConfirmationDialog
 import ru.vo1dmain.ttmanager.ui.extensions.activity
 import ru.vo1dmain.ttmanager.ui.extensions.observe
-import ru.vo1dmain.ttmanager.ui.extensions.selectionModeCallback
 import ru.vo1dmain.ttmanager.ui.extensions.selectionTracker
 import ru.vo1dmain.ttmanager.ui.selection.LongDetailsLookup
+import ru.vo1dmain.ttmanager.ui.selectionModeCallback
 import ru.vo1dmain.ttmanager.ui.R as UiR
 
 class InstructorsListFragment : Fragment(R.layout.fragment_instructors_list) {

@@ -6,8 +6,8 @@ plugins {
 group = "ru.vo1dmain.build-tools"
 
 dependencies {
-    implementation(libs.android.tools.build)
-    implementation(libs.kotlin.gradle.plugin)
+    implementation(libs.android.tools.build.gradle)
+    implementation(libs.kotlin.gradle)
     
     // Workaround for version catalog working inside precompiled scripts
     // Issue - https://github.com/gradle/gradle/issues/15383

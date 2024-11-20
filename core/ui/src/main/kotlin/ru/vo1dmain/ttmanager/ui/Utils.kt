@@ -1,11 +1,9 @@
-package ru.vo1dmain.ttmanager.ui.extensions
+package ru.vo1dmain.ttmanager.ui
 
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.view.ActionMode
 import androidx.recyclerview.selection.SelectionTracker
-import ru.vo1dmain.ttmanager.ui.ActionModeOwner
-import ru.vo1dmain.ttmanager.ui.R
 
 fun <T> selectionModeCallback(
     tracker: SelectionTracker<T>,

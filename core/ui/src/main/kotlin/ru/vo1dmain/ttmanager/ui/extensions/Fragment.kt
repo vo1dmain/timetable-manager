@@ -5,5 +5,5 @@ import androidx.fragment.app.FragmentActivity
 
 
 inline fun <reified T : FragmentActivity> Fragment.activity() = lazy {
-    requireActivity().cast<FragmentActivity, T>()
+    requireActivity() as T
 }

@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.buildtools.library)
-    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
@@ -18,6 +18,6 @@ android {
 dependencies {
     api(libs.material)
     
-    api(platform(libs.androidx.compose.bom))
-    api(libs.androidx.compose.material3)
+    api(platform(libs.compose.bom))
+    api(libs.compose.material3)
 }

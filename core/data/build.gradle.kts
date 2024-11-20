@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.buildtools.library)
-    alias(libs.plugins.devtools.ksp)
+    alias(libs.plugins.google.ksp)
 }
 
 android {
@@ -20,6 +20,6 @@ ksp {
 dependencies {
     implementation(project(":core:datetime"))
     
-    api(libs.androidx.room.ktx)
-    ksp(libs.androidx.room.compiler)
+    api(libs.room.ktx)
+    ksp(libs.room.compiler)
 }

@@ -15,16 +15,16 @@ android {
 }
 
 dependencies {
-    api(libs.androidx.lifecycle.viewmodel.ktx)
-    api(libs.androidx.lifecycle.livedata.ktx)
-    api(libs.androidx.lifecycle.runtime.ktx)
+    api(libs.lifecycle.viewmodel.ktx)
+    api(libs.lifecycle.livedata.ktx)
+    api(libs.lifecycle.runtime.ktx)
     
-    api(libs.androidx.navigation.fragment.ktx)
+    api(libs.navigation.fragment.ktx)
     
-    api(libs.androidx.constraintlayout)
-    api(libs.androidx.recyclerview.selection)
+    api(libs.constraintlayout)
+    api(libs.recyclerview.selection)
     
-    api(libs.androidx.fragment.ktx)
-    api(libs.androidx.appcompat)
+    api(libs.fragment.ktx)
+    api(libs.appcompat)
     api(libs.material)
 }
