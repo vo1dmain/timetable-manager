@@ -1,4 +1,4 @@
-package ru.vo1dmain.ttmanager.utils.extensions
+package ru.vo1dmain.timetables.utils
 
 import android.util.Patterns
 
