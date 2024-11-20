@@ -1,4 +1,4 @@
-package ru.vo1dmain.ttmanager.prefs.extensions
+package ru.vo1dmain.timetables.prefs.extensions
 
 import android.content.Context
 import androidx.datastore.preferences.preferencesDataStore
