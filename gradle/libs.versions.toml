@@ -25,6 +25,8 @@ junit = "4.13.2"
 
 kotlin = "2.0.21"
 kotlinxDatetime = "0.6.1"
+kotlinxSerialization = "1.7.3"
+
 ksp = "2.0.21-1.0.26"
 
 lifecycle = "2.8.7"
@@ -52,6 +54,9 @@ compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeB
 compose-material3 = { module = "androidx.compose.material3:material3" }
 compose-runtime-android = { module = "androidx.compose.runtime:runtime-android" }
 
+compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+
 constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
 
 datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
@@ -65,6 +70,7 @@ junit = { module = "junit:junit", version.ref = "junit" }
 kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
+kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 
 lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycle" }
@@ -74,6 +80,7 @@ material = { module = "com.google.android.material:material", version.ref = "mat
 
 navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigation" }
 navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigation" }
+navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
 
 preference-ktx = { module = "androidx.preference:preference-ktx", version.ref = "preferenceKtx" }
 recyclerview-selection = { module = "androidx.recyclerview:recyclerview-selection", version.ref = "recyclerviewSelection" }
@@ -89,9 +96,11 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 
 navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation" }
 
-buildtools-library = { id = "ru.vo1dmain.ttmanager.library", version = "unspecified" }
+buildtools-feature = { id = "ru.vo1dmain.buildtools.feature", version = "unspecified" }
+buildtools-library = { id = "ru.vo1dmain.buildtools.library", version = "unspecified" }
 
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

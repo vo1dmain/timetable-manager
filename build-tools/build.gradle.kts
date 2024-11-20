@@ -3,8 +3,6 @@ plugins {
     `java-gradle-plugin`
 }
 
-group = "ru.vo1dmain.build-tools"
-
 dependencies {
     implementation(libs.android.tools.build.gradle)
     implementation(libs.kotlin.gradle)
@@ -23,8 +21,12 @@ tasks {
 
 gradlePlugin {
     plugins {
+        register("feature") {
+            id = "ru.vo1dmain.buildtools.feature"
+            implementationClass = "ru.vo1dmain.buildtools.FeaturePlugin"
+        }
         register("library") {
-            id = "ru.vo1dmain.ttmanager.library"
+            id = "ru.vo1dmain.buildtools.library"
             implementationClass = "ru.vo1dmain.buildtools.LibraryPlugin"
         }
     }
