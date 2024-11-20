@@ -1,23 +1,16 @@
 plugins {
     alias(libs.plugins.buildtools.library)
-    alias(libs.plugins.kotlin.compose)
 }
 
 android {
-    namespace = "ru.vo1dmain.ttmanager.prefs"
+    namespace = "ru.vo1dmain.timetables.prefs"
     
     defaultConfig {
         version = "0.1.0"
     }
-    
-    buildFeatures {
-        compose = true
-    }
 }
 
 dependencies {
-    implementation(project(":core:datetime"))
-    
-    api(libs.preference.ktx)
+    implementation(libs.appcompat)
     api(libs.datastore.preferences)
 }
