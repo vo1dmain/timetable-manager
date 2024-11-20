@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "ru.vo1dmain.ttmanager.datetime"
+    namespace = "ru.vo1dmain.timetables.datetime"
     
     defaultConfig {
         version = "0.1.0"

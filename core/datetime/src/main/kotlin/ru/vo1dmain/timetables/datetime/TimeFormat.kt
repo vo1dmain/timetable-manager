@@ -1,4 +1,4 @@
-package ru.vo1dmain.ttmanager.datetime
+package ru.vo1dmain.timetables.datetime
 
 enum class TimeFormat {
     System,
