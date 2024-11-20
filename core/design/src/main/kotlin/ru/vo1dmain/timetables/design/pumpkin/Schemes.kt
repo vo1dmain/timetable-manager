@@ -1,4 +1,4 @@
-package ru.vo1dmain.ttmanager.design.pumpkin
+package ru.vo1dmain.timetables.design.pumpkin
 
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme

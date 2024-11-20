@@ -1,4 +1,4 @@
-package ru.vo1dmain.ttmanager.design
+package ru.vo1dmain.timetables.design
 
 import androidx.compose.material3.Typography
 

@@ -1,6 +1,7 @@
-package ru.vo1dmain.ttmanager.design
+package ru.vo1dmain.timetables.design
 
 import android.os.Build
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -9,8 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import ru.vo1dmain.ttmanager.design.pumpkin.darkScheme
-import ru.vo1dmain.ttmanager.design.pumpkin.lightScheme
+import ru.vo1dmain.timetables.design.pumpkin.darkScheme
+import ru.vo1dmain.timetables.design.pumpkin.lightScheme
 
 @Immutable
 data class ColorFamily(
@@ -26,7 +27,7 @@ val unspecified_scheme = ColorFamily(
 
 @Composable
 fun AppTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: Boolean = isNightMode(),
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
@@ -46,4 +47,11 @@ fun AppTheme(
         typography = AppTypography,
         content = content
     )
+}
+
+@Composable
+private fun isNightMode() = when (AppCompatDelegate.getDefaultNightMode()) {
+    AppCompatDelegate.MODE_NIGHT_NO -> false
+    AppCompatDelegate.MODE_NIGHT_YES -> true
+    else -> isSystemInDarkTheme()
 }

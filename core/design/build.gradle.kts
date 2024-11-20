@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "ru.vo1dmain.ttmanager.design"
+    namespace = "ru.vo1dmain.timetables.design"
     
     defaultConfig {
         version = "0.1.0"
