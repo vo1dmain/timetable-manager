@@ -1,4 +1,4 @@
-package ru.vo1dmain.ttmanager.data
+package ru.vo1dmain.timetables.data
 
 import androidx.room.Delete
 import androidx.room.Insert

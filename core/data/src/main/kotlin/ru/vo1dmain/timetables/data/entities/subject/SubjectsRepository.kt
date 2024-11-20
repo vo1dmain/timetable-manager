@@ -1,9 +1,8 @@
-package ru.vo1dmain.ttmanager.data.entities.subjects
+package ru.vo1dmain.timetables.data.entities.subject
 
 import android.app.Application
-import ru.vo1dmain.ttmanager.data.BaseRepository
-import ru.vo1dmain.ttmanager.data.TimetableDb
-import ru.vo1dmain.ttmanager.data.entities.subjectinstructors.SubjectInstructor
+import ru.vo1dmain.timetables.data.BaseRepository
+import ru.vo1dmain.timetables.data.TimetableDb
 
 class SubjectsRepository(application: Application) : BaseRepository<Subject, SubjectsDao>() {
     override val dao = TimetableDb.instance(application).subjectsDao()

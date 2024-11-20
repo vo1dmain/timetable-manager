@@ -1,4 +1,4 @@
-package ru.vo1dmain.ttmanager.data.entities.sessions
+package ru.vo1dmain.timetables.data.entities.session
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
@@ -7,11 +7,11 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalTime
-import ru.vo1dmain.ttmanager.data.DatabaseEntity
-import ru.vo1dmain.ttmanager.data.DatabaseEntity.Companion.DEFAULT_ID
-import ru.vo1dmain.ttmanager.data.entities.instructors.Instructor
-import ru.vo1dmain.ttmanager.data.entities.subjects.Subject
-import ru.vo1dmain.ttmanager.data.entities.weeks.Week
+import ru.vo1dmain.timetables.data.DatabaseEntity
+import ru.vo1dmain.timetables.data.DatabaseEntity.Companion.DEFAULT_ID
+import ru.vo1dmain.timetables.data.entities.instructor.Instructor
+import ru.vo1dmain.timetables.data.entities.subject.Subject
+import ru.vo1dmain.timetables.data.entities.week.Week
 
 @Entity(
     tableName = "sessions",

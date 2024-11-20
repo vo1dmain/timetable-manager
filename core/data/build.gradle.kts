@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "ru.vo1dmain.ttmanager.data"
+    namespace = "ru.vo1dmain.timetables.data"
     
     defaultConfig {
         version = "0.1.0"
@@ -18,7 +18,7 @@ ksp {
 }
 
 dependencies {
-    implementation(project(":core:datetime"))
+    implementation(projects.core.datetime)
     
     api(libs.room.ktx)
     ksp(libs.room.compiler)

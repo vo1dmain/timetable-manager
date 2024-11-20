@@ -1,8 +1,8 @@
-package ru.vo1dmain.ttmanager.data.entities.instructors
+package ru.vo1dmain.timetables.data.entities.instructor
 
 import android.app.Application
-import ru.vo1dmain.ttmanager.data.BaseRepository
-import ru.vo1dmain.ttmanager.data.TimetableDb
+import ru.vo1dmain.timetables.data.BaseRepository
+import ru.vo1dmain.timetables.data.TimetableDb
 
 class InstructorsRepository(application: Application) :
     BaseRepository<Instructor, InstructorsDao>() {

@@ -1,9 +1,9 @@
-package ru.vo1dmain.ttmanager.data.entities.weeks
+package ru.vo1dmain.timetables.data.entities.week
 
 import androidx.room.Dao
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
-import ru.vo1dmain.ttmanager.data.BaseDao
+import ru.vo1dmain.timetables.data.BaseDao
 
 @Dao
 interface WeeksDao : BaseDao<Week> {

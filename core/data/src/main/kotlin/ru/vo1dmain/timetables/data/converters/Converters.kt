@@ -1,10 +1,10 @@
-package ru.vo1dmain.ttmanager.data.converters
+package ru.vo1dmain.timetables.data.converters
 
 import androidx.room.TypeConverter
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.isoDayNumber
-import ru.vo1dmain.ttmanager.data.entities.sessions.SessionType
+import ru.vo1dmain.timetables.data.entities.session.SessionType
 
 class Converters {
     @TypeConverter

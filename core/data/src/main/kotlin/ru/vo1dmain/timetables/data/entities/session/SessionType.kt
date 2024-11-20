@@ -1,4 +1,4 @@
-package ru.vo1dmain.ttmanager.data.entities.sessions
+package ru.vo1dmain.timetables.data.entities.session
 
 enum class SessionType {
     None,

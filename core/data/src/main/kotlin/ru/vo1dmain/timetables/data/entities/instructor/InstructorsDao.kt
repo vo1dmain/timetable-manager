@@ -1,10 +1,10 @@
-package ru.vo1dmain.ttmanager.data.entities.instructors
+package ru.vo1dmain.timetables.data.entities.instructor
 
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
-import ru.vo1dmain.ttmanager.data.BaseDao
+import ru.vo1dmain.timetables.data.BaseDao
 
 @Dao
 interface InstructorsDao : BaseDao<Instructor> {

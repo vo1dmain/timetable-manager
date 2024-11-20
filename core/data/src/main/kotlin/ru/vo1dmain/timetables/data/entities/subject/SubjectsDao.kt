@@ -1,10 +1,10 @@
-package ru.vo1dmain.ttmanager.data.entities.subjects
+package ru.vo1dmain.timetables.data.entities.subject
 
 import androidx.room.Dao
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
-import ru.vo1dmain.ttmanager.data.BaseDao
-import ru.vo1dmain.ttmanager.data.entities.sessions.SessionType
+import ru.vo1dmain.timetables.data.BaseDao
+import ru.vo1dmain.timetables.data.entities.session.SessionType
 
 @Dao
 interface SubjectsDao : BaseDao<Subject> {

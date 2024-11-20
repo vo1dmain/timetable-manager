@@ -1,12 +1,11 @@
-package ru.vo1dmain.ttmanager.data.entities.subjectinstructors
+package ru.vo1dmain.timetables.data.entities.subject
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.Index
-import ru.vo1dmain.ttmanager.data.DatabaseEntity
-import ru.vo1dmain.ttmanager.data.entities.instructors.Instructor
-import ru.vo1dmain.ttmanager.data.entities.subjects.Subject
+import ru.vo1dmain.timetables.data.DatabaseEntity
+import ru.vo1dmain.timetables.data.entities.instructor.Instructor
 
 @Entity(
     tableName = "subject_instructors",

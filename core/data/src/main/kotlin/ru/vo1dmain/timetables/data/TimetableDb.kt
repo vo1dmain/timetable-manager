@@ -1,22 +1,22 @@
-package ru.vo1dmain.ttmanager.data
+package ru.vo1dmain.timetables.data
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import ru.vo1dmain.ttmanager.data.converters.Converters
-import ru.vo1dmain.ttmanager.data.entities.instructors.Instructor
-import ru.vo1dmain.ttmanager.data.entities.instructors.InstructorFts
-import ru.vo1dmain.ttmanager.data.entities.instructors.InstructorsDao
-import ru.vo1dmain.ttmanager.data.entities.sessions.Session
-import ru.vo1dmain.ttmanager.data.entities.sessions.SessionsDao
-import ru.vo1dmain.ttmanager.data.entities.subjectinstructors.SubjectInstructor
-import ru.vo1dmain.ttmanager.data.entities.subjectinstructors.SubjectInstructorsDao
-import ru.vo1dmain.ttmanager.data.entities.subjects.Subject
-import ru.vo1dmain.ttmanager.data.entities.subjects.SubjectsDao
-import ru.vo1dmain.ttmanager.data.entities.weeks.Week
-import ru.vo1dmain.ttmanager.data.entities.weeks.WeeksDao
+import ru.vo1dmain.timetables.data.converters.Converters
+import ru.vo1dmain.timetables.data.entities.instructor.Instructor
+import ru.vo1dmain.timetables.data.entities.instructor.InstructorFts
+import ru.vo1dmain.timetables.data.entities.instructor.InstructorsDao
+import ru.vo1dmain.timetables.data.entities.session.Session
+import ru.vo1dmain.timetables.data.entities.session.SessionsDao
+import ru.vo1dmain.timetables.data.entities.subject.Subject
+import ru.vo1dmain.timetables.data.entities.subject.SubjectInstructor
+import ru.vo1dmain.timetables.data.entities.subject.SubjectInstructorsDao
+import ru.vo1dmain.timetables.data.entities.subject.SubjectsDao
+import ru.vo1dmain.timetables.data.entities.week.Week
+import ru.vo1dmain.timetables.data.entities.week.WeeksDao
 
 @Database(
     entities = [

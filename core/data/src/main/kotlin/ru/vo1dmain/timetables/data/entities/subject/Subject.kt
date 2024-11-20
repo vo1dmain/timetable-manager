@@ -1,11 +1,11 @@
-package ru.vo1dmain.ttmanager.data.entities.subjects
+package ru.vo1dmain.timetables.data.entities.subject
 
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import ru.vo1dmain.ttmanager.data.DatabaseEntity
-import ru.vo1dmain.ttmanager.data.DatabaseEntity.Companion.DEFAULT_ID
-import ru.vo1dmain.ttmanager.data.entities.sessions.SessionType
+import ru.vo1dmain.timetables.data.DatabaseEntity
+import ru.vo1dmain.timetables.data.DatabaseEntity.Companion.DEFAULT_ID
+import ru.vo1dmain.timetables.data.entities.session.SessionType
 
 @Entity(tableName = "subjects", indices = [Index(value = ["id"], unique = true)])
 data class Subject(

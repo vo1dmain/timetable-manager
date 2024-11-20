@@ -1,10 +1,10 @@
-package ru.vo1dmain.ttmanager.data.entities.sessions
+package ru.vo1dmain.timetables.data.entities.session
 
 import androidx.room.Dao
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.DayOfWeek
-import ru.vo1dmain.ttmanager.data.BaseDao
+import ru.vo1dmain.timetables.data.BaseDao
 
 @Dao
 interface SessionsDao : BaseDao<Session> {

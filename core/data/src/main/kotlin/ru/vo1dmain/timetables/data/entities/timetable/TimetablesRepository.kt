@@ -1,7 +1,7 @@
-package ru.vo1dmain.ttmanager.data.entities.timetables
+package ru.vo1dmain.timetables.data.entities.timetable
 
 import android.app.Application
-import ru.vo1dmain.ttmanager.data.TimetableDb
+import ru.vo1dmain.timetables.data.TimetableDb
 
 class TimetablesRepository(application: Application) {
     private val db = TimetableDb.instance(application)

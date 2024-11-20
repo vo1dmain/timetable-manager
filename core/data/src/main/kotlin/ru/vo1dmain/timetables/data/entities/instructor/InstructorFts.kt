@@ -1,4 +1,4 @@
-package ru.vo1dmain.ttmanager.data.entities.instructors
+package ru.vo1dmain.timetables.data.entities.instructor
 
 import androidx.room.Entity
 import androidx.room.Fts4

@@ -1,9 +1,9 @@
-package ru.vo1dmain.ttmanager.data.entities.instructors
+package ru.vo1dmain.timetables.data.entities.instructor
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import ru.vo1dmain.ttmanager.data.DatabaseEntity
-import ru.vo1dmain.ttmanager.data.DatabaseEntity.Companion.DEFAULT_ID
+import ru.vo1dmain.timetables.data.DatabaseEntity
+import ru.vo1dmain.timetables.data.DatabaseEntity.Companion.DEFAULT_ID
 
 @Entity(tableName = "instructors")
 data class Instructor(
