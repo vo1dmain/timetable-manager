@@ -18,7 +18,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "timetable-manager"
+rootProject.name = "timetables"
 include(":app")
 
 include(":core:data")
