@@ -1,4 +1,4 @@
-package ru.vo1dmain.ttmanager.ui.extensions
+package ru.vo1dmain.timetables.ui.extensions
 
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup

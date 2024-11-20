@@ -1,4 +1,4 @@
-package ru.vo1dmain.ttmanager.ui.dialogs
+package ru.vo1dmain.timetables.ui.dialogs
 
 import android.content.DialogInterface
 import android.os.Bundle

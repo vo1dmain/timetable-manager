@@ -1,9 +1,8 @@
-package ru.vo1dmain.ttmanager.ui.selection
+package ru.vo1dmain.timetables.ui.selection
 
 import android.view.MotionEvent
 import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.widget.RecyclerView
-import ru.vo1dmain.ttmanager.utils.extensions.cast
 
 class LongDetailsLookup(private val recyclerView: RecyclerView) :
     ItemDetailsLookup<Long>() {
@@ -12,7 +11,7 @@ class LongDetailsLookup(private val recyclerView: RecyclerView) :
         val view = recyclerView.findChildViewUnder(e.x, e.y) ?: return null
         val holder = recyclerView.getChildViewHolder(view)
         
-        return if (holder is SelectableViewHolder<*>) holder.getItemDetails().cast()
+        return if (holder is SelectableViewHolder<*>) holder.getItemDetails() as ItemDetails<Long>
         else null
     }
     

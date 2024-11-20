@@ -1,11 +1,11 @@
-package ru.vo1dmain.ttmanager.ui.dialogs
+package ru.vo1dmain.timetables.ui.dialogs
 
 import android.content.DialogInterface
 import android.os.Bundle
 import androidx.annotation.StringRes
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import ru.vo1dmain.ttmanager.ui.R
+import ru.vo1dmain.timetables.ui.R
 
 class ConfirmationDialog(
     @StringRes private val title: Int,

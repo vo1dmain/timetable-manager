@@ -1,4 +1,4 @@
-package ru.vo1dmain.ttmanager.ui.extensions
+package ru.vo1dmain.timetables.ui.extensions
 
 import android.view.View
 import android.widget.AdapterView

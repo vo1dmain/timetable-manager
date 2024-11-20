@@ -1,4 +1,4 @@
-package ru.vo1dmain.ttmanager.ui.selection
+package ru.vo1dmain.timetables.ui.selection
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

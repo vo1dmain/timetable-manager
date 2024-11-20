@@ -1,4 +1,4 @@
-package ru.vo1dmain.ttmanager.ui
+package ru.vo1dmain.timetables.ui
 
 interface Submitter {
     fun submit(onResult: (Boolean) -> Unit)

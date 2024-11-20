@@ -1,4 +1,4 @@
-package ru.vo1dmain.ttmanager.ui.dialogs
+package ru.vo1dmain.timetables.ui.dialogs
 
 import android.app.Dialog
 import android.content.DialogInterface
@@ -7,9 +7,9 @@ import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import ru.vo1dmain.ttmanager.ui.R
-import ru.vo1dmain.ttmanager.ui.databinding.DialogCreateBinding
-import ru.vo1dmain.ttmanager.ui.extensions.doAfterTextChanged
+import ru.vo1dmain.timetables.ui.R
+import ru.vo1dmain.timetables.ui.databinding.DialogCreateBinding
+import ru.vo1dmain.timetables.ui.extensions.doAfterTextChanged
 
 class TextInputDialog(
     private val text: String,

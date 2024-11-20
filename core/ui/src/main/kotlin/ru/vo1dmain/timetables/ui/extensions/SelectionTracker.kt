@@ -1,4 +1,4 @@
-package ru.vo1dmain.ttmanager.ui.extensions
+package ru.vo1dmain.timetables.ui.extensions
 
 import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.selection.ItemKeyProvider
