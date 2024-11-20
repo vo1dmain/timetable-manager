@@ -7,7 +7,6 @@
     <string name="action_delete_this_week">Удалить эту неделю</string>
     <string name="action_rename_week">Переименовать неделю</string>
 
-    <string name="app_name">Менеджер расписаний</string>
     <string name="app_version">Версия:</string>
 
     <string name="category_formatting_title">Форматирование</string>
@@ -26,7 +25,6 @@
     <string name="fragment_label_course_edition">Изменить предмет</string>
     <string name="fragment_label_instructor_creation">Новый преподаватель</string>
     <string name="fragment_label_instructor_edition">Изменить преподавателя</string>
-    <string name="fragment_label_settings">Настройки</string>
 
     <string name="hint_end_time">Окончание</string>
     <string name="hint_instructor_email">Электронная почта</string>
@@ -74,7 +72,6 @@
         <item>Бирюзовая</item>
         <item>Тыквенная</item>
     </string-array>
-    <string name="theme_preference_title">Тема</string>
 
     <string name="title_contact_info_block">Контакты</string>
     <string name="title_instructor_setting_block">Преподаватель</string>

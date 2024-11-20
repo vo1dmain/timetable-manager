@@ -14,12 +14,12 @@ kotlin {
 }
 
 android {
-    namespace = "ru.vo1dmain.ttmanager"
+    namespace = "ru.vo1dmain.timetables"
     compileSdk = libs.versions.compileSdk.get().toInt()
     buildToolsVersion = libs.versions.buildTools.get()
     
     defaultConfig {
-        applicationId = "ru.vo1dmain.ttmanager"
+        applicationId = "ru.vo1dmain.timetables"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 4
@@ -55,8 +55,6 @@ android {
 
 dependencies {
     coreLibraryDesugaring(libs.android.tools.desugarJdkLibs)
-    
-    implementation(libs.navigation.ui.ktx)
     
     implementation(project(":core:ui"))
     implementation(project(":core:data"))
