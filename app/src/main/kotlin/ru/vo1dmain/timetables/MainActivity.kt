@@ -33,7 +33,6 @@ internal class MainActivity : AppCompatActivity(), ActionModeOwner {
             R.id.nav_timetable,
             R.id.nav_subjects,
             R.id.nav_instructors,
-            R.id.nav_preferences
         ).build()
     }
 }
