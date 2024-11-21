@@ -23,7 +23,7 @@ android {
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 4
-        versionName = "0.1.0"
+        versionName = "2.0.0"
     }
     
     buildTypes {
@@ -56,9 +56,10 @@ android {
 dependencies {
     coreLibraryDesugaring(libs.android.tools.desugarJdkLibs)
     
-    implementation(project(":core:ui"))
-    implementation(project(":core:data"))
-    implementation(project(":core:datetime"))
-    implementation(project(":core:design"))
-    implementation(project(":core:preferences"))
+    implementation(projects.core.ui)
+    implementation(projects.core.data)
+    implementation(projects.core.datetime)
+    implementation(projects.core.preferences)
+    
+    implementation(projects.feature.settings)
 }
