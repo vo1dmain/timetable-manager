@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.buildtools.library)
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
@@ -11,6 +12,7 @@ android {
     
     buildFeatures {
         viewBinding = true
+        compose = true
     }
 }
 

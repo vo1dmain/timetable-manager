@@ -17,9 +17,5 @@
             android:icon="@drawable/ic_outline_people_alt"
             android:title="@string/menu_instructors" />
 
-        <item
-            android:id="@+id/nav_preferences"
-            android:icon="@drawable/ic_outline_settings"
-            android:title="@string/fragment_label_settings" />
     </group>
 </menu>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_title_cancel">Отмена</string>
+    <string name="action_title_whats_new">Что нового в этой версии</string>
+
+    <string name="app_version">Версия %1$s (%2$d)</string>
+
+    <string name="fragment_label_about">О приложении</string>
+    <string name="fragment_label_settings">Настройки</string>
+
+    <string name="message_easter_egg">Ну, привет! &#128406;</string>
+
+    <string name="preference_category_title_appearance">Оформление</string>
+
+    <string name="preference_title_dynamic_color">Использовать динамический цвет</string>
+    <string name="preference_title_theme">Тема</string>
+
+    <string-array name="theme_entries">
+        <item>Системная</item>
+        <item>Светлая</item>
+        <item>Тёмная</item>
+    </string-array>
+</resources>

@@ -27,3 +27,7 @@ include(":core:design")
 include(":core:preferences")
 include(":core:ui")
 include(":utils")
+
+include(":feature:settings")
+
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
