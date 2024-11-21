@@ -27,7 +27,6 @@ internal class MainActivity : AppCompatActivity(), ActionModeOwner {
         }
     }
     
-    
     companion object {
         val appBarConfiguration = AppBarConfiguration.Builder(
             R.id.nav_timetable,

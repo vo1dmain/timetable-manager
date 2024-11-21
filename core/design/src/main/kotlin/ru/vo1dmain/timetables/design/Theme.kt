@@ -1,7 +1,6 @@
 package ru.vo1dmain.timetables.design
 
 import android.os.Build
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -27,7 +26,7 @@ val unspecified_scheme = ColorFamily(
 
 @Composable
 fun AppTheme(
-    darkTheme: Boolean = isNightMode(),
+    darkTheme: Boolean = isSystemInDarkTheme(),
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
@@ -47,11 +46,4 @@ fun AppTheme(
         typography = AppTypography,
         content = content
     )
-}
-
-@Composable
-private fun isNightMode() = when (AppCompatDelegate.getDefaultNightMode()) {
-    AppCompatDelegate.MODE_NIGHT_NO -> false
-    AppCompatDelegate.MODE_NIGHT_YES -> true
-    else -> isSystemInDarkTheme()
 }
