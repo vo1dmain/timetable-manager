@@ -4,6 +4,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.Companion.IGNORE
 import androidx.room.Update
+import androidx.room.Upsert
 
 interface BaseDao<T : DatabaseEntity> {
     @Insert(onConflict = IGNORE)
@@ -14,6 +15,9 @@ interface BaseDao<T : DatabaseEntity> {
     
     @Update
     suspend fun update(item: T)
+    
+    @Upsert
+    suspend fun upsert(item: T)
     
     @Delete
     suspend fun delete(vararg items: T)

@@ -15,6 +15,10 @@ abstract class BaseRepository<I : DatabaseEntity, D : BaseDao<I>>(protected val 
         dao.update(item)
     }
     
+    suspend fun upsert(item: I) {
+        dao.upsert(item)
+    }
+    
     suspend fun delete(vararg items: I) {
         dao.delete(*items)
     }
