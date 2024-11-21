@@ -17,21 +17,20 @@ android {
 }
 
 dependencies {
-    api(projects.core.design)
+    api(platform(libs.compose.bom))
+    
+    api(libs.appcompat)
     
     api(libs.activity.compose)
     
-    api(libs.lifecycle.viewmodel.ktx)
-    api(libs.lifecycle.livedata.ktx)
-    api(libs.lifecycle.runtime.ktx)
+    api(libs.lifecycle.viewmodel.compose)
+    api(libs.lifecycle.viewmodel.savedstate)
     
-    api(libs.navigation.fragment.ktx)
-    api(libs.navigation.ui.ktx)
+    api(libs.lifecycle.runtime.compose)
     
-    api(libs.constraintlayout)
-    api(libs.recyclerview.selection)
+    api(libs.navigation.compose)
     
-    api(libs.fragment.ktx)
-    api(libs.appcompat)
-    api(libs.material)
+    api(libs.compose.material.navigation)
+    
+    api(projects.core.design)
 }

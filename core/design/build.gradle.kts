@@ -16,8 +16,6 @@ android {
 }
 
 dependencies {
-    api(libs.material)
-    
-    api(platform(libs.compose.bom))
+    implementation(platform(libs.compose.bom))
     api(libs.compose.material3)
 }

@@ -22,7 +22,6 @@ class FeaturePlugin : LibraryPlugin() {
             dependencies {
                 implementation(project(":core:ui"))
                 
-                implementation(libs.navigation.compose)
                 implementation(libs.kotlinx.serialization)
                 
                 implementation(libs.compose.ui.tooling.preview)
