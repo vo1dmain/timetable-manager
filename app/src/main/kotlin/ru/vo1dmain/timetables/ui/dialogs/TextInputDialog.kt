@@ -7,8 +7,8 @@ import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import ru.vo1dmain.timetables.databinding.DialogCreateBinding
 import ru.vo1dmain.timetables.ui.R
-import ru.vo1dmain.timetables.ui.databinding.DialogCreateBinding
 import ru.vo1dmain.timetables.ui.extensions.doAfterTextChanged
 
 class TextInputDialog(

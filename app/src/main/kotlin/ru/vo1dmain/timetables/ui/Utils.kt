@@ -4,6 +4,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.view.ActionMode
 import androidx.recyclerview.selection.SelectionTracker
+import ru.vo1dmain.timetables.R
 
 fun <T> selectionModeCallback(
     tracker: SelectionTracker<T>,
