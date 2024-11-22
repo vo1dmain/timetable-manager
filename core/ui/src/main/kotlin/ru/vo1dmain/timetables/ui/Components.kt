@@ -3,7 +3,11 @@ package ru.vo1dmain.timetables.ui
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.IconToggleButton
+import androidx.compose.material3.IconToggleButtonColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
@@ -31,9 +35,10 @@ fun SimpleIconToggleButton(
     uncheckedContentDescription: String? = null
 ) {
     IconToggleButton(
-        modifier = modifier,
         checked = checked,
         onCheckedChange = onCheckedChange,
+        modifier = modifier,
+        enabled = enabled,
         colors = colors,
         interactionSource = interactionSource
     ) {

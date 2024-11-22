@@ -1,5 +1,6 @@
 package ru.vo1dmain.timetables.ui
 
+import android.content.res.Configuration
 import android.os.Build
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
@@ -9,9 +10,13 @@ import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 
+@Preview(group = "Default")
+@Preview(group = "Default", uiMode = Configuration.UI_MODE_NIGHT_YES)
+annotation class Previews
 
 @Composable
 fun mipmapPainterResource(@DrawableRes id: Int): Painter {

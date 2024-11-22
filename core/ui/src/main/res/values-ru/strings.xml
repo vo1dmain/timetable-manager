@@ -4,6 +4,7 @@
     <string name="action_confirm">Подтвердить</string>
     <string name="action_delete">Удалить</string>
     <string name="action_delete_all">Удалить все</string>
+    <string name="action_done">Готово</string>
     <string name="action_edit">Изменить</string>
     <string name="action_search">Искать</string>
     <string name="action_select_all">Выбрать все</string>
@@ -12,11 +13,13 @@
     <string name="dialog_message_delete_all">Все элементы будут удалены навсегда.</string>
     <string name="dialog_negative">Отмена</string>
     <string name="dialog_positive">ОК</string>
-    <string name="dialog_title_delete_multiple_items">Удалить элементы?</string>
-    <string name="dialog_title_delete_one">Удалить этот элемент?</string>
+    <string name="dialog_title_delete">Удалить?</string>
 
     <string name="message_is_empty">Здесь пока ничего</string>
     <string name="message_nothing_found">Ничего не найдено</string>
 
-    <string name="selection_count">Выбрано: %1$d</string>
+    <string name="title_selected_count">Выбрано: %1$d</string>
+
+    <string name="message_delete_failed">Не получилось удалить.</string>
+    <string name="message_deleted_count">Удалено: %1$d</string>
 </resources>

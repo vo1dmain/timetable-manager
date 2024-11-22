@@ -4,6 +4,7 @@
     <string name="action_confirm">Confirm</string>
     <string name="action_delete">Delete</string>
     <string name="action_delete_all">Delete all</string>
+    <string name="action_done">Done</string>
     <string name="action_edit">Edit</string>
     <string name="action_search">Search</string>
     <string name="action_select_all">Select all</string>
@@ -12,11 +13,13 @@
     <string name="dialog_message_delete_all">All items will be permanently deleted.</string>
     <string name="dialog_negative">Cancel</string>
     <string name="dialog_positive">OK</string>
-    <string name="dialog_title_delete_multiple_items">Delete items?</string>
-    <string name="dialog_title_delete_one">Delete this item?</string>
+    <string name="dialog_title_delete">Delete?</string>
 
     <string name="message_is_empty">There\'s nothing yet</string>
     <string name="message_nothing_found">Nothing found</string>
 
-    <string name="selection_count">Selected: %1$d</string>
+    <string name="title_selected_count">Selected: %1$d</string>
+
+    <string name="message_delete_failed">Failed to delete.</string>
+    <string name="message_deleted_count">Deleted: %1$d</string>
 </resources>
