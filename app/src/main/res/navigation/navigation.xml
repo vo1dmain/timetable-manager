@@ -28,18 +28,6 @@
             android:id="@+id/add_subject"
             app:destination="@id/nav_subject_creation" />
     </fragment>
-    <fragment
-        android:id="@+id/nav_instructors"
-        android:name="ru.vo1dmain.timetables.sections.instructors.list.InstructorsListFragment"
-        android:label="@string/menu_instructors"
-        tools:layout="@layout/fragment_instructors_list">
-        <action
-            android:id="@+id/edit_instructor"
-            app:destination="@id/nav_instructor_edition" />
-        <action
-            android:id="@+id/add_instructor"
-            app:destination="@id/nav_instructor_creation" />
-    </fragment>
 
     <fragment
         android:id="@+id/nav_subject_creation"
@@ -52,18 +40,6 @@
         android:name="ru.vo1dmain.timetables.sections.subjects.setup.SubjectSetupFragment"
         android:label="@string/fragment_label_course_edition"
         tools:layout="@layout/fragment_subject_setup" />
-
-    <fragment
-        android:id="@+id/nav_instructor_creation"
-        android:name="ru.vo1dmain.timetables.sections.instructors.setup.InstructorSetupFragment"
-        android:label="@string/fragment_label_instructor_creation"
-        tools:layout="@layout/fragment_instructor_setup" />
-
-    <fragment
-        android:id="@+id/nav_instructor_edition"
-        android:name="ru.vo1dmain.timetables.sections.instructors.setup.InstructorSetupFragment"
-        android:label="@string/fragment_label_instructor_edition"
-        tools:layout="@layout/fragment_instructor_setup" />
 
     <fragment
         android:id="@+id/nav_session_creation"
