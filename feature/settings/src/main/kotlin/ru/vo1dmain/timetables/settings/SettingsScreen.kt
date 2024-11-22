@@ -1,6 +1,5 @@
 package ru.vo1dmain.timetables.settings
 
-import android.content.res.Configuration
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
@@ -9,15 +8,24 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.*
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LargeTopAppBar
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import ru.vo1dmain.timetables.design.AppTheme
+import ru.vo1dmain.timetables.ui.Previews
 
 
 @Composable
@@ -40,7 +48,6 @@ private fun SettingsLayout(
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(topAppBarState)
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             LargeTopAppBar(
                 title = {
@@ -48,7 +55,8 @@ private fun SettingsLayout(
                 },
                 scrollBehavior = scrollBehavior
             )
-        }
+        },
+        snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -59,7 +67,7 @@ private fun SettingsLayout(
             categories.forEach {
                 ListItem(
                     modifier = Modifier.clickable(onClick = { onNavigate(it.route) }),
-                    headlineContent = { Text(stringResource(it.title)) },
+                    headlineContent = { Text(text = stringResource(it.title)) },
                     leadingContent = {
                         Icon(
                             painter = painterResource(it.icon),
@@ -91,8 +99,7 @@ private val categories = listOf(
     )
 )
 
-@Preview(group = "Default")
-@Preview(group = "Default", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Previews
 @Composable
 private fun PrefsScreenPreview() {
     AppTheme {

@@ -20,4 +20,6 @@
         <item>Light</item>
         <item>Dark</item>
     </string-array>
+
+    <string name="developer_name" translatable="false">by vo1d</string>
 </resources>
