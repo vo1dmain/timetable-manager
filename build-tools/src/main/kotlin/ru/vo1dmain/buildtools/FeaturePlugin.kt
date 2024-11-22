@@ -24,7 +24,6 @@ class FeaturePlugin : LibraryPlugin() {
                 
                 implementation(libs.kotlinx.serialization)
                 
-                implementation(libs.compose.ui.tooling.preview)
                 debugImplementation(libs.compose.ui.tooling)
             }
         }
