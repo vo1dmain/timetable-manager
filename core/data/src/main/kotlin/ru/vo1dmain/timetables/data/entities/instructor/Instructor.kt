@@ -10,10 +10,11 @@ data class Instructor(
     @field:PrimaryKey(autoGenerate = true)
     val id: Int = DEFAULT_ID,
     val firstName: String,
-    val middleName: String,
-    val lastName: String,
-    val email: String
+    val middleName: String? = null,
+    val lastName: String? = null,
+    val email: String? = null,
+    val image: String? = null
 ) : DatabaseEntity {
-    val shortName get() = "$lastName ${firstName[0]}. ${middleName[0]}."
+    val shortName get() = "$lastName ${firstName[0]}. ${middleName?.getOrNull(0)}."
     val fullName get() = "$lastName $firstName $middleName"
 }
