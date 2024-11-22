@@ -4,7 +4,7 @@
     <string name="action_confirm">Confirm</string>
     <string name="action_delete">Delete</string>
     <string name="action_delete_all">Delete all</string>
-    <string name="action_done">Done</string>
+    <string name="action_save">Save</string>
     <string name="action_edit">Edit</string>
     <string name="action_search">Search</string>
     <string name="action_select_all">Select all</string>

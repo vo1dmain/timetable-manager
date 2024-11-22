@@ -2,10 +2,21 @@ package ru.vo1dmain.timetables.settings.appearance
 
 import android.content.res.Configuration
 import android.os.Build
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.*
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LargeTopAppBar
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -69,7 +80,7 @@ private fun AppearanceLayout(
             LargeTopAppBar(
                 scrollBehavior = scrollBehavior,
                 title = {
-                    Text(text = stringResource(R.string.preference_category_title_appearance))
+                    Text(text = stringResource(R.string.screen_title_appearance))
                 },
                 navigationIcon = {
                     NavigationIcon { onNavigateUp() }

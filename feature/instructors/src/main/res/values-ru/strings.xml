@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_add_instructor">Новый преподаватель</string>
+
+    <string name="label_contacts">Контакты</string>
+    <string name="label_email">Электронная почта</string>
+    <string name="label_first_name">Имя</string>
+    <string name="label_general">Основная информация</string>
+    <string name="label_last_name">Фамилия</string>
+    <string name="label_middle_name">Отчество</string>
+    <string name="label_name">Имя</string>
+
+    <string name="screen_title_instructors">Преподаватели</string>
+</resources>

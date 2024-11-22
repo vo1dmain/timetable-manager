@@ -51,7 +51,7 @@ private fun SettingsLayout(
         topBar = {
             LargeTopAppBar(
                 title = {
-                    Text(text = stringResource(R.string.fragment_label_settings))
+                    Text(text = stringResource(R.string.screen_title_settings))
                 },
                 scrollBehavior = scrollBehavior
             )
@@ -88,12 +88,12 @@ private data class Preference<T>(
 
 private val categories = listOf(
     Preference(
-        R.string.preference_category_title_appearance,
+        R.string.screen_title_appearance,
         R.drawable.rounded_palette_24,
         Appearance
     ),
     Preference(
-        R.string.fragment_label_about,
+        R.string.screen_title_about,
         R.drawable.rounded_info_24,
         About
     )

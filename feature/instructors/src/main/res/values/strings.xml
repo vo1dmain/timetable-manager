@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_add_instructor">New instructor</string>
+
+    <string name="label_contacts">Contacts</string>
+    <string name="label_email">Email</string>
+    <string name="label_first_name">First name</string>
+    <string name="label_general">General</string>
+    <string name="label_last_name">Last name</string>
+    <string name="label_middle_name">Middle name</string>
+    <string name="label_name">Name</string>
+
+    <string name="screen_title_instructors">Instructors</string>
+</resources>

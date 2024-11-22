@@ -4,7 +4,7 @@
     <string name="action_confirm">Подтвердить</string>
     <string name="action_delete">Удалить</string>
     <string name="action_delete_all">Удалить все</string>
-    <string name="action_done">Готово</string>
+    <string name="action_save">Сохранить</string>
     <string name="action_edit">Изменить</string>
     <string name="action_search">Искать</string>
     <string name="action_select_all">Выбрать все</string>

@@ -5,15 +5,14 @@
 
     <string name="app_version">Версия %1$s (%2$d)</string>
 
-    <string name="fragment_label_about">О приложении</string>
-    <string name="fragment_label_settings">Настройки</string>
-
     <string name="message_easter_egg">Ну, привет! &#128406;</string>
-
-    <string name="preference_category_title_appearance">Оформление</string>
 
     <string name="preference_title_dynamic_color">Использовать динамический цвет</string>
     <string name="preference_title_theme">Тема</string>
+
+    <string name="screen_title_about">О приложении</string>
+    <string name="screen_title_appearance">Оформление</string>
+    <string name="screen_title_settings">Настройки</string>
 
     <string-array name="theme_entries">
         <item>Системная</item>
