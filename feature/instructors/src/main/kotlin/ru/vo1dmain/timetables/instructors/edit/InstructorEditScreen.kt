@@ -15,6 +15,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.shapes
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -121,9 +122,9 @@ private fun InstructorEditLayout(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
                 .padding(paddingValues)
-                .padding(horizontal = 16.dp)
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(16.dp))
             
             Image(
                 painter = rememberAsyncImagePainter(
@@ -132,18 +133,25 @@ private fun InstructorEditLayout(
                 ),
                 contentDescription = "Image",
                 modifier = Modifier
-                    .clip(shapes.large)
+                    .clip(shapes.extraLarge)
                     .requiredSizeIn(180.dp, 180.dp)
-                    .align(Alignment.CenterHorizontally)
                     .background(colorScheme.secondaryContainer)
             )
             
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(8.dp))
+            
+            OutlinedButton(onClick = {}) {
+                Text(text = stringResource(R.string.action_edit_photo))
+            }
+            
+            Spacer(modifier = Modifier.height(8.dp))
             
             val (nameValue, onNameChanged) = name
             OutlinedTextField(
                 value = nameValue,
-                onValueChange = onNameChanged,
+                onValueChange = {
+                    onNameChanged(it.take(40))
+                },
                 modifier = Modifier.fillMaxWidth(),
                 label = {
                     Text(text = stringResource(R.string.label_name))
@@ -151,7 +159,7 @@ private fun InstructorEditLayout(
                 leadingIcon = {
                     Icon(
                         painter = painterResource(R.drawable.rounded_person_24),
-                        contentDescription = "Email"
+                        contentDescription = stringResource(R.string.label_name)
                     )
                 },
                 singleLine = true
@@ -162,7 +170,9 @@ private fun InstructorEditLayout(
             val (emailValue, onEmailChanged) = email
             OutlinedTextField(
                 value = emailValue ?: "",
-                onValueChange = onEmailChanged,
+                onValueChange = {
+                    onEmailChanged(it.take(40))
+                },
                 modifier = Modifier.fillMaxWidth(),
                 label = {
                     Text(text = stringResource(R.string.label_email))
@@ -170,7 +180,7 @@ private fun InstructorEditLayout(
                 leadingIcon = {
                     Icon(
                         painter = painterResource(R.drawable.rounded_alternate_email_24),
-                        contentDescription = "Email"
+                        contentDescription = stringResource(R.string.label_email)
                     )
                 },
                 singleLine = true
