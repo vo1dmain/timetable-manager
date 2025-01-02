@@ -29,8 +29,6 @@ dependencies {
     
     api(libs.navigation.compose)
     
-    api(libs.compose.material.navigation)
-    
     api(projects.core.design)
     
     api(libs.compose.ui.tooling.preview)
