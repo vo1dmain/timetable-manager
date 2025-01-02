@@ -1,22 +1,32 @@
 package ru.vo1dmain.timetables.instructors.edit
 
 import android.app.Application
+import android.content.Context
+import android.net.Uri
+import android.os.Environment
+import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.core.net.toUri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.vo1dmain.timetables.data.DatabaseEntity
 import ru.vo1dmain.timetables.data.entities.instructor.Instructor
 import ru.vo1dmain.timetables.data.entities.instructor.InstructorsRepository
+import java.io.File
+import java.util.UUID
 
 internal class InstructorEditViewModel(
     savedStateHandle: SavedStateHandle,
     application: Application
 ) : AndroidViewModel(application) {
     private val repo = InstructorsRepository(application)
+    
+    private val _image = mutableStateOf<String?>(null)
     
     private val id = savedStateHandle.toRoute<InstructorEdit>().id
     
@@ -30,7 +40,7 @@ internal class InstructorEditViewModel(
         }
     }
     
-    val image = mutableStateOf<String?>(null)
+    val image: State<String?> get() = _image
     val name = mutableStateOf("")
     val email = mutableStateOf<String?>(null)
     
@@ -53,6 +63,28 @@ internal class InstructorEditViewModel(
             
             tryUpsert(instructor)
         }
+    }
+    
+    fun savePhoto(uri: Uri) {
+        val context = getApplication<Application>().applicationContext
+        val filesDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val imageFile = File(filesDir, UUID.randomUUID().toString())
+        viewModelScope.launch(Dispatchers.IO) {
+            val previousImage = _image.value
+            if (previousImage != null) {
+                context.deleteFile(previousImage)
+            }
+            
+            val data = context.contentResolver.openInputStream(uri).use {
+                it?.readBytes()
+            }
+            
+            context.openFileOutput(imageFile.path, Context.MODE_PRIVATE).use {
+                it.write(data)
+            }
+        }
+        
+        _image.value = imageFile.toUri().toString()
     }
     
     private suspend fun tryUpsert(instructor: Instructor) {

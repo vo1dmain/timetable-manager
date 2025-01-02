@@ -1,5 +1,9 @@
 package ru.vo1dmain.timetables.instructors.edit
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -63,6 +67,9 @@ internal fun InstructorEditScreen(
         email = viewModel.email,
         canBeSubmitted = viewModel.canBeSubmitted,
         onNavigateUp = onNavigateUp,
+        onPickImage = {
+            viewModel.savePhoto(it)
+        },
         onSubmit = {
             viewModel.submit()
             onNavigateUp()
@@ -75,15 +82,22 @@ internal fun InstructorEditScreen(
 private fun InstructorEditLayout(
     isEditMode: Boolean,
     snackbarHostState: SnackbarHostState,
-    image: MutableState<String?>,
+    image: State<String?>,
     name: MutableState<String>,
     email: MutableState<String?>,
     canBeSubmitted: State<Boolean>,
     onNavigateUp: () -> Unit = {},
-    onSubmit: () -> Unit = {},
+    onPickImage: (Uri) -> Unit = {},
+    onSubmit: () -> Unit = {}
 ) {
     val topAppBarState = rememberTopAppBarState()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(topAppBarState)
+    
+    val pickMedia = rememberLauncherForActivityResult(PickVisualMedia()) {
+        if (it != null) {
+            onPickImage(it)
+        }
+    }
     
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -140,7 +154,9 @@ private fun InstructorEditLayout(
             
             Spacer(modifier = Modifier.height(8.dp))
             
-            OutlinedButton(onClick = {}) {
+            OutlinedButton(onClick = {
+                pickMedia.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
+            }) {
                 Text(text = stringResource(R.string.action_edit_photo))
             }
             
