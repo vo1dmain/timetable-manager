@@ -1,7 +1,6 @@
 package ru.vo1dmain.timetables.settings.components
 
 import android.content.res.Configuration
-import androidx.compose.foundation.clickable
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -21,11 +20,9 @@ internal fun SwitchPreference(
     onCheckedChange: (Boolean) -> Unit
 ) {
     ListItem(
-        modifier = modifier.clickable {
-            onCheckedChange(state.value.not())
-        },
+        modifier = modifier,
         headlineContent = { Text(title) },
-        trailingContent = { Switch(checked = state.value, onCheckedChange = null) },
+        trailingContent = { Switch(checked = state.value, onCheckedChange = onCheckedChange) },
     )
 }
 
