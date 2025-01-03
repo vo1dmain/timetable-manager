@@ -16,6 +16,7 @@ import androidx.core.graphics.drawable.toBitmap
 
 @Preview(group = "Default")
 @Preview(group = "Default", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(group = "Landscape", device = "spec:width=411dp,height=891dp,orientation=landscape")
 annotation class Previews
 
 @Composable
