@@ -9,16 +9,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme.typography
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -33,7 +29,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -41,7 +36,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
 import ru.vo1dmain.timetables.design.AppTheme
 import ru.vo1dmain.timetables.settings.R
-import ru.vo1dmain.timetables.ui.NavigationIcon
+import ru.vo1dmain.timetables.ui.TopBarScaffoldScreen
 import ru.vo1dmain.timetables.ui.mipmapPainterResource
 import ru.vo1dmain.timetables.design.R as DesignR
 
@@ -71,42 +66,30 @@ private fun AboutScreenLayout(
     val topAppBarState = rememberTopAppBarState()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(topAppBarState)
     val coroutineScope = rememberCoroutineScope()
+    val scrollState = rememberScrollState()
     
-    Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        snackbarHost = { SnackbarHost(snackbarHostState) },
-        topBar = {
-            CenterAlignedTopAppBar(
-                scrollBehavior = scrollBehavior,
-                title = {
-                    Text(text = stringResource(R.string.screen_title_about))
-                },
-                navigationIcon = {
-                    NavigationIcon(onNavigateUp)
-                }
-            )
-        }
-    ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .verticalScroll(rememberScrollState())
-                .padding(innerPadding)
-        ) {
-            AppInfo(versionName, versionCode) {
-                coroutineScope.launch {
-                    snackbarHostState.showSnackbar(
-                        message = it,
-                        duration = SnackbarDuration.Long
-                    )
-                }
+    TopBarScaffoldScreen(
+        title = stringResource(R.string.screen_title_about),
+        snackbarHostState = snackbarHostState,
+        topAppBarState = topAppBarState,
+        scrollBehavior = scrollBehavior,
+        scrollState = scrollState,
+        onNavigateUp = onNavigateUp
+    ) {
+        AppInfo(versionName, versionCode) {
+            coroutineScope.launch {
+                snackbarHostState.showSnackbar(
+                    message = it,
+                    duration = SnackbarDuration.Long
+                )
             }
-            
-            HorizontalDivider(Modifier.padding(horizontal = 16.dp))
-            ListItem(
-                modifier = Modifier.clickable(onClick = onShowPatchNotes),
-                headlineContent = { Text(stringResource(R.string.action_title_whats_new)) }
-            )
         }
+        
+        HorizontalDivider(Modifier.padding(horizontal = 16.dp))
+        ListItem(
+            modifier = Modifier.clickable(onClick = onShowPatchNotes),
+            headlineContent = { Text(stringResource(R.string.action_title_whats_new)) }
+        )
     }
 }
 
