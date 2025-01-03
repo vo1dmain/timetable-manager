@@ -42,8 +42,9 @@ import kotlinx.serialization.Serializable
 import ru.vo1dmain.timetables.design.AppTheme
 import ru.vo1dmain.timetables.instructors.R
 import ru.vo1dmain.timetables.instructors.contentPadding
-import ru.vo1dmain.timetables.instructors.largeImageSize
-import ru.vo1dmain.timetables.instructors.spacerSize
+import ru.vo1dmain.timetables.instructors.mediumImageSize
+import ru.vo1dmain.timetables.instructors.mediumSpacerSize
+import ru.vo1dmain.timetables.instructors.smallSpacerSize
 import ru.vo1dmain.timetables.ui.Previews
 import ru.vo1dmain.timetables.ui.TopBarScaffoldScreen
 import ru.vo1dmain.timetables.ui.R as UiR
@@ -127,11 +128,11 @@ private fun InstructorEditLayout(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .clip(shapes.extraLarge)
-                .requiredSize(largeImageSize)
+                .requiredSize(mediumImageSize)
                 .background(colorScheme.secondaryContainer)
         )
         
-        Spacer(modifier = Modifier.height(spacerSize))
+        Spacer(modifier = Modifier.height(smallSpacerSize))
         
         OutlinedButton(
             onClick = { pickMedia.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly)) },
@@ -140,14 +141,14 @@ private fun InstructorEditLayout(
             Text(text = stringResource(R.string.action_edit_photo))
         }
         
-        Spacer(modifier = Modifier.height(spacerSize))
+        Spacer(modifier = Modifier.height(smallSpacerSize))
         
         Text(
             text = stringResource(R.string.label_general),
             style = typography.titleSmall
         )
         
-        Spacer(modifier = Modifier.height(spacerSize))
+        Spacer(modifier = Modifier.height(smallSpacerSize))
         
         SingleLineTextField(
             state = state.name,
@@ -155,7 +156,7 @@ private fun InstructorEditLayout(
             limit = maxNameLength
         )
         
-        Spacer(modifier = Modifier.height(spacerSize))
+        Spacer(modifier = Modifier.height(smallSpacerSize))
         
         SingleLineTextField(
             state = state.title,
@@ -163,14 +164,14 @@ private fun InstructorEditLayout(
             limit = maxNameLength
         )
         
-        Spacer(modifier = Modifier.height(spacerSize * 2))
+        Spacer(modifier = Modifier.height(mediumSpacerSize))
         
         Text(
             text = stringResource(R.string.label_contacts),
             style = typography.titleSmall
         )
         
-        Spacer(modifier = Modifier.height(spacerSize))
+        Spacer(modifier = Modifier.height(smallSpacerSize))
         
         SingleLineTextField(
             state = state.email,
