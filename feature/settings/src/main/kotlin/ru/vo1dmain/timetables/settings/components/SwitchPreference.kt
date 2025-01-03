@@ -29,7 +29,7 @@ internal fun SwitchPreference(
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-private fun SwitchPreferencePreview() {
+private fun Preview() {
     AppTheme {
         val state = remember { mutableStateOf(false) }
         SwitchPreference(

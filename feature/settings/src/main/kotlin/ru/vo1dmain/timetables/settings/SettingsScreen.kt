@@ -101,7 +101,7 @@ private val categories = listOf(
 
 @Previews
 @Composable
-private fun PrefsScreenPreview() {
+private fun Preview() {
     AppTheme {
         SettingsLayout(SnackbarHostState(), categories)
     }

@@ -67,7 +67,7 @@ private val ContainerTopPadding = 8.dp
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-private fun ListPreferencePreview() {
+private fun Preview() {
     AppTheme {
         val value = remember { mutableStateOf("System") }
         FlatListPreference(
@@ -79,7 +79,6 @@ private fun ListPreferencePreview() {
                 "Dark" to "Dark"
             )
         ) {
-        
         }
     }
 }

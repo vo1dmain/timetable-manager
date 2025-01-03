@@ -142,7 +142,7 @@ private fun AppInfo(
 @Preview(group = "Default")
 @Preview(group = "Default", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-private fun AboutFragmentPreview() {
+private fun Preview() {
     AppTheme {
         AboutScreenLayout(SnackbarHostState(), "2.0.0", 4)
     }

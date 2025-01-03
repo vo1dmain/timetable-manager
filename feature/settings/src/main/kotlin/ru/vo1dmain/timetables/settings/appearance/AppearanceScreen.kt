@@ -96,7 +96,7 @@ private fun AppearanceLayout(
 @Preview(group = "Default")
 @Preview(group = "Default", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-private fun PrefsScreenPreview() {
+private fun Preview() {
     AppTheme {
         val themeState = remember { mutableStateOf("System") }
         val dynamicColorState = remember { mutableStateOf(false) }
