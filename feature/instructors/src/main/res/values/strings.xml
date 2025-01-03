@@ -4,7 +4,7 @@
     <string name="action_edit_photo">Edit photo</string>
 
     <string name="label_contacts">Contacts</string>
-    <string name="label_email">Email</string>
+    <string name="label_email">Email address</string>
     <string name="label_first_name">First name</string>
     <string name="label_general">General</string>
     <string name="label_last_name">Last name</string>
