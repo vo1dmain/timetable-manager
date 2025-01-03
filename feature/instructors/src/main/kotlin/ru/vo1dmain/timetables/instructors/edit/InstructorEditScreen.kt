@@ -28,7 +28,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -218,7 +217,6 @@ private fun SingleLineTextField(
 private fun InstructorEditPreview() {
     val state = remember {
         EditScreenState(
-            image = mutableStateOf(null),
             name = TextFieldState("Ivanov Ivan Ivanovich"),
             title = TextFieldState("Programming"),
             email = TextFieldState("sample@mail.com")

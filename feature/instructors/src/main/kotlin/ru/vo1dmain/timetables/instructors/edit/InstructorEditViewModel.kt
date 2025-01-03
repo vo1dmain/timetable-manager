@@ -33,6 +33,11 @@ internal class InstructorEditViewModel(
     
     private val id = savedStateHandle.toRoute<InstructorEdit>().id
     
+    
+    val state = EditScreenState()
+    
+    val isEditMode get() = id != null
+    
     init {
         if (id != null) {
             viewModelScope.launch {
@@ -44,15 +49,6 @@ internal class InstructorEditViewModel(
             }
         }
     }
-    
-    val state = EditScreenState(
-        image = mutableStateOf(null),
-        name = TextFieldState(),
-        email = TextFieldState(),
-        title = TextFieldState(),
-    )
-    
-    val isEditMode get() = id != null
     
     fun submit() {
         viewModelScope.launch {
@@ -106,10 +102,10 @@ internal class InstructorEditViewModel(
 
 @Stable
 internal class EditScreenState(
-    image: MutableState<String?>,
-    val name: TextFieldState,
-    val title: TextFieldState,
-    val email: TextFieldState
+    image: MutableState<String?> = mutableStateOf(null),
+    val name: TextFieldState = TextFieldState(),
+    val title: TextFieldState = TextFieldState(),
+    val email: TextFieldState = TextFieldState()
 ) {
     val canBeSubmitted by derivedStateOf { this.name.text.isNotBlank() }
     
