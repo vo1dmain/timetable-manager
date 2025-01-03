@@ -10,7 +10,8 @@
     <string name="label_last_name">Фамилия</string>
     <string name="label_middle_name">Отчество</string>
     <string name="label_name">Имя</string>
-
     <string name="label_title">Должность</string>
+
+    <string name="screen_title_instructor">Преподаватель</string>
     <string name="screen_title_instructors">Преподаватели</string>
 </resources>

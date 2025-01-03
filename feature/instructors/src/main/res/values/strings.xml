@@ -12,5 +12,6 @@
     <string name="label_name">Name</string>
     <string name="label_title">Title</string>
 
+    <string name="screen_title_instructor">Instructor</string>
     <string name="screen_title_instructors">Instructors</string>
 </resources>
