@@ -27,7 +27,7 @@ import ru.vo1dmain.timetables.data.entities.week.WeeksDao
         SubjectInstructor::class,
         Week::class
     ],
-    version = 1
+    version = 2
 )
 @TypeConverters(Converters::class)
 abstract class TimetableDb : RoomDatabase() {
@@ -38,15 +38,16 @@ abstract class TimetableDb : RoomDatabase() {
     abstract fun weeksDao(): WeeksDao
     
     companion object {
-        private lateinit var db: TimetableDb
+        private var db: TimetableDb? = null
         
         @Synchronized
         fun instance(context: Context): TimetableDb {
-            if (Companion::db.isInitialized.not()) db = Room
-                .databaseBuilder(context, TimetableDb::class.java, "timetable_db")
-                .build()
+            if (db == null)
+                db = Room.databaseBuilder(context, TimetableDb::class.java, "timetable_db")
+                    .fallbackToDestructiveMigration()
+                    .build()
             
-            return db
+            return db as TimetableDb
         }
     }
 }

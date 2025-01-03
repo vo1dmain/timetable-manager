@@ -42,7 +42,7 @@ internal class InstructorEditViewModel(
         if (id != null) {
             viewModelScope.launch {
                 val record = repo.findById(id)
-                state.name.setTextAndPlaceCursorAtEnd(record.fullName)
+                state.name.setTextAndPlaceCursorAtEnd(record.name)
                 state.title.setTextAndPlaceCursorAtEnd(record.title ?: "")
                 state.email.setTextAndPlaceCursorAtEnd(record.email ?: "")
                 state.image = record.image
@@ -52,14 +52,9 @@ internal class InstructorEditViewModel(
     
     fun submit() {
         viewModelScope.launch {
-            val trimmedName = state.name.text.toString().trim()
-            val nameParts = trimmedName.split(' ')
-            
             val instructor = Instructor(
                 id = id ?: DatabaseEntity.DEFAULT_ID,
-                firstName = nameParts.elementAtOrElse(0) { trimmedName },
-                middleName = nameParts.elementAtOrNull(1),
-                lastName = nameParts.elementAtOrNull(2),
+                name = state.name.text.toString().trim(),
                 email = state.email.text.toString().trim(),
                 title = state.title.text.toString().trim(),
                 image = state.image

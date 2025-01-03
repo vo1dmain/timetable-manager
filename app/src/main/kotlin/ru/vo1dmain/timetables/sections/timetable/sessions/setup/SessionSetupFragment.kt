@@ -190,7 +190,7 @@ open class SessionSetupFragment : Fragment(R.layout.fragment_session_setup) {
             binding.instructor.list.addItemChip(
                 it,
                 ChipInstructorActionBinding::inflate,
-                it::shortName
+                it::name
             )
         }
     }

@@ -23,7 +23,7 @@ internal class InstructorViewModel(
             val record = repo.findById(id)
             state = InstructorState(
                 image = record.image,
-                name = record.fullName,
+                name = record.name,
                 title = record.title,
                 email = record.email
             )

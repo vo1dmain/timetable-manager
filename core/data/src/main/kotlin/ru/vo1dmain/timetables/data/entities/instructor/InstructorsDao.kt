@@ -9,7 +9,7 @@ import ru.vo1dmain.timetables.data.BaseDao
 @Dao
 interface InstructorsDao : BaseDao<Instructor> {
     
-    @get:Query("SELECT * FROM instructors ORDER BY lastName ASC, firstName ASC, middleName ASC")
+    @get:Query("SELECT * FROM instructors ORDER BY name ASC")
     val all: Flow<List<Instructor>>
     
     
@@ -17,7 +17,7 @@ interface InstructorsDao : BaseDao<Instructor> {
         """SELECT * FROM instructors AS i
            INNER JOIN instructors_fts AS fts ON fts.rowId == i.id
            WHERE instructors_fts MATCH :query
-           ORDER BY lastName ASC, firstName ASC, middleName ASC"""
+           ORDER BY name ASC"""
     )
     fun find(query: String): Flow<List<Instructor>>
     
@@ -26,7 +26,7 @@ interface InstructorsDao : BaseDao<Instructor> {
         """SELECT i.* FROM instructors AS i
         INNER JOIN subject_instructors AS si ON i.id = si.instructorId
         WHERE si.subjectId = :subjectId
-        GROUP BY i.id ORDER BY lastName ASC, firstName ASC, middleName ASC"""
+        GROUP BY i.id ORDER BY name ASC"""
     )
     fun findForSubject(subjectId: Int): Flow<List<Instructor>>
     

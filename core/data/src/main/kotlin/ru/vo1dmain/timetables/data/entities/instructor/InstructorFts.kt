@@ -6,8 +6,6 @@ import androidx.room.Fts4
 @Fts4(contentEntity = Instructor::class)
 @Entity(tableName = "instructors_fts")
 data class InstructorFts(
-    val firstName: String,
-    val middleName: String,
-    val lastName: String,
+    val name: String,
     val email: String
 )
