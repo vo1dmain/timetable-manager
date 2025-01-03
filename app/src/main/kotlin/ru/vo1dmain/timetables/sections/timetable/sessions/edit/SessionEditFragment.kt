@@ -13,8 +13,8 @@ import com.google.android.material.chip.ChipGroup
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.vo1dmain.timetables.data.DatabaseEntity.Companion.INVALID_ID
-import ru.vo1dmain.timetables.data.entities.instructor.Instructor
 import ru.vo1dmain.timetables.data.entities.session.SessionType
+import ru.vo1dmain.timetables.data.entities.teacher.Teacher
 import ru.vo1dmain.timetables.sections.timetable.sessions.setup.SessionSetupFragment
 
 class SessionEditFragment : SessionSetupFragment() {
@@ -36,7 +36,7 @@ class SessionEditFragment : SessionSetupFragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch { viewModel.subjectId.collectLatest(::onSubjectIdSet) }
-                launch { viewModel.instructorId.collectLatest(::onInstructorIdSet) }
+                launch { viewModel.teacherId.collectLatest(::onInstructorIdSet) }
                 launch { viewModel.selectedType.collectLatest(::onTypeSelected) }
             }
         }
@@ -53,7 +53,7 @@ class SessionEditFragment : SessionSetupFragment() {
         
         val chip = binding.instructor.list.findViewByPredicate<Chip> {
             val tag = it.tag
-            tag is Instructor && tag.id == id
+            tag is Teacher && tag.id == id
         } ?: return
         
         binding.instructor.list.check(chip.id)

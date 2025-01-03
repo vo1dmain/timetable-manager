@@ -26,7 +26,7 @@
     <string name="hint_new_week_title">Название недели</string>
     <string name="hint_place_building">Корпус №</string>
     <string name="hint_place_cabinet">Кабинет №</string>
-    <string name="hint_set_instructors">Преподаватели</string>
+    <string name="hint_set_teachers">Преподаватели</string>
     <string name="hint_start_time">Начало</string>
     <string name="hint_subject_title">Название предмета</string>
 

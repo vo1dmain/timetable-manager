@@ -8,11 +8,11 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import ru.vo1dmain.timetables.data.entities.instructor.Instructor
 import ru.vo1dmain.timetables.data.entities.session.SessionType
 import ru.vo1dmain.timetables.data.entities.subject.Subject
-import ru.vo1dmain.timetables.data.entities.subject.SubjectInstructor
+import ru.vo1dmain.timetables.data.entities.subject.SubjectTeacher
 import ru.vo1dmain.timetables.data.entities.subject.SubjectsRepository
+import ru.vo1dmain.timetables.data.entities.teacher.Teacher
 import ru.vo1dmain.timetables.ui.Submitter
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -22,15 +22,15 @@ internal class SubjectSetupViewModel(application: Application) :
     private val repo = SubjectsRepository(application)
     
     private val title = MutableStateFlow("")
-    private val selectedInstructors = MutableStateFlow(mutableListOf<Instructor>())
+    private val selectedTeachers = MutableStateFlow(mutableListOf<Teacher>())
     private val selectedTypes = MutableStateFlow(mutableListOf<SessionType>())
     
     private val titleIsSet by lazy { title.mapLatest(String::isNotBlank) }
-    private val instructorsAreSet by lazy { selectedInstructors.mapLatest(MutableList<Instructor>::isNotEmpty) }
+    private val teachersAreSet by lazy { selectedTeachers.mapLatest(MutableList<Teacher>::isNotEmpty) }
     private val typesAreSet by lazy { selectedTypes.mapLatest(MutableList<SessionType>::isNotEmpty) }
     
     
-    val canBeSubmitted = combine(titleIsSet, instructorsAreSet, typesAreSet) { states ->
+    val canBeSubmitted = combine(titleIsSet, teachersAreSet, typesAreSet) { states ->
         states.all { it }
     }
     
@@ -52,11 +52,11 @@ internal class SubjectSetupViewModel(application: Application) :
     fun unselectType(type: SessionType) =
         selectedTypes.update { it.apply { remove(type) } }
     
-    fun selectInstructor(instructor: Instructor) =
-        selectedInstructors.update { it.apply { add(instructor) } }
+    fun selectTeacher(teacher: Teacher) =
+        selectedTeachers.update { it.apply { add(teacher) } }
     
-    fun unselectInstructor(instructor: Instructor) =
-        selectedInstructors.update { it.apply { remove(instructor) } }
+    fun unselectTeacher(teacher: Teacher) =
+        selectedTeachers.update { it.apply { remove(teacher) } }
     
     
     private suspend fun trySubmit(): Boolean {
@@ -69,8 +69,8 @@ internal class SubjectSetupViewModel(application: Application) :
             
             if (id == -1) return false
             
-            selectedInstructors.value.forEach {
-                val pair = SubjectInstructor(id, it.id)
+            selectedTeachers.value.forEach {
+                val pair = SubjectTeacher(id, it.id)
                 repo.insertPair(pair)
             }
             true

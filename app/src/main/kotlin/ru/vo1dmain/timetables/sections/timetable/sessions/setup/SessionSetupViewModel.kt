@@ -5,17 +5,27 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlinx.datetime.*
+import kotlinx.datetime.Clock
+import kotlinx.datetime.DayOfWeek
+import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import ru.vo1dmain.timetables.data.DatabaseEntity.Companion.DEFAULT_ID
 import ru.vo1dmain.timetables.data.DatabaseEntity.Companion.INVALID_ID
-import ru.vo1dmain.timetables.data.entities.instructor.InstructorsRepository
 import ru.vo1dmain.timetables.data.entities.session.Session
 import ru.vo1dmain.timetables.data.entities.session.SessionType
 import ru.vo1dmain.timetables.data.entities.session.SessionsRepository
 import ru.vo1dmain.timetables.data.entities.subject.SubjectsRepository
+import ru.vo1dmain.timetables.data.entities.teacher.TeachersRepository
 import ru.vo1dmain.timetables.ui.Submitter
 import kotlin.properties.Delegates
 import kotlin.time.Duration.Companion.minutes
@@ -26,14 +36,14 @@ open class SessionSetupViewModel(application: Application) :
     
     protected val sessionsRepo = SessionsRepository(application)
     private val subjectsRepo = SubjectsRepository(application)
-    private val instructorsRepo = InstructorsRepository(application)
+    private val teachersRepo = TeachersRepository(application)
     
     
     @Suppress("PropertyName")
     protected val _subjectId = MutableStateFlow(INVALID_ID)
     
     @Suppress("PropertyName")
-    protected val _instructorId = MutableStateFlow(INVALID_ID)
+    protected val _teacherId = MutableStateFlow(INVALID_ID)
     
     @Suppress("PropertyName")
     protected val _selectedType = MutableStateFlow(SessionType.None)
@@ -49,7 +59,7 @@ open class SessionSetupViewModel(application: Application) :
     
     
     val subjectIsSet by lazy { _subjectId.mapLatest { it > INVALID_ID } }
-    val instructorIsSet by lazy { _instructorId.mapLatest { it > INVALID_ID } }
+    val teacherIsSet by lazy { _teacherId.mapLatest { it > INVALID_ID } }
     val typeIsSet by lazy { _selectedType.mapLatest { true } }
     val placeIsSet by lazy {
         combine(_buildingNumber, _roomNumber) { states ->
@@ -60,14 +70,14 @@ open class SessionSetupViewModel(application: Application) :
     val canBeSubmitted by lazy {
         combine(
             subjectIsSet,
-            instructorIsSet,
+            teacherIsSet,
             placeIsSet,
             typeIsSet
         ) { states -> states.all { it } }
     }
     
     val subjects by lazy { subjectsRepo.all }
-    val instructors by lazy { _subjectId.flatMapLatest { instructorsRepo.findForSubject(it) } }
+    val teachers by lazy { _subjectId.flatMapLatest { teachersRepo.findForSubject(it) } }
     val types by lazy { _subjectId.flatMapLatest { subjectsRepo.findTypesFor(it) } }
     
     
@@ -106,8 +116,8 @@ open class SessionSetupViewModel(application: Application) :
         _subjectId.update { id }
     }
     
-    fun setInstructorId(id: Int) {
-        _instructorId.update { id }
+    fun setTeacherId(id: Int) {
+        _teacherId.update { id }
     }
     
     fun setType(type: SessionType) {
@@ -128,7 +138,7 @@ open class SessionSetupViewModel(application: Application) :
         return Session(
             id = id,
             subjectId = _subjectId.value,
-            instructorId = _instructorId.value,
+            teacherId = _teacherId.value,
             weekId = weekId,
             day = day,
             place = place,

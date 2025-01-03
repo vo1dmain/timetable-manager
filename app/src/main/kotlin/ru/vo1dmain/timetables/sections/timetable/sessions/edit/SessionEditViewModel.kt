@@ -17,7 +17,7 @@ class SessionEditViewModel(application: Application) : SessionSetupViewModel(app
     
     
     val subjectId by lazy { _subjectId.asStateFlow() }
-    val instructorId by lazy { _instructorId.asStateFlow() }
+    val teacherId by lazy { _teacherId.asStateFlow() }
     val selectedType by lazy { _selectedType.asStateFlow() }
     
     
@@ -49,7 +49,7 @@ class SessionEditViewModel(application: Application) : SessionSetupViewModel(app
             itemId.collectLatest {
                 val item = sessionsRepo.findById(it) ?: return@collectLatest
                 setSubjectId(item.subjectId)
-                setInstructorId(item.instructorId)
+                setTeacherId(item.teacherId)
                 setType(item.type)
                 setStartTime(item.startTime)
                 setEndTime(item.endTime)

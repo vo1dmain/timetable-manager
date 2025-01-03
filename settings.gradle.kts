@@ -28,7 +28,7 @@ include(":core:preferences")
 include(":core:ui")
 include(":utils")
 
-include(":feature:instructors")
+include(":feature:teachers")
 include(":feature:settings")
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")

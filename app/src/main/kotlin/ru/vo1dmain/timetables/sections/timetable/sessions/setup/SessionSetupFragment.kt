@@ -25,9 +25,9 @@ import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalTime
 import ru.vo1dmain.timetables.R
 import ru.vo1dmain.timetables.data.DatabaseEntity
-import ru.vo1dmain.timetables.data.entities.instructor.Instructor
 import ru.vo1dmain.timetables.data.entities.session.SessionType
 import ru.vo1dmain.timetables.data.entities.subject.Subject
+import ru.vo1dmain.timetables.data.entities.teacher.Teacher
 import ru.vo1dmain.timetables.databinding.ChipInstructorActionBinding
 import ru.vo1dmain.timetables.databinding.ChipSessionTypeChoiceBinding
 import ru.vo1dmain.timetables.databinding.FragmentSessionSetupBinding
@@ -99,8 +99,8 @@ open class SessionSetupFragment : Fragment(R.layout.fragment_session_setup) {
         binding.subject.subjectInput.setAdapter(subjectsAdapter)
         binding.subject.subjectInput.onItemSelectedListener = SubjectSelectedListener()
         
-        binding.instructor.list.onItemChipSelected<Instructor> {
-            viewModel.setInstructorId(
+        binding.instructor.list.onItemChipSelected<Teacher> {
+            viewModel.setTeacherId(
                 it?.id ?: DatabaseEntity.INVALID_ID
             )
         }
@@ -129,7 +129,7 @@ open class SessionSetupFragment : Fragment(R.layout.fragment_session_setup) {
                     viewModel.subjectIsSet.collectLatest { onSubjectSet(it, this) }
                 }
                 launch {
-                    viewModel.instructorIsSet.collectLatest { onInstructorSet(it, this) }
+                    viewModel.teacherIsSet.collectLatest { onInstructorSet(it, this) }
                 }
                 launch {
                     viewModel.typeIsSet.collectLatest { onTypeIsSet(it, this) }
@@ -146,7 +146,7 @@ open class SessionSetupFragment : Fragment(R.layout.fragment_session_setup) {
         if (isSet.not()) return
         
         binding.instructor.root.isVisible = true
-        scope.launch { viewModel.instructors.collectLatest(::onInstructorsLoaded) }
+        scope.launch { viewModel.teachers.collectLatest(::onInstructorsLoaded) }
     }
     
     private fun onInstructorSet(isSet: Boolean, scope: CoroutineScope) {
@@ -182,11 +182,11 @@ open class SessionSetupFragment : Fragment(R.layout.fragment_session_setup) {
         subjectsAdapter.addAll(subjects)
     }
     
-    private fun onInstructorsLoaded(instructors: List<Instructor>) {
+    private fun onInstructorsLoaded(teachers: List<Teacher>) {
         binding.instructor.list.clearCheck()
         binding.instructor.list.removeAllViewsInLayout()
         
-        instructors.forEach {
+        teachers.forEach {
             binding.instructor.list.addItemChip(
                 it,
                 ChipInstructorActionBinding::inflate,

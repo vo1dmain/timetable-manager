@@ -9,8 +9,8 @@ import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalTime
 import ru.vo1dmain.timetables.data.DatabaseEntity
 import ru.vo1dmain.timetables.data.DatabaseEntity.Companion.DEFAULT_ID
-import ru.vo1dmain.timetables.data.entities.instructor.Instructor
 import ru.vo1dmain.timetables.data.entities.subject.Subject
+import ru.vo1dmain.timetables.data.entities.teacher.Teacher
 import ru.vo1dmain.timetables.data.entities.week.Week
 
 @Entity(
@@ -24,9 +24,9 @@ import ru.vo1dmain.timetables.data.entities.week.Week
             onUpdate = CASCADE
         ),
         ForeignKey(
-            entity = Instructor::class,
+            entity = Teacher::class,
             parentColumns = ["id"],
-            childColumns = ["instructorId"],
+            childColumns = ["teacherId"],
             onDelete = CASCADE,
             onUpdate = CASCADE
         ),
@@ -41,7 +41,7 @@ import ru.vo1dmain.timetables.data.entities.week.Week
     indices = [
         Index(value = ["id"], unique = true),
         Index(value = ["subjectId"]),
-        Index(value = ["instructorId"]),
+        Index(value = ["teacherId"]),
         Index(value = ["weekId"])
     ]
 )
@@ -49,7 +49,7 @@ data class Session(
     @field:PrimaryKey(autoGenerate = true)
     val id: Int = DEFAULT_ID,
     val subjectId: Int,
-    val instructorId: Int,
+    val teacherId: Int,
     val weekId: Int,
     val day: DayOfWeek,
     val place: String,

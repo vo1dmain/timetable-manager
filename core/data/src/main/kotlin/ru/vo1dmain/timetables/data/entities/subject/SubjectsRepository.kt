@@ -9,7 +9,7 @@ import ru.vo1dmain.timetables.data.entities.session.SessionType
 class SubjectsRepository(application: Application) :
     BaseRepository<Subject, SubjectsDao>(TimetableDb.instance(application).subjectsDao()) {
     
-    private val pairDao = TimetableDb.instance(application).subjectInstructorsDao()
+    private val pairDao = TimetableDb.instance(application).subjectTeacherDao()
     
     val all get() = dao.all
     
@@ -23,7 +23,7 @@ class SubjectsRepository(application: Application) :
     }
     
     
-    suspend fun insertPair(pair: SubjectInstructor): Long {
+    suspend fun insertPair(pair: SubjectTeacher): Long {
         return pairDao.insert(pair)
     }
     

@@ -31,7 +31,6 @@ internal class MainActivity : AppCompatActivity(), ActionModeOwner {
         val appBarConfiguration = AppBarConfiguration.Builder(
             R.id.nav_timetable,
             R.id.nav_subjects,
-            R.id.nav_instructors,
         ).build()
     }
 }

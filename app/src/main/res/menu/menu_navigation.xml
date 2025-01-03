@@ -12,10 +12,5 @@
             android:id="@+id/nav_subjects"
             android:icon="@drawable/ic_list"
             android:title="@string/menu_courses" />
-        <item
-            android:id="@+id/nav_instructors"
-            android:icon="@drawable/ic_outline_people_alt"
-            android:title="@string/menu_instructors" />
-
     </group>
 </menu>
