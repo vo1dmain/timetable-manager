@@ -41,6 +41,9 @@ import coil3.compose.rememberAsyncImagePainter
 import kotlinx.serialization.Serializable
 import ru.vo1dmain.timetables.design.AppTheme
 import ru.vo1dmain.timetables.instructors.R
+import ru.vo1dmain.timetables.instructors.contentPadding
+import ru.vo1dmain.timetables.instructors.largeImageSize
+import ru.vo1dmain.timetables.instructors.spacerSize
 import ru.vo1dmain.timetables.ui.Previews
 import ru.vo1dmain.timetables.ui.TopBarScaffoldScreen
 import ru.vo1dmain.timetables.ui.R as UiR
@@ -124,7 +127,7 @@ private fun InstructorEditLayout(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .clip(shapes.extraLarge)
-                .requiredSize(imageSize)
+                .requiredSize(largeImageSize)
                 .background(colorScheme.secondaryContainer)
         )
         
@@ -231,9 +234,6 @@ private fun InstructorEditPreview() {
     }
 }
 
-private val contentPadding = 16.dp
-private val spacerSize = 8.dp
-private val imageSize = 360.dp
 private val textFieldMaxWidth = 488.dp
 
 private const val maxNameLength = Short.MAX_VALUE.toInt()
