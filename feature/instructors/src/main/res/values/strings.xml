@@ -10,6 +10,7 @@
     <string name="label_last_name">Last name</string>
     <string name="label_middle_name">Middle name</string>
     <string name="label_name">Name</string>
+    <string name="label_title">Title</string>
 
     <string name="screen_title_instructors">Instructors</string>
 </resources>

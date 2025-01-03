@@ -12,6 +12,7 @@ data class Instructor(
     val firstName: String,
     val middleName: String? = null,
     val lastName: String? = null,
+    val title: String? = null,
     val email: String? = null,
     val image: String? = null
 ) : DatabaseEntity {

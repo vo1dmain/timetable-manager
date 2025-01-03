@@ -4,9 +4,14 @@ import android.app.Application
 import android.content.Context
 import android.net.Uri
 import android.os.Environment
-import androidx.compose.runtime.State
+import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.core.net.toUri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
@@ -26,39 +31,42 @@ internal class InstructorEditViewModel(
 ) : AndroidViewModel(application) {
     private val repo = InstructorsRepository(application)
     
-    private val _image = mutableStateOf<String?>(null)
-    
     private val id = savedStateHandle.toRoute<InstructorEdit>().id
     
     init {
         if (id != null) {
             viewModelScope.launch {
                 val record = repo.findById(id)
-                name.value = record.fullName
-                email.value = record.email
+                state.name.setTextAndPlaceCursorAtEnd(record.fullName)
+                state.title.setTextAndPlaceCursorAtEnd(record.title ?: "")
+                state.email.setTextAndPlaceCursorAtEnd(record.email ?: "")
+                state.image = record.image
             }
         }
     }
     
-    val image: State<String?> get() = _image
-    val name = mutableStateOf("")
-    val email = mutableStateOf<String?>(null)
+    val state = EditScreenState(
+        image = mutableStateOf(null),
+        name = TextFieldState(),
+        email = TextFieldState(),
+        title = TextFieldState(),
+    )
     
     val isEditMode get() = id != null
     
-    val canBeSubmitted = derivedStateOf { name.value.isNotBlank() }
-    
     fun submit() {
         viewModelScope.launch {
-            val nameParts = name.value.split(' ')
+            val trimmedName = state.name.text.toString().trim()
+            val nameParts = trimmedName.split(' ')
             
             val instructor = Instructor(
                 id = id ?: DatabaseEntity.DEFAULT_ID,
-                firstName = nameParts.elementAtOrElse(0) { name.value },
+                firstName = nameParts.elementAtOrElse(0) { trimmedName },
                 middleName = nameParts.elementAtOrNull(1),
                 lastName = nameParts.elementAtOrNull(2),
-                email = email.value?.trim(),
-                image = image.value
+                email = state.email.text.toString().trim(),
+                title = state.title.text.toString().trim(),
+                image = state.image
             )
             
             tryUpsert(instructor)
@@ -70,7 +78,7 @@ internal class InstructorEditViewModel(
         val filesDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         val imageFile = File(filesDir, UUID.randomUUID().toString())
         viewModelScope.launch(Dispatchers.IO) {
-            val previousImage = _image.value
+            val previousImage = state.image
             if (previousImage != null) {
                 context.deleteFile(previousImage)
             }
@@ -84,7 +92,7 @@ internal class InstructorEditViewModel(
             }
         }
         
-        _image.value = imageFile.toUri().toString()
+        state.image = imageFile.toUri().toString()
     }
     
     private suspend fun tryUpsert(instructor: Instructor) {
@@ -94,4 +102,17 @@ internal class InstructorEditViewModel(
             e.printStackTrace()
         }
     }
+}
+
+@Stable
+internal class EditScreenState(
+    image: MutableState<String?>,
+    val name: TextFieldState,
+    val title: TextFieldState,
+    val email: TextFieldState
+) {
+    val canBeSubmitted by derivedStateOf { this.name.text.isNotBlank() }
+    
+    var image by image
+        internal set
 }
