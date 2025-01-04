@@ -89,7 +89,7 @@ fun TopBarScaffoldScreen(
     scrollState: ScrollState = rememberScrollState(),
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
     horizontalAlignment: Alignment.Horizontal = Alignment.Start,
-    onNavigateUp: (() -> Unit)? = null,
+    onNavigationIconClick: (() -> Unit)? = null,
     actions: @Composable RowScope.() -> Unit = {},
     content: @Composable ColumnScope.() -> Unit
 ) {
@@ -101,8 +101,8 @@ fun TopBarScaffoldScreen(
                     Text(text = title)
                 },
                 navigationIcon = {
-                    if (onNavigateUp != null) {
-                        NavigationIcon(onNavigateUp)
+                    if (onNavigationIconClick != null) {
+                        NavigationIcon(onNavigationIconClick)
                     }
                 },
                 actions = actions,

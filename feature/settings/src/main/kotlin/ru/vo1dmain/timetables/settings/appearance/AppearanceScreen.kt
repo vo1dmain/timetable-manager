@@ -40,7 +40,7 @@ internal fun AppearanceScreen(
         snackbarHostState = snackbarHostState,
         themeState = themeState,
         dynamicColorState = dynamicColorState,
-        onNavigateUp = onNavigateUp,
+        onNavigationIconClick = onNavigateUp,
         onThemeSelected = { viewModel.selectTheme(it) },
         onDynamicColorToggled = { viewModel.toggleDynamicColor(it) }
     )
@@ -52,7 +52,7 @@ private fun AppearanceLayout(
     snackbarHostState: SnackbarHostState,
     themeState: State<String>,
     dynamicColorState: State<Boolean>,
-    onNavigateUp: () -> Unit = {},
+    onNavigationIconClick: () -> Unit = {},
     onThemeSelected: (String) -> Unit = {},
     onDynamicColorToggled: (Boolean) -> Unit = {}
 ) {
@@ -71,7 +71,7 @@ private fun AppearanceLayout(
         topAppBarState = topAppBarState,
         scrollBehavior = scrollBehavior,
         scrollState = scrollState,
-        onNavigateUp = onNavigateUp
+        onNavigationIconClick = onNavigationIconClick
     ) {
         FlatListPreference(
             title = stringResource(R.string.preference_title_theme),

@@ -63,7 +63,7 @@ internal fun TeacherEditScreen(
         isEditMode = viewModel.isEditMode,
         snackbarHostState = snackbarHostState,
         state = viewModel.state,
-        onNavigateUp = onNavigateUp,
+        onNavigationIconClick = onNavigateUp,
         onPickImage = {
             viewModel.savePhoto(it)
         },
@@ -80,7 +80,7 @@ private fun TeacherEditLayout(
     isEditMode: Boolean,
     snackbarHostState: SnackbarHostState,
     state: EditScreenState,
-    onNavigateUp: () -> Unit = {},
+    onNavigationIconClick: () -> Unit = {},
     onPickImage: (Uri) -> Unit = {},
     onSubmit: () -> Unit = {}
 ) {
@@ -106,7 +106,7 @@ private fun TeacherEditLayout(
         topAppBarState = topAppBarState,
         scrollBehavior = scrollBehavior,
         scrollState = scrollState,
-        onNavigateUp = onNavigateUp,
+        onNavigationIconClick = onNavigationIconClick,
         actions = {
             IconButton(
                 onClick = onSubmit,

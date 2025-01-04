@@ -57,7 +57,7 @@ internal fun TeacherScreen(
         onEditClick = {
             onNavigateToEdit(TeacherEdit(viewModel.id))
         },
-        onNavigateUp = onNavigateUp
+        onNavigationIconClick = onNavigateUp
     )
 }
 
@@ -67,7 +67,7 @@ private fun TeacherLayout(
     state: TeacherState,
     snackbarHostState: SnackbarHostState,
     onEditClick: () -> Unit = {},
-    onNavigateUp: () -> Unit = {}
+    onNavigationIconClick: () -> Unit = {}
 ) {
     val topAppBarState = rememberTopAppBarState()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(topAppBarState)
@@ -80,7 +80,7 @@ private fun TeacherLayout(
         topAppBarState = topAppBarState,
         scrollBehavior = scrollBehavior,
         scrollState = scrollState,
-        onNavigateUp = onNavigateUp,
+        onNavigationIconClick = onNavigationIconClick,
     ) {
         Image(
             painter = rememberAsyncImagePainter(

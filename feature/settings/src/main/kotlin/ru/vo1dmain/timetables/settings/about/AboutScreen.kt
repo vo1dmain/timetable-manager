@@ -50,7 +50,7 @@ internal fun AboutScreen(
         versionCode = viewModel.versionCode,
         versionName = viewModel.versionName,
         snackbarHostState = snackbarHostState,
-        onNavigateUp = onNavigateUp
+        onNavigationIconClick = onNavigateUp
     )
 }
 
@@ -60,7 +60,7 @@ private fun AboutScreenLayout(
     snackbarHostState: SnackbarHostState,
     versionName: String,
     versionCode: Number,
-    onNavigateUp: () -> Unit = {},
+    onNavigationIconClick: () -> Unit = {},
     onShowPatchNotes: () -> Unit = {}
 ) {
     val topAppBarState = rememberTopAppBarState()
@@ -74,7 +74,7 @@ private fun AboutScreenLayout(
         topAppBarState = topAppBarState,
         scrollBehavior = scrollBehavior,
         scrollState = scrollState,
-        onNavigateUp = onNavigateUp
+        onNavigationIconClick = onNavigationIconClick
     ) {
         AppInfo(versionName, versionCode) {
             coroutineScope.launch {
