@@ -60,9 +60,9 @@ private fun SettingsLayout(
     ) { innerPadding ->
         Column(
             modifier = Modifier
-                .verticalScroll(rememberScrollState())
                 .padding(innerPadding)
                 .fillMaxSize()
+                .verticalScroll(rememberScrollState())
         ) {
             categories.forEach {
                 ListItem(
