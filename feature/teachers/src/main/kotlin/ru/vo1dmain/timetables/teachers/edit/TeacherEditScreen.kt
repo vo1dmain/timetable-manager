@@ -42,7 +42,7 @@ import kotlinx.serialization.Serializable
 import ru.vo1dmain.timetables.design.AppTheme
 import ru.vo1dmain.timetables.teachers.R
 import ru.vo1dmain.timetables.teachers.contentPadding
-import ru.vo1dmain.timetables.teachers.mediumImageSize
+import ru.vo1dmain.timetables.teachers.largeImageSize
 import ru.vo1dmain.timetables.teachers.mediumSpacerSize
 import ru.vo1dmain.timetables.teachers.smallSpacerSize
 import ru.vo1dmain.timetables.ui.Previews
@@ -128,7 +128,7 @@ private fun TeacherEditLayout(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .clip(shapes.extraLarge)
-                .requiredSize(mediumImageSize)
+                .requiredSize(largeImageSize)
                 .background(colorScheme.secondaryContainer)
         )
         

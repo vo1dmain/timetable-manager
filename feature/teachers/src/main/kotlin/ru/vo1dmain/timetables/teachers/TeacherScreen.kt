@@ -91,7 +91,7 @@ private fun TeacherLayout(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .clip(shapes.extraLarge)
-                .requiredSize(largeImageSize)
+                .requiredSize(extraLargeImageSize)
                 .background(colorScheme.secondaryContainer)
         )
         
