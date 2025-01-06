@@ -1,36 +1,19 @@
 package ru.vo1dmain.timetables
 
 import android.os.Bundle
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.view.ActionMode
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import ru.vo1dmain.timetables.ui.ActionModeOwner
+import ru.vo1dmain.timetables.design.AppTheme
 
-internal class MainActivity : AppCompatActivity(), ActionModeOwner {
-    override var actionMode: ActionMode? = null
-    
+internal class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        
-        val navigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
-        
-        navigationView.setupWithNavController(navController)
-        navController.addOnDestinationChangedListener { _, _, _ ->
-            actionMode?.finish()
+        setContent {
+            AppTheme {
+            
+            }
         }
-    }
-    
-    companion object {
-        val appBarConfiguration = AppBarConfiguration.Builder(
-            R.id.nav_timetable,
-            R.id.nav_subjects,
-        ).build()
     }
 }
