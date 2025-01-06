@@ -18,8 +18,6 @@ datastorePreferences = "1.1.1"
 
 espressoCore = "3.6.1"
 
-fragmentKtx = "1.8.5"
-
 jdkDesugaring = "2.1.4"
 junit = "4.13.2"
 
@@ -31,13 +29,7 @@ ksp = "2.0.21-1.0.26"
 
 lifecycle = "2.8.7"
 
-material = "1.12.0"
-
 navigation = "2.8.5"
-
-preferenceKtx = "1.2.1"
-
-recyclerviewSelection = "1.1.0"
 
 room = "2.6.1"
 
@@ -65,8 +57,6 @@ datastore-preferences = { module = "androidx.datastore:datastore-preferences", v
 
 espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
 
-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentKtx" }
-
 junit = { module = "junit:junit", version.ref = "junit" }
 
 kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
@@ -76,18 +66,10 @@ kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-
 
 lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 lifecycle-viewmodel-savedstate = { module = "androidx.lifecycle:lifecycle-viewmodel-savedstate", version.ref = "lifecycle" }
-lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata", version.ref = "lifecycle" }
 lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" }
 
-material = { module = "com.google.android.material:material", version.ref = "material" }
-
-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigation" }
-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigation" }
 navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
 navigation-testing = { module = "androidx.navigation:navigation-testing", version.ref = "navigation" }
-
-preference-ktx = { module = "androidx.preference:preference-ktx", version.ref = "preferenceKtx" }
-recyclerview-selection = { module = "androidx.recyclerview:recyclerview-selection", version.ref = "recyclerviewSelection" }
 
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }

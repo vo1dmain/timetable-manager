@@ -47,7 +47,6 @@ android {
     
     buildFeatures {
         buildConfig = true
-        viewBinding = true
         compose = true
     }
 }
@@ -56,21 +55,12 @@ android {
 dependencies {
     coreLibraryDesugaring(libs.android.tools.desugarJdkLibs)
     
-    implementation(libs.material)
-    implementation(libs.lifecycle.livedata)
-    
-    implementation(libs.navigation.fragment.ktx)
-    implementation(libs.navigation.ui.ktx)
-    
-    implementation(libs.constraintlayout)
-    implementation(libs.recyclerview.selection)
-    
-    implementation(libs.fragment.ktx)
-    
     implementation(projects.core.ui)
     implementation(projects.core.data)
     implementation(projects.core.datetime)
     implementation(projects.core.preferences)
     
     implementation(projects.feature.settings)
+    implementation(projects.feature.subjects)
+    implementation(projects.feature.teachers)
 }
