@@ -3,8 +3,8 @@ package ru.vo1dmain.timetables.subjects.edit
 import android.app.Application
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -14,7 +14,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import kotlinx.coroutines.launch
 import ru.vo1dmain.timetables.data.DatabaseEntity
-import ru.vo1dmain.timetables.data.entities.session.SessionType
+import ru.vo1dmain.timetables.data.entities.event.EventType
 import ru.vo1dmain.timetables.data.entities.subject.Subject
 import ru.vo1dmain.timetables.data.entities.subject.SubjectTeacher
 import ru.vo1dmain.timetables.data.entities.subject.SubjectsRepository
@@ -27,10 +27,13 @@ internal class SubjectEditViewModel(
     private val repo = SubjectsRepository(application)
     
     private val id = savedStateHandle.toRoute<SubjectEdit>().id
-    private val teachersState = mutableStateOf<List<Teacher>>(emptyList())
-    private val typesState = mutableStateOf<List<SessionType>>(emptyList())
+    private val teachers = mutableStateOf<List<Teacher>>(emptyList())
+    private val types = mutableStateOf<List<EventType>>(emptyList())
     
-    val state = EditScreenState()
+    val state = EditScreenState(
+        teachers = teachers,
+        types = types
+    )
     
     val isEditMode get() = id != null
     
@@ -40,7 +43,7 @@ internal class SubjectEditViewModel(
                 val record = repo.findById(id) ?: return@launch
                 
                 state.title.setTextAndPlaceCursorAtEnd(record.title)
-                typesState.value = record.types
+                types.value = record.types
             }
         }
     }
@@ -57,20 +60,20 @@ internal class SubjectEditViewModel(
         }
     }
     
-    fun selectType(type: SessionType) {
-        typesState.value += type
+    fun selectType(type: EventType) {
+        types.value += type
     }
     
-    fun unselectType(type: SessionType) {
-        typesState.value -= type
+    fun unselectType(type: EventType) {
+        types.value -= type
     }
     
     fun selectTeacher(teacher: Teacher) {
-        teachersState.value += teacher
+        teachers.value += teacher
     }
     
     fun unselectTeacher(teacher: Teacher) {
-        teachersState.value -= teacher
+        teachers.value -= teacher
     }
     
     private suspend fun trySubmit(subject: Subject) {
@@ -92,11 +95,11 @@ internal class SubjectEditViewModel(
 @Stable
 internal class EditScreenState(
     val title: TextFieldState = TextFieldState(),
-    teachersState: MutableState<List<Teacher>> = mutableStateOf(emptyList()),
-    typesState: MutableState<List<SessionType>> = mutableStateOf(emptyList())
+    teachers: State<List<Teacher>> = mutableStateOf(emptyList()),
+    types: State<List<EventType>> = mutableStateOf(emptyList())
 ) {
-    val selectedTeachers by teachersState
-    val selectedTypes by typesState
+    val selectedTeachers by teachers
+    val selectedTypes by types
     
     val canBeSubmitted by derivedStateOf {
         title.text.isNotBlank() && selectedTeachers.isNotEmpty() && selectedTypes.isNotEmpty()

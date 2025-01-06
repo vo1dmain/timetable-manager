@@ -4,7 +4,7 @@ import android.app.Application
 import kotlinx.coroutines.flow.Flow
 import ru.vo1dmain.timetables.data.BaseRepository
 import ru.vo1dmain.timetables.data.TimetableDb
-import ru.vo1dmain.timetables.data.entities.session.SessionType
+import ru.vo1dmain.timetables.data.entities.event.EventType
 
 class SubjectsRepository(application: Application) :
     BaseRepository<Subject, SubjectsDao>(TimetableDb.instance(application).subjectsDao()) {
@@ -18,7 +18,7 @@ class SubjectsRepository(application: Application) :
         return dao.find(filter)
     }
     
-    fun findTypesFor(id: Int): Flow<List<SessionType>> {
+    fun findTypesFor(id: Int): Flow<List<EventType>> {
         return dao.findTypesFor(id)
     }
     

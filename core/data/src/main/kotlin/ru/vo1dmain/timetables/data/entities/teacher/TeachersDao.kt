@@ -12,15 +12,6 @@ interface TeachersDao : BaseDao<Teacher> {
     @get:Query("SELECT * FROM teachers ORDER BY name ASC")
     val all: Flow<List<Teacher>>
     
-    
-    @Query(
-        """SELECT * FROM teachers AS i
-           INNER JOIN teachers_fts AS fts ON fts.rowId == i.id
-           WHERE teachers_fts MATCH :query
-           ORDER BY name ASC"""
-    )
-    fun find(query: String): Flow<List<Teacher>>
-    
     @Transaction
     @Query(
         """SELECT t.* FROM teachers AS t

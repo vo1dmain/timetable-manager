@@ -28,6 +28,7 @@ include(":core:preferences")
 include(":core:ui")
 include(":utils")
 
+include(":feature:calendar")
 include(":feature:settings")
 include(":feature:subjects")
 include(":feature:teachers")

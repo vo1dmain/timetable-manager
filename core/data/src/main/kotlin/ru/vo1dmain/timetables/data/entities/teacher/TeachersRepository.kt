@@ -10,10 +10,6 @@ class TeachersRepository(application: Application) :
     
     val all get() = dao.all
     
-    fun find(query: String): Flow<List<Teacher>> {
-        return dao.find(query)
-    }
-    
     fun findForSubject(subjectId: Int): Flow<List<Teacher>> {
         return dao.findForSubject(subjectId)
     }
