@@ -6,9 +6,6 @@
     <string name="action_delete_this_week">Delete this week</string>
     <string name="action_rename_week">Rename week</string>
 
-    <string name="category_formatting_title">Formatting</string>
-    <string name="category_title_appearance">Appearance</string>
-
     <string name="checkbox_title_is_distant">Is distant</string>
 
     <string name="dialog_message_delete_day">Day “%1$s” and all its classes will be permanently deleted.</string>
@@ -19,8 +16,6 @@
 
     <string name="fragment_label_class_creation">New session</string>
     <string name="fragment_label_class_edition">Edit session</string>
-    <string name="fragment_label_course_creation">New subject</string>
-    <string name="fragment_label_course_edition">Edit subject</string>
 
     <string name="hint_end_time">End time</string>
     <string name="hint_new_week_title">Week title</string>
@@ -30,19 +25,10 @@
     <string name="hint_start_time">Start time</string>
     <string name="hint_subject_title">Subject title</string>
 
-    <string name="menu_about">About</string>
-    <string name="menu_courses">Courses</string>
     <string name="menu_timetable">Timetable</string>
 
     <string name="place_distant">Distant</string>
     <string name="place_info">Room %1$s</string>
-
-    <string-array name="session_types">
-        <item>None</item>
-        <item>Lecture</item>
-        <item>Practice</item>
-        <item>Laboratory</item>
-    </string-array>
 
     <string name="snackbar_message_creation_success">New items has been added: %1$s.</string>
     <string name="snackbar_message_delete_all_success">All items has been deleted.</string>

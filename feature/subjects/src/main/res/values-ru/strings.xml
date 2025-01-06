@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_add_subject">Новый предмет</string>
+
+    <string name="screen_title_subjects">Предметы</string>
+
+    <string-array name="session_types">
+        <item>Не указано</item>
+        <item>Лекция</item>
+        <item>Практика</item>
+        <item>Лабораторная</item>
+    </string-array>
+</resources>

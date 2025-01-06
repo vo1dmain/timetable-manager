@@ -38,5 +38,5 @@ interface TeachersDao : BaseDao<Teacher> {
     suspend fun findById(id: Int): Teacher
     
     @Query("DELETE FROM teachers WHERE id IN (:ids)")
-    suspend fun deleteByIds(ids: List<Int>)
+    suspend fun deleteByIds(ids: Collection<Int>)
 }

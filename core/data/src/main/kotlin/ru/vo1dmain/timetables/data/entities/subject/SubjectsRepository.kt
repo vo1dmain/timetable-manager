@@ -31,6 +31,10 @@ class SubjectsRepository(application: Application) :
         dao.deleteAll()
     }
     
+    suspend fun deleteByIds(ids: Collection<Int>) {
+        dao.deleteByIds(ids)
+    }
+    
     suspend fun findById(id: Int): Subject? {
         return dao.findById(id)
     }

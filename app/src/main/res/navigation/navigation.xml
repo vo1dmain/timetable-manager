@@ -16,30 +16,6 @@
             android:id="@+id/edit_session"
             app:destination="@id/nav_session_edition" />
     </fragment>
-    <fragment
-        android:id="@+id/nav_subjects"
-        android:name="ru.vo1dmain.timetables.sections.subjects.list.SubjectsListFragment"
-        android:label="@string/menu_courses"
-        tools:layout="@layout/fragment_subjects_list">
-        <action
-            android:id="@+id/edit_subject"
-            app:destination="@id/nav_subject_edition" />
-        <action
-            android:id="@+id/add_subject"
-            app:destination="@id/nav_subject_creation" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/nav_subject_creation"
-        android:name="ru.vo1dmain.timetables.sections.subjects.setup.SubjectSetupFragment"
-        android:label="@string/fragment_label_course_creation"
-        tools:layout="@layout/fragment_subject_setup" />
-
-    <fragment
-        android:id="@+id/nav_subject_edition"
-        android:name="ru.vo1dmain.timetables.sections.subjects.setup.SubjectSetupFragment"
-        android:label="@string/fragment_label_course_edition"
-        tools:layout="@layout/fragment_subject_setup" />
 
     <fragment
         android:id="@+id/nav_session_creation"

@@ -7,9 +7,6 @@
     <string name="action_delete_this_week">Удалить эту неделю</string>
     <string name="action_rename_week">Переименовать неделю</string>
 
-    <string name="category_formatting_title">Форматирование</string>
-    <string name="category_title_appearance">Оформление</string>
-
     <string name="checkbox_title_is_distant">Дистанционно</string>
 
     <string name="dialog_message_delete_day">День «%1$s» и все занятия в нём будут удалены навсегда.</string>
@@ -19,8 +16,6 @@
 
     <string name="fragment_label_class_creation">Новое занятие</string>
     <string name="fragment_label_class_edition">Изменить занятие</string>
-    <string name="fragment_label_course_creation">Новый предмет</string>
-    <string name="fragment_label_course_edition">Изменить предмет</string>
 
     <string name="hint_end_time">Окончание</string>
     <string name="hint_new_week_title">Название недели</string>
@@ -30,19 +25,10 @@
     <string name="hint_start_time">Начало</string>
     <string name="hint_subject_title">Название предмета</string>
 
-    <string name="menu_about">О приложении</string>
-    <string name="menu_courses">Предметы</string>
     <string name="menu_timetable">Расписание</string>
 
     <string name="place_distant">Дистанционно</string>
     <string name="place_info">Ауд. %1$s</string>
-
-    <string-array name="session_types">
-        <item>Не указано</item>
-        <item>Лекция</item>
-        <item>Практика</item>
-        <item>Лабораторная</item>
-    </string-array>
 
     <string name="snackbar_message_creation_success">Добавлен новый элемент: %1$s.</string>
     <string name="snackbar_message_delete_all_success">Все элементы удалены.</string>

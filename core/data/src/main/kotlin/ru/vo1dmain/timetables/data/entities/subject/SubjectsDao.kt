@@ -28,4 +28,7 @@ interface SubjectsDao : BaseDao<Subject> {
     
     @Query("DELETE FROM subjects")
     suspend fun deleteAll()
+    
+    @Query("DELETE FROM subjects WHERE id IN (:ids)")
+    suspend fun deleteByIds(ids: Collection<Int>)
 }

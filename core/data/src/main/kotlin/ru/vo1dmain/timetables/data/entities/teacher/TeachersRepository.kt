@@ -18,7 +18,7 @@ class TeachersRepository(application: Application) :
         return dao.findForSubject(subjectId)
     }
     
-    suspend fun deleteByIds(ids: List<Int>) {
+    suspend fun deleteByIds(ids: Collection<Int>) {
         dao.deleteByIds(ids)
     }
     
