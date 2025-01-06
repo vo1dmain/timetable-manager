@@ -11,7 +11,6 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.core.net.toUri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
@@ -32,8 +31,9 @@ internal class TeacherEditViewModel(
     private val repo = TeachersRepository(application)
     
     private val id = savedStateHandle.toRoute<TeacherEdit>().id
+    private val imageState = mutableStateOf<String?>(null)
     
-    val state = EditScreenState()
+    val state = EditScreenState(image = imageState)
     
     val isEditMode get() = id != null
     
@@ -44,7 +44,7 @@ internal class TeacherEditViewModel(
                 state.name.setTextAndPlaceCursorAtEnd(record.name)
                 state.title.setTextAndPlaceCursorAtEnd(record.title ?: "")
                 state.email.setTextAndPlaceCursorAtEnd(record.email ?: "")
-                state.image = record.image
+                imageState.value = record.image
             }
         }
     }
@@ -82,7 +82,7 @@ internal class TeacherEditViewModel(
             }
         }
         
-        state.image = imageFile.toUri().toString()
+        imageState.value = imageFile.toUri().toString()
     }
     
     private suspend fun tryUpsert(teacher: Teacher) {
@@ -101,8 +101,7 @@ internal class EditScreenState(
     val title: TextFieldState = TextFieldState(),
     val email: TextFieldState = TextFieldState()
 ) {
-    val canBeSubmitted by derivedStateOf { this.name.text.isNotBlank() }
+    val image by image
     
-    var image by image
-        internal set
+    val canBeSubmitted by derivedStateOf { name.text.isNotBlank() }
 }

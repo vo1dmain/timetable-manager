@@ -14,7 +14,7 @@ internal class TeachersListViewModel(application: Application) :
     AndroidViewModel(application) {
     private val repo = TeachersRepository(application)
     
-    private val selected = mutableListOf<Int>()
+    private val selected = mutableSetOf<Int>()
     
     val all by lazy {
         repo.all.stateIn(
