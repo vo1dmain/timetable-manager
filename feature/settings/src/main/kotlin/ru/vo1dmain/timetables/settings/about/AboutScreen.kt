@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
 import ru.vo1dmain.timetables.design.AppTheme
+import ru.vo1dmain.timetables.design.dimensions
 import ru.vo1dmain.timetables.settings.R
 import ru.vo1dmain.timetables.ui.TopBarScaffoldScreen
 import ru.vo1dmain.timetables.ui.mipmapPainterResource
@@ -85,7 +86,7 @@ private fun AboutScreenLayout(
             }
         }
         
-        HorizontalDivider(Modifier.padding(horizontal = 16.dp))
+        HorizontalDivider(Modifier.padding(horizontal = dimensions.mediumSpacerSize))
         ListItem(
             modifier = Modifier.clickable(onClick = onShowPatchNotes),
             headlineContent = { Text(stringResource(R.string.action_title_whats_new)) }
@@ -115,7 +116,7 @@ private fun AppInfo(
         modifier = Modifier
             .clickable(onClick = onEasterEggClick)
             .fillMaxWidth()
-            .padding(vertical = 16.dp),
+            .padding(vertical = dimensions.contentPadding),
         verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

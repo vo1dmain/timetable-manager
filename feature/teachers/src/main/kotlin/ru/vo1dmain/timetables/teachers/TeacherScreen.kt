@@ -30,11 +30,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.rememberAsyncImagePainter
 import kotlinx.serialization.Serializable
 import ru.vo1dmain.timetables.design.AppTheme
+import ru.vo1dmain.timetables.design.dimensions
 import ru.vo1dmain.timetables.teachers.edit.TeacherEdit
 import ru.vo1dmain.timetables.ui.Previews
 import ru.vo1dmain.timetables.ui.TopBarScaffoldScreen
@@ -76,7 +76,7 @@ private fun TeacherLayout(
     TopBarScaffoldScreen(
         title = stringResource(R.string.screen_title_teacher),
         snackbarHostState = snackbarHostState,
-        contentModifier = Modifier.padding(contentPadding),
+        contentModifier = Modifier.padding(dimensions.contentPadding),
         topAppBarState = topAppBarState,
         scrollBehavior = scrollBehavior,
         scrollState = scrollState,
@@ -91,11 +91,11 @@ private fun TeacherLayout(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .clip(shapes.extraLarge)
-                .requiredSize(extraLargeImageSize)
+                .requiredSize(dimensions.extraLargeImageSize)
                 .background(colorScheme.secondaryContainer)
         )
         
-        Spacer(modifier = Modifier.height(smallSpacerSize * 2))
+        Spacer(modifier = Modifier.height(dimensions.mediumSpacerSize))
         
         Text(
             text = state.name,
@@ -103,7 +103,7 @@ private fun TeacherLayout(
             maxLines = 2
         )
         
-        Spacer(modifier = Modifier.height(smallSpacerSize))
+        Spacer(modifier = Modifier.height(dimensions.smallSpacerSize))
         
         if (state.title != null) {
             Text(
@@ -111,7 +111,7 @@ private fun TeacherLayout(
                 maxLines = 2
             )
             
-            Spacer(modifier = Modifier.height(smallSpacerSize))
+            Spacer(modifier = Modifier.height(dimensions.smallSpacerSize))
         }
         
         OutlinedButton(
@@ -124,14 +124,14 @@ private fun TeacherLayout(
             Text(text = stringResource(UiR.string.action_edit))
         }
         
-        Spacer(modifier = Modifier.height(mediumSpacerSize))
+        Spacer(modifier = Modifier.height(dimensions.mediumSpacerSize))
         
         if (state.email != null) {
-            HorizontalDivider(modifier = Modifier.height(2.dp))
+            HorizontalDivider()
             
             Column(
                 modifier = Modifier
-                    .padding(vertical = smallSpacerSize)
+                    .padding(vertical = dimensions.smallSpacerSize)
                     .fillMaxWidth()
             ) {
                 Text(
@@ -139,7 +139,7 @@ private fun TeacherLayout(
                     style = typography.labelLarge
                 )
                 
-                Spacer(modifier = Modifier.height(smallSpacerSize))
+                Spacer(modifier = Modifier.height(dimensions.smallSpacerSize))
                 
                 Surface(
                     onClick = {},
@@ -147,7 +147,10 @@ private fun TeacherLayout(
                     shape = shapes.small
                 ) {
                     Row(
-                        modifier = Modifier.padding(vertical = mediumSpacerSize, horizontal = smallSpacerSize),
+                        modifier = Modifier.padding(
+                            vertical = dimensions.mediumSpacerSize,
+                            horizontal = dimensions.smallSpacerSize
+                        ),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
@@ -155,7 +158,7 @@ private fun TeacherLayout(
                             contentDescription = stringResource(R.string.label_email)
                         )
                         
-                        Spacer(modifier = Modifier.width(smallSpacerSize))
+                        Spacer(modifier = Modifier.width(dimensions.smallSpacerSize))
                         
                         Text(text = state.email)
                     }

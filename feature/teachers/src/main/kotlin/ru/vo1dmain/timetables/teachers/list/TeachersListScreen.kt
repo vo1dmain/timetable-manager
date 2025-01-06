@@ -42,10 +42,10 @@ import coil3.compose.rememberAsyncImagePainter
 import kotlinx.serialization.Serializable
 import ru.vo1dmain.timetables.data.entities.teacher.Teacher
 import ru.vo1dmain.timetables.design.AppTheme
+import ru.vo1dmain.timetables.design.dimensions
 import ru.vo1dmain.timetables.teachers.R
 import ru.vo1dmain.timetables.teachers.TeacherScreen
 import ru.vo1dmain.timetables.teachers.edit.TeacherEdit
-import ru.vo1dmain.timetables.teachers.smallImageSize
 import ru.vo1dmain.timetables.ui.Previews
 import ru.vo1dmain.timetables.ui.R as UiR
 
@@ -149,7 +149,7 @@ private fun TeacherListItem(
                 contentDescription = "Image",
                 modifier = Modifier
                     .clip(shapes.small)
-                    .requiredSize(smallImageSize)
+                    .requiredSize(dimensions.smallImageSize)
                     .background(colorScheme.secondaryContainer)
             )
         }
