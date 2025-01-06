@@ -6,8 +6,8 @@ import android.net.Uri
 import android.os.Environment
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -96,7 +96,7 @@ internal class TeacherEditViewModel(
 
 @Stable
 internal class EditScreenState(
-    image: MutableState<String?> = mutableStateOf(null),
+    image: State<String?> = mutableStateOf(null),
     val name: TextFieldState = TextFieldState(),
     val title: TextFieldState = TextFieldState(),
     val email: TextFieldState = TextFieldState()
