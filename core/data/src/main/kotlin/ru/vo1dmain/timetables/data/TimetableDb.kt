@@ -6,29 +6,29 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import ru.vo1dmain.timetables.data.converters.Converters
-import ru.vo1dmain.timetables.data.entities.event.Event
-import ru.vo1dmain.timetables.data.entities.event.EventsDao
-import ru.vo1dmain.timetables.data.entities.subject.Subject
+import ru.vo1dmain.timetables.data.entities.event.EventDao
+import ru.vo1dmain.timetables.data.entities.event.EventEntity
+import ru.vo1dmain.timetables.data.entities.subject.SubjectDao
+import ru.vo1dmain.timetables.data.entities.subject.SubjectEntity
 import ru.vo1dmain.timetables.data.entities.subject.SubjectTeacher
 import ru.vo1dmain.timetables.data.entities.subject.SubjectTeacherDao
-import ru.vo1dmain.timetables.data.entities.subject.SubjectsDao
-import ru.vo1dmain.timetables.data.entities.teacher.Teacher
-import ru.vo1dmain.timetables.data.entities.teacher.TeachersDao
+import ru.vo1dmain.timetables.data.entities.teacher.TeacherDao
+import ru.vo1dmain.timetables.data.entities.teacher.TeacherEntity
 
 @Database(
     entities = [
-        Subject::class,
-        Event::class,
-        Teacher::class,
+        SubjectEntity::class,
+        EventEntity::class,
+        TeacherEntity::class,
         SubjectTeacher::class
     ],
     version = 2
 )
 @TypeConverters(Converters::class)
-abstract class TimetableDb : RoomDatabase() {
-    abstract fun subjectsDao(): SubjectsDao
-    abstract fun eventsDao(): EventsDao
-    abstract fun teachersDao(): TeachersDao
+internal abstract class TimetableDb : RoomDatabase() {
+    abstract fun subjectDao(): SubjectDao
+    abstract fun eventDao(): EventDao
+    abstract fun teacherDao(): TeacherDao
     abstract fun subjectTeacherDao(): SubjectTeacherDao
     
     companion object {

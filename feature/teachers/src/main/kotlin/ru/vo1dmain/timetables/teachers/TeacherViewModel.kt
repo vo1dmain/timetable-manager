@@ -2,43 +2,47 @@ package ru.vo1dmain.timetables.teachers
 
 import android.app.Application
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import ru.vo1dmain.timetables.data.entities.teacher.TeachersRepository
+import ru.vo1dmain.timetables.data.repos.TeachersRepository
+import ru.vo1dmain.timetables.data.sources.teacher.TeacherRoomDataSource
 
 internal class TeacherViewModel(
     savedStateHandle: SavedStateHandle,
     application: Application
 ) : AndroidViewModel(application) {
-    private val repo = TeachersRepository(application)
+    private val repo = TeachersRepository(TeacherRoomDataSource.instance(application))
     
-    init {
-        viewModelScope.launch {
-            val record = repo.findById(id)
-            state = TeacherState(
-                image = record.image,
-                name = record.name,
-                title = record.title,
-                email = record.email
-            )
-        }
-    }
+    private val _uiState = MutableStateFlow(TeacherScreenState())
     
     val id = savedStateHandle.toRoute<TeacherScreen>().id
     
-    var state by mutableStateOf(TeacherState())
-        private set
+    val uiState = _uiState.asStateFlow()
     
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+            val record = repo.findById(id) ?: return@launch
+            _uiState.update {
+                TeacherScreenState(
+                    image = record.image,
+                    name = record.name,
+                    title = record.title,
+                    email = record.email
+                )
+            }
+        }
+    }
 }
 
 @Immutable
-internal data class TeacherState(
+internal data class TeacherScreenState(
     val image: String? = null,
     val name: String = "",
     val title: String? = null,

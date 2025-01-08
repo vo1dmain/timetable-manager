@@ -6,25 +6,20 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import ru.vo1dmain.timetables.data.entities.subject.SubjectsRepository
+import ru.vo1dmain.timetables.data.repos.SubjectRepository
+import ru.vo1dmain.timetables.data.sources.subject.SubjectRoomDataSource
 
 internal class SubjectsListViewModel(application: Application) : AndroidViewModel(application) {
-    private val repo = SubjectsRepository(application)
+    private val repo = SubjectRepository(SubjectRoomDataSource.instance(application))
     
     private val selected = mutableSetOf<Int>()
     
     val all by lazy {
-        repo.all.stateIn(
+        repo.getAll().stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000L),
             initialValue = emptyList()
         )
-    }
-    
-    fun deleteAll() {
-        viewModelScope.launch {
-            repo.deleteAll()
-        }
     }
     
     fun deleteSelected() {

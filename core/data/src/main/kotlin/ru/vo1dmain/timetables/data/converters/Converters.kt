@@ -5,7 +5,7 @@ import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.isoDayNumber
-import ru.vo1dmain.timetables.data.entities.event.EventType
+import ru.vo1dmain.timetables.data.models.EventType
 
 class Converters {
     @TypeConverter

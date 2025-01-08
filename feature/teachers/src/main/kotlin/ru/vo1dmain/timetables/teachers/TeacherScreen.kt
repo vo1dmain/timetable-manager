@@ -30,6 +30,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.rememberAsyncImagePainter
 import kotlinx.serialization.Serializable
@@ -50,9 +51,10 @@ internal fun TeacherScreen(
     onNavigateUp: () -> Unit
 ) {
     val viewModel = viewModel<TeacherViewModel>()
+    val state = viewModel.uiState.collectAsStateWithLifecycle()
     
     TeacherLayout(
-        state = viewModel.state,
+        state = state.value,
         snackbarHostState = snackbarHostState,
         onEditClick = {
             onNavigateToEdit(TeacherEdit(viewModel.id))
@@ -64,7 +66,7 @@ internal fun TeacherScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TeacherLayout(
-    state: TeacherState,
+    state: TeacherScreenState,
     snackbarHostState: SnackbarHostState,
     onEditClick: () -> Unit = {},
     onNavigationIconClick: () -> Unit = {}
@@ -173,7 +175,7 @@ private fun TeacherLayout(
 private fun Preview() {
     AppTheme {
         TeacherLayout(
-            state = TeacherState(
+            state = TeacherScreenState(
                 name = "Ivanov Ivan Ivanovich",
                 title = "Programming",
                 email = "sample@mail.com"

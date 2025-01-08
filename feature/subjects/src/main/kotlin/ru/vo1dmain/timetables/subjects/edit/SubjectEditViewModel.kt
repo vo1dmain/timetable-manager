@@ -12,23 +12,25 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import ru.vo1dmain.timetables.data.DatabaseEntity
-import ru.vo1dmain.timetables.data.entities.event.EventType
-import ru.vo1dmain.timetables.data.entities.subject.Subject
-import ru.vo1dmain.timetables.data.entities.subject.SubjectTeacher
-import ru.vo1dmain.timetables.data.entities.subject.SubjectsRepository
-import ru.vo1dmain.timetables.data.entities.teacher.Teacher
+import ru.vo1dmain.timetables.data.DEFAULT_ID
+import ru.vo1dmain.timetables.data.models.EventType
+import ru.vo1dmain.timetables.data.models.Subject
+import ru.vo1dmain.timetables.data.models.Teacher
+import ru.vo1dmain.timetables.data.repos.SubjectRepository
+import ru.vo1dmain.timetables.data.sources.subject.SubjectRoomDataSource
 
 internal class SubjectEditViewModel(
     savedStateHandle: SavedStateHandle,
     application: Application
 ) : AndroidViewModel(application) {
-    private val repo = SubjectsRepository(application)
+    private val repo = SubjectRepository(SubjectRoomDataSource.instance(application))
     
-    private val id = savedStateHandle.toRoute<SubjectEdit>().id
     private val teachers = mutableStateOf<List<Teacher>>(emptyList())
     private val types = mutableStateOf<List<EventType>>(emptyList())
+    
+    val id = savedStateHandle.toRoute<SubjectEdit>().id
     
     val state = EditScreenState(
         teachers = teachers,
@@ -39,33 +41,32 @@ internal class SubjectEditViewModel(
     
     init {
         if (id != null) {
-            viewModelScope.launch {
-                val record = repo.findById(id) ?: return@launch
+            viewModelScope.launch(Dispatchers.IO) {
+                val model = repo.findById(id) ?: return@launch
                 
-                state.title.setTextAndPlaceCursorAtEnd(record.title)
-                types.value = record.types
+                state.title.setTextAndPlaceCursorAtEnd(model.title)
+                types.value = model.types
+                teachers.value = model.teachers
             }
         }
     }
     
     fun submit() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val subject = Subject(
-                id = id ?: DatabaseEntity.DEFAULT_ID,
+                id = id ?: DEFAULT_ID,
                 title = state.title.text.toString().trim(),
-                types = state.selectedTypes
+                types = state.selectedTypes,
+                teachers = teachers.value
             )
             
-            trySubmit(subject)
+            repo.upsert(subject)
         }
     }
     
-    fun selectType(type: EventType) {
-        types.value += type
-    }
-    
-    fun unselectType(type: EventType) {
-        types.value -= type
+    fun toggleType(type: EventType, selected: Boolean) {
+        if (selected) types.value += type
+        else types.value -= type
     }
     
     fun selectTeacher(teacher: Teacher) {
@@ -74,21 +75,6 @@ internal class SubjectEditViewModel(
     
     fun unselectTeacher(teacher: Teacher) {
         teachers.value -= teacher
-    }
-    
-    private suspend fun trySubmit(subject: Subject) {
-        try {
-            val id = repo.insert(subject).toInt()
-            
-            if (id == -1) return
-            
-            state.selectedTeachers.forEach {
-                val pair = SubjectTeacher(id, it.id)
-                repo.insertPair(pair)
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
     }
 }
 

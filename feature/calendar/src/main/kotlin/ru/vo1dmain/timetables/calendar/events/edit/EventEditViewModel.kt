@@ -18,28 +18,28 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import ru.vo1dmain.timetables.data.DatabaseEntity.Companion.INVALID_ID
-import ru.vo1dmain.timetables.data.entities.event.Event
-import ru.vo1dmain.timetables.data.entities.event.EventType
-import ru.vo1dmain.timetables.data.entities.event.EventsRepository
-import ru.vo1dmain.timetables.data.entities.subject.SubjectsRepository
-import ru.vo1dmain.timetables.data.entities.teacher.TeachersRepository
+import ru.vo1dmain.timetables.data.INVALID_ID
+import ru.vo1dmain.timetables.data.models.Event
+import ru.vo1dmain.timetables.data.models.EventType
+import ru.vo1dmain.timetables.data.repos.EventRepository
+import ru.vo1dmain.timetables.data.repos.SubjectRepository
+import ru.vo1dmain.timetables.data.sources.event.EventRoomDataSource
+import ru.vo1dmain.timetables.data.sources.subject.SubjectRoomDataSource
 import kotlin.time.Duration.Companion.minutes
 
 internal class EventEditViewModel(
     savedStateHandle: SavedStateHandle,
     application: Application
 ) : AndroidViewModel(application) {
-    private val eventsRepo = EventsRepository(application)
-    private val subjectsRepo = SubjectsRepository(application)
-    private val teachersRepo = TeachersRepository(application)
+    private val eventsRepo = EventRepository(EventRoomDataSource.instance(application))
+    private val subjectsRepo = SubjectRepository(SubjectRoomDataSource.instance(application))
     
     private val id = savedStateHandle.toRoute<EventEdit>().id
     
     val state = EditScreenState()
     
     val subjects by lazy {
-        subjectsRepo.all.stateIn(
+        subjectsRepo.getAll().stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000L),
             initialValue = emptyList()
@@ -51,21 +51,13 @@ internal class EventEditViewModel(
             val event = Event(
                 id = id ?: INVALID_ID,
                 subjectId = state.subjectId,
-                teacherId = state.teacherId,
+                hostId = state.teacherId,
                 place = state.place.text.toString().trim(),
                 type = state.type,
                 startTime = state.startTime,
                 endTime = state.endTime
             )
-            trySubmit(event)
-        }
-    }
-    
-    private suspend fun trySubmit(event: Event) {
-        try {
-            eventsRepo.insert(event)
-        } catch (e: Exception) {
-            e.printStackTrace()
+            eventsRepo.upsert(event)
         }
     }
 }

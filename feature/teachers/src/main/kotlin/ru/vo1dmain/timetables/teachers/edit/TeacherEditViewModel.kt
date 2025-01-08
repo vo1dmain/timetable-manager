@@ -18,9 +18,10 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import ru.vo1dmain.timetables.data.DatabaseEntity
-import ru.vo1dmain.timetables.data.entities.teacher.Teacher
-import ru.vo1dmain.timetables.data.entities.teacher.TeachersRepository
+import ru.vo1dmain.timetables.data.DEFAULT_ID
+import ru.vo1dmain.timetables.data.models.Teacher
+import ru.vo1dmain.timetables.data.repos.TeachersRepository
+import ru.vo1dmain.timetables.data.sources.teacher.TeacherRoomDataSource
 import java.io.File
 import java.util.UUID
 
@@ -28,38 +29,38 @@ internal class TeacherEditViewModel(
     savedStateHandle: SavedStateHandle,
     application: Application
 ) : AndroidViewModel(application) {
-    private val repo = TeachersRepository(application)
+    private val repo = TeachersRepository(TeacherRoomDataSource.instance(application))
     
     private val id = savedStateHandle.toRoute<TeacherEdit>().id
-    private val imageState = mutableStateOf<String?>(null)
+    private val image = mutableStateOf<String?>(null)
     
-    val state = EditScreenState(image = imageState)
+    val state = EditScreenState(image = image)
     
     val isEditMode get() = id != null
     
     init {
         if (id != null) {
-            viewModelScope.launch {
-                val record = repo.findById(id)
-                state.name.setTextAndPlaceCursorAtEnd(record.name)
-                state.title.setTextAndPlaceCursorAtEnd(record.title ?: "")
-                state.email.setTextAndPlaceCursorAtEnd(record.email ?: "")
-                imageState.value = record.image
+            viewModelScope.launch(Dispatchers.IO) {
+                val model = repo.findById(id) ?: return@launch
+                state.name.setTextAndPlaceCursorAtEnd(model.name)
+                state.title.setTextAndPlaceCursorAtEnd(model.title ?: "")
+                state.email.setTextAndPlaceCursorAtEnd(model.email ?: "")
+                image.value = model.image
             }
         }
     }
     
     fun submit() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val teacher = Teacher(
-                id = id ?: DatabaseEntity.DEFAULT_ID,
+                id = id ?: DEFAULT_ID,
                 name = state.name.text.toString().trim(),
                 email = state.email.text.toString().trim(),
                 title = state.title.text.toString().trim(),
                 image = state.image
             )
             
-            tryUpsert(teacher)
+            repo.upsert(teacher)
         }
     }
     
@@ -82,15 +83,7 @@ internal class TeacherEditViewModel(
             }
         }
         
-        imageState.value = imageFile.toUri().toString()
-    }
-    
-    private suspend fun tryUpsert(teacher: Teacher) {
-        try {
-            repo.upsert(teacher)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+        image.value = imageFile.toUri().toString()
     }
 }
 

@@ -40,7 +40,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.rememberAsyncImagePainter
 import kotlinx.serialization.Serializable
-import ru.vo1dmain.timetables.data.entities.teacher.Teacher
+import ru.vo1dmain.timetables.data.models.Teacher
 import ru.vo1dmain.timetables.design.AppTheme
 import ru.vo1dmain.timetables.design.dimensions
 import ru.vo1dmain.timetables.teachers.R
