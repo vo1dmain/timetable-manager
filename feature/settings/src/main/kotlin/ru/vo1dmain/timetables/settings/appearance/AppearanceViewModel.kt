@@ -28,7 +28,7 @@ internal class AppearanceViewModel(application: Application) : AndroidViewModel(
         )
     
     val dynamicColor = preferences.data
-        .map { it[dynamicColorKey] ?: false }
+        .map { it[dynamicColorKey] == true }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
