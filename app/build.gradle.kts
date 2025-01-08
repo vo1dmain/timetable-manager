@@ -60,6 +60,7 @@ dependencies {
     implementation(projects.core.datetime)
     implementation(projects.core.preferences)
     
+    implementation(projects.feature.calendar)
     implementation(projects.feature.settings)
     implementation(projects.feature.subjects)
     implementation(projects.feature.teachers)
