@@ -12,7 +12,7 @@ import ru.vo1dmain.timetables.data.sources.teacher.TeacherRoomDataSource
 
 internal class TeachersListViewModel(application: Application) :
     AndroidViewModel(application) {
-    private val repo = TeachersRepository(TeacherRoomDataSource.instance(application))
+    private val repo = TeachersRepository(TeacherRoomDataSource(application))
     
     private val selected = mutableSetOf<Int>()
     

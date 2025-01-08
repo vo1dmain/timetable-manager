@@ -12,7 +12,7 @@ import ru.vo1dmain.timetables.data.models.Event
 import ru.vo1dmain.timetables.data.toEntity
 import ru.vo1dmain.timetables.data.toModel
 
-class EventRoomDataSource internal constructor(private val dao: EventDao) : EventDataSource {
+internal class EventRoomDataSource(private val dao: EventDao) : EventDataSource {
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun findAllForDate(date: Instant): Flow<List<Event>> {
         return dao.findAllForDate(date).mapLatest { it.map(EventEntity::toModel) }
@@ -37,10 +37,9 @@ class EventRoomDataSource internal constructor(private val dao: EventDao) : Even
     override suspend fun delete(item: Event) {
         dao.delete(item.toEntity())
     }
-    
-    companion object {
-        fun instance(application: Application): EventDataSource {
-            return EventRoomDataSource(TimetableDb.instance(application).eventDao())
-        }
-    }
+}
+
+@Suppress("FunctionName")
+fun EventRoomDataSource(application: Application): EventDataSource {
+    return EventRoomDataSource(TimetableDb.instance(application).eventDao())
 }

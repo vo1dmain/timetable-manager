@@ -13,7 +13,7 @@ import ru.vo1dmain.timetables.data.models.Subject
 import ru.vo1dmain.timetables.data.toEntity
 import ru.vo1dmain.timetables.data.toModel
 
-class SubjectRoomDataSource internal constructor(
+internal class SubjectRoomDataSource(
     private val dao: SubjectDao,
     private val junctionDao: SubjectTeacherDao
 ) : SubjectDataSource {
@@ -55,14 +55,13 @@ class SubjectRoomDataSource internal constructor(
     override suspend fun delete(item: Subject) {
         dao.delete(item.toEntity())
     }
-    
-    companion object {
-        fun instance(application: Application): SubjectDataSource {
-            val db = TimetableDb.instance(application)
-            return SubjectRoomDataSource(
-                dao = db.subjectDao(),
-                junctionDao = db.subjectTeacherDao()
-            )
-        }
-    }
+}
+
+@Suppress("FunctionName")
+fun SubjectRoomDataSource(application: Application): SubjectDataSource {
+    val db = TimetableDb.instance(application)
+    return SubjectRoomDataSource(
+        dao = db.subjectDao(),
+        junctionDao = db.subjectTeacherDao()
+    )
 }

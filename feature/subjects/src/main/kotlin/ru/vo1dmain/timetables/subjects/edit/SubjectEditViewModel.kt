@@ -25,7 +25,7 @@ internal class SubjectEditViewModel(
     savedStateHandle: SavedStateHandle,
     application: Application
 ) : AndroidViewModel(application) {
-    private val repo = SubjectRepository(SubjectRoomDataSource.instance(application))
+    private val repo = SubjectRepository(SubjectRoomDataSource(application))
     
     private val teachers = mutableStateOf<List<Teacher>>(emptyList())
     private val types = mutableStateOf<List<EventType>>(emptyList())

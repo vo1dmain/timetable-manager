@@ -18,7 +18,7 @@ internal class TeacherViewModel(
     savedStateHandle: SavedStateHandle,
     application: Application
 ) : AndroidViewModel(application) {
-    private val repo = TeachersRepository(TeacherRoomDataSource.instance(application))
+    private val repo = TeachersRepository(TeacherRoomDataSource(application))
     
     private val _uiState = MutableStateFlow(TeacherScreenState())
     

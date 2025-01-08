@@ -10,7 +10,7 @@ import ru.vo1dmain.timetables.data.repos.SubjectRepository
 import ru.vo1dmain.timetables.data.sources.subject.SubjectRoomDataSource
 
 internal class SubjectsListViewModel(application: Application) : AndroidViewModel(application) {
-    private val repo = SubjectRepository(SubjectRoomDataSource.instance(application))
+    private val repo = SubjectRepository(SubjectRoomDataSource(application))
     
     private val selected = mutableSetOf<Int>()
     

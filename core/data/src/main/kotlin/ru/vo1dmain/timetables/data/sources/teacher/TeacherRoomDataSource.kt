@@ -11,7 +11,7 @@ import ru.vo1dmain.timetables.data.models.Teacher
 import ru.vo1dmain.timetables.data.toEntity
 import ru.vo1dmain.timetables.data.toModel
 
-class TeacherRoomDataSource internal constructor(private val dao: TeacherDao) : TeacherDataSource {
+internal class TeacherRoomDataSource(private val dao: TeacherDao) : TeacherDataSource {
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun getAll(): Flow<List<Teacher>> {
         return dao.getAll().mapLatest { it.map(TeacherEntity::toModel) }
@@ -40,10 +40,9 @@ class TeacherRoomDataSource internal constructor(private val dao: TeacherDao) : 
     override suspend fun delete(item: Teacher) {
         dao.delete(item.toEntity())
     }
-    
-    companion object {
-        fun instance(application: Application): TeacherDataSource {
-            return TeacherRoomDataSource(TimetableDb.instance(application).teacherDao())
-        }
-    }
+}
+
+@Suppress("FunctionName")
+fun TeacherRoomDataSource(application: Application): TeacherDataSource {
+    return TeacherRoomDataSource(TimetableDb.instance(application).teacherDao())
 }

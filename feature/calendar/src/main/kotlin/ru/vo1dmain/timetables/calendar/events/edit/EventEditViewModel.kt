@@ -31,8 +31,8 @@ internal class EventEditViewModel(
     savedStateHandle: SavedStateHandle,
     application: Application
 ) : AndroidViewModel(application) {
-    private val eventsRepo = EventRepository(EventRoomDataSource.instance(application))
-    private val subjectsRepo = SubjectRepository(SubjectRoomDataSource.instance(application))
+    private val eventsRepo = EventRepository(EventRoomDataSource(application))
+    private val subjectsRepo = SubjectRepository(SubjectRoomDataSource(application))
     
     private val id = savedStateHandle.toRoute<EventEdit>().id
     
