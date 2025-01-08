@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import kotlinx.serialization.Serializable
 
 @Serializable
-object Calendar
+internal object Calendar
 
 @Composable
 internal fun CalendarScreen(
