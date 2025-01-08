@@ -37,7 +37,7 @@ internal class SubjectEditViewModel(
         types = types
     )
     
-    val isEditMode get() = id != null
+    val isCreationMode get() = id == null
     
     init {
         if (id != null) {

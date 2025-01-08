@@ -36,7 +36,7 @@ internal class TeacherEditViewModel(
     
     val state = EditScreenState(image = image)
     
-    val isEditMode get() = id != null
+    val isCreationMode get() = id == null
     
     init {
         if (id != null) {

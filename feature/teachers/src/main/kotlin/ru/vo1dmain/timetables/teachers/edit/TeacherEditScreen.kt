@@ -57,9 +57,9 @@ internal fun TeacherEditScreen(
     val viewModel = viewModel<TeacherEditViewModel>()
     
     TeacherEditLayout(
-        isEditMode = viewModel.isEditMode,
-        snackbarHostState = snackbarHostState,
+        isCreationMode = viewModel.isCreationMode,
         state = viewModel.state,
+        snackbarHostState = snackbarHostState,
         onNavigationIconClick = onNavigateUp,
         onPickImage = {
             viewModel.savePhoto(it)
@@ -74,9 +74,9 @@ internal fun TeacherEditScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TeacherEditLayout(
-    isEditMode: Boolean,
-    snackbarHostState: SnackbarHostState,
+    isCreationMode: Boolean,
     state: EditScreenState,
+    snackbarHostState: SnackbarHostState,
     onNavigationIconClick: () -> Unit = {},
     onPickImage: (Uri) -> Unit = {},
     onSubmit: () -> Unit = {}
@@ -92,8 +92,8 @@ private fun TeacherEditLayout(
     }
     
     val screenTitle = remember {
-        if (isEditMode) UiR.string.action_edit
-        else R.string.action_add_teacher
+        if (isCreationMode) R.string.action_add_teacher
+        else UiR.string.action_edit
     }
     
     TopBarScaffoldScreen(
@@ -225,7 +225,7 @@ private fun Preview() {
     }
     AppTheme {
         TeacherEditLayout(
-            isEditMode = true,
+            isCreationMode = true,
             snackbarHostState = SnackbarHostState(),
             state = state
         )
