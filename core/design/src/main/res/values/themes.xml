@@ -1,98 +1,98 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.TimetableManager" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimaryDark">?attr/colorSurface</item>
-        <item name="windowActionModeOverlay">true</item>
-    </style>
+    <!--    <style name="Theme.TimetableManager" parent="Theme.MaterialComponents.DayNight.NoActionBar">-->
+    <!--        <item name="colorPrimaryDark">?attr/colorSurface</item>-->
+    <!--        <item name="windowActionModeOverlay">true</item>-->
+    <!--    </style>-->
 
-    <style name="Theme.TimetableManager.Crimson" parent="Theme.TimetableManager">
-        <item name="colorPrimary">@color/pink_500</item>
-        <item name="colorPrimaryVariant">@color/pink_500_light</item>
-        <item name="colorPrimaryDark">@color/pink_500_dark</item>
-        <item name="colorOnPrimary">@color/color_control_black</item>
-        <item name="colorSecondary">@color/cyan_300</item>
-        <item name="colorSecondaryVariant">@color/cyan_300_dark</item>
-        <item name="colorOnSecondary">@color/color_control_black</item>
-    </style>
+    <!--    <style name="Theme.TimetableManager.Crimson" parent="Theme.TimetableManager">-->
+    <!--        <item name="colorPrimary">@color/pink_500</item>-->
+    <!--        <item name="colorPrimaryVariant">@color/pink_500_light</item>-->
+    <!--        <item name="colorPrimaryDark">@color/pink_500_dark</item>-->
+    <!--        <item name="colorOnPrimary">@color/color_control_black</item>-->
+    <!--        <item name="colorSecondary">@color/cyan_300</item>-->
+    <!--        <item name="colorSecondaryVariant">@color/cyan_300_dark</item>-->
+    <!--        <item name="colorOnSecondary">@color/color_control_black</item>-->
+    <!--    </style>-->
 
-    <style name="Theme.TimetableManager.Cyan" parent="Theme.TimetableManager">
-        <item name="colorPrimary">@color/cyan_300</item>
-        <item name="colorPrimaryVariant">@color/cyan_300_light</item>
-        <item name="colorPrimaryDark">@color/cyan_300_dark</item>
-        <item name="colorOnPrimary">@color/color_control_black</item>
-        <item name="colorSecondary">@color/deep_orange_400</item>
-        <item name="colorSecondaryVariant">@color/deep_orange_400_light</item>
-        <item name="colorOnSecondary">@color/color_control_black</item>
-    </style>
+    <!--    <style name="Theme.TimetableManager.Cyan" parent="Theme.TimetableManager">-->
+    <!--        <item name="colorPrimary">@color/cyan_300</item>-->
+    <!--        <item name="colorPrimaryVariant">@color/cyan_300_light</item>-->
+    <!--        <item name="colorPrimaryDark">@color/cyan_300_dark</item>-->
+    <!--        <item name="colorOnPrimary">@color/color_control_black</item>-->
+    <!--        <item name="colorSecondary">@color/deep_orange_400</item>-->
+    <!--        <item name="colorSecondaryVariant">@color/deep_orange_400_light</item>-->
+    <!--        <item name="colorOnSecondary">@color/color_control_black</item>-->
+    <!--    </style>-->
 
-    <style name="Theme.TimetableManager.DeepCyan" parent="Theme.TimetableManager">
-        <item name="colorPrimary">@color/cyan_900</item>
-        <item name="colorPrimaryVariant">@color/cyan_900_light</item>
-        <item name="colorPrimaryDark">@color/cyan_900_dark</item>
-        <item name="colorOnPrimary">@color/color_control_white</item>
-        <item name="colorSecondary">@color/red_A200</item>
-        <item name="colorSecondaryVariant">@color/red_A200_light</item>
-        <item name="colorOnSecondary">@color/color_control_black</item>
-    </style>
+    <!--    <style name="Theme.TimetableManager.DeepCyan" parent="Theme.TimetableManager">-->
+    <!--        <item name="colorPrimary">@color/cyan_900</item>-->
+    <!--        <item name="colorPrimaryVariant">@color/cyan_900_light</item>-->
+    <!--        <item name="colorPrimaryDark">@color/cyan_900_dark</item>-->
+    <!--        <item name="colorOnPrimary">@color/color_control_white</item>-->
+    <!--        <item name="colorSecondary">@color/red_A200</item>-->
+    <!--        <item name="colorSecondaryVariant">@color/red_A200_light</item>-->
+    <!--        <item name="colorOnSecondary">@color/color_control_black</item>-->
+    <!--    </style>-->
 
-    <style name="Theme.TimetableManager.DeepPurple" parent="Theme.TimetableManager">
-        <item name="colorPrimary">@color/deep_purple_200</item>
-        <item name="colorPrimaryVariant">@color/deep_purple_200_light</item>
-        <item name="colorPrimaryDark">@color/deep_purple_200_dark</item>
-        <item name="colorOnPrimary">@color/color_control_black</item>
-        <item name="colorSecondary">@color/pink_100</item>
-        <item name="colorSecondaryVariant">@color/pink_100_dark</item>
-        <item name="colorOnSecondary">@color/color_control_black</item>
-    </style>
+    <!--    <style name="Theme.TimetableManager.DeepPurple" parent="Theme.TimetableManager">-->
+    <!--        <item name="colorPrimary">@color/deep_purple_200</item>-->
+    <!--        <item name="colorPrimaryVariant">@color/deep_purple_200_light</item>-->
+    <!--        <item name="colorPrimaryDark">@color/deep_purple_200_dark</item>-->
+    <!--        <item name="colorOnPrimary">@color/color_control_black</item>-->
+    <!--        <item name="colorSecondary">@color/pink_100</item>-->
+    <!--        <item name="colorSecondaryVariant">@color/pink_100_dark</item>-->
+    <!--        <item name="colorOnSecondary">@color/color_control_black</item>-->
+    <!--    </style>-->
 
-    <style name="Theme.TimetableManager.Green" parent="Theme.TimetableManager">
-        <item name="colorPrimary">@color/green_300</item>
-        <item name="colorPrimaryVariant">@color/green_300_light</item>
-        <item name="colorPrimaryDark">@color/green_300_dark</item>
-        <item name="colorOnPrimary">@color/color_control_black</item>
-        <item name="colorSecondary">@color/pink_500</item>
-        <item name="colorSecondaryVariant">@color/pink_500_light</item>
-        <item name="colorOnSecondary">@color/color_control_black</item>
-    </style>
+    <!--    <style name="Theme.TimetableManager.Green" parent="Theme.TimetableManager">-->
+    <!--        <item name="colorPrimary">@color/green_300</item>-->
+    <!--        <item name="colorPrimaryVariant">@color/green_300_light</item>-->
+    <!--        <item name="colorPrimaryDark">@color/green_300_dark</item>-->
+    <!--        <item name="colorOnPrimary">@color/color_control_black</item>-->
+    <!--        <item name="colorSecondary">@color/pink_500</item>-->
+    <!--        <item name="colorSecondaryVariant">@color/pink_500_light</item>-->
+    <!--        <item name="colorOnSecondary">@color/color_control_black</item>-->
+    <!--    </style>-->
 
-    <style name="Theme.TimetableManager.LightBlue" parent="Theme.TimetableManager">
-        <item name="colorPrimary">@color/blue_100</item>
-        <item name="colorPrimaryVariant">@color/blue_100_light</item>
-        <item name="colorPrimaryDark">@color/blue_100_dark</item>
-        <item name="colorOnPrimary">@color/color_control_black</item>
-        <item name="colorSecondary">@color/teal_100</item>
-        <item name="colorSecondaryVariant">@color/teal_100_dark</item>
-        <item name="colorOnSecondary">@color/color_control_black</item>
-    </style>
+    <!--    <style name="Theme.TimetableManager.LightBlue" parent="Theme.TimetableManager">-->
+    <!--        <item name="colorPrimary">@color/blue_100</item>-->
+    <!--        <item name="colorPrimaryVariant">@color/blue_100_light</item>-->
+    <!--        <item name="colorPrimaryDark">@color/blue_100_dark</item>-->
+    <!--        <item name="colorOnPrimary">@color/color_control_black</item>-->
+    <!--        <item name="colorSecondary">@color/teal_100</item>-->
+    <!--        <item name="colorSecondaryVariant">@color/teal_100_dark</item>-->
+    <!--        <item name="colorOnSecondary">@color/color_control_black</item>-->
+    <!--    </style>-->
 
-    <style name="Theme.TimetableManager.Pumpkin" parent="Theme.TimetableManager">
-        <item name="colorPrimary">@color/amber_900</item>
-        <item name="colorPrimaryVariant">@color/amber_900_light</item>
-        <item name="colorPrimaryDark">@color/amber_900_dark</item>
-        <item name="colorOnPrimary">@color/color_control_black</item>
-        <item name="colorSecondary">@color/orange_900</item>
-        <item name="colorSecondaryVariant">@color/orange_900_light</item>
-        <item name="colorOnSecondary">@color/color_control_white</item>
-    </style>
+    <!--    <style name="Theme.TimetableManager.Pumpkin" parent="Theme.TimetableManager">-->
+    <!--        <item name="colorPrimary">@color/amber_900</item>-->
+    <!--        <item name="colorPrimaryVariant">@color/amber_900_light</item>-->
+    <!--        <item name="colorPrimaryDark">@color/amber_900_dark</item>-->
+    <!--        <item name="colorOnPrimary">@color/color_control_black</item>-->
+    <!--        <item name="colorSecondary">@color/orange_900</item>-->
+    <!--        <item name="colorSecondaryVariant">@color/orange_900_light</item>-->
+    <!--        <item name="colorOnSecondary">@color/color_control_white</item>-->
+    <!--    </style>-->
 
-    <style name="Theme.TimetableManager.Purple" parent="Theme.TimetableManager">
-        <item name="colorPrimary">@color/purple_100</item>
-        <item name="colorPrimaryVariant">@color/purple_100_light</item>
-        <item name="colorPrimaryDark">@color/purple_100_dark</item>
-        <item name="colorOnPrimary">@color/color_control_black</item>
-        <item name="colorSecondary">@color/deep_orange_50</item>
-        <item name="colorSecondaryVariant">@color/deep_orange_50_dark</item>
-        <item name="colorOnSecondary">@color/color_control_black</item>
-    </style>
+    <!--    <style name="Theme.TimetableManager.Purple" parent="Theme.TimetableManager">-->
+    <!--        <item name="colorPrimary">@color/purple_100</item>-->
+    <!--        <item name="colorPrimaryVariant">@color/purple_100_light</item>-->
+    <!--        <item name="colorPrimaryDark">@color/purple_100_dark</item>-->
+    <!--        <item name="colorOnPrimary">@color/color_control_black</item>-->
+    <!--        <item name="colorSecondary">@color/deep_orange_50</item>-->
+    <!--        <item name="colorSecondaryVariant">@color/deep_orange_50_dark</item>-->
+    <!--        <item name="colorOnSecondary">@color/color_control_black</item>-->
+    <!--    </style>-->
 
-    <style name="Theme.TimetableManager.Teal" parent="Theme.TimetableManager">
-        <item name="colorPrimary">@color/teal_200</item>
-        <item name="colorPrimaryVariant">@color/teal_200_light</item>
-        <item name="colorPrimaryDark">@color/teal_200_dark</item>
-        <item name="colorOnPrimary">@color/color_control_black</item>
-        <item name="colorSecondary">@color/indigo_100</item>
-        <item name="colorSecondaryVariant">@color/indigo_100_dark</item>
-        <item name="colorOnSecondary">@color/color_control_black</item>
-    </style>
+    <!--    <style name="Theme.TimetableManager.Teal" parent="Theme.TimetableManager">-->
+    <!--        <item name="colorPrimary">@color/teal_200</item>-->
+    <!--        <item name="colorPrimaryVariant">@color/teal_200_light</item>-->
+    <!--        <item name="colorPrimaryDark">@color/teal_200_dark</item>-->
+    <!--        <item name="colorOnPrimary">@color/color_control_black</item>-->
+    <!--        <item name="colorSecondary">@color/indigo_100</item>-->
+    <!--        <item name="colorSecondaryVariant">@color/indigo_100_dark</item>-->
+    <!--        <item name="colorOnSecondary">@color/color_control_black</item>-->
+    <!--    </style>-->
 </resources>
