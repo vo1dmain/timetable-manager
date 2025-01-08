@@ -3,11 +3,10 @@ package ru.vo1dmain.timetables.settings
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LargeTopAppBar
@@ -27,25 +26,44 @@ import androidx.compose.ui.res.stringResource
 import ru.vo1dmain.timetables.design.AppTheme
 import ru.vo1dmain.timetables.ui.Previews
 
+private data class Preference(
+    @StringRes val title: Int,
+    @DrawableRes val icon: Int,
+    val route: Any
+)
 
 @Composable
 internal fun SettingsScreen(
     snackbarHostState: SnackbarHostState,
     onNavigate: (Any) -> Unit
 ) {
-    val categories = remember { categories }
-    SettingsLayout(snackbarHostState, categories, onNavigate)
+    SettingsLayout(snackbarHostState, onNavigate)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun SettingsLayout(
     snackbarHostState: SnackbarHostState,
-    categories: List<Preference<out Any>>,
-    onNavigate: (Any) -> Unit = {}
+    onPreferenceCategoryClick: (Any) -> Unit = {}
 ) {
     val topAppBarState = rememberTopAppBarState()
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(topAppBarState)
+    
+    val categories = remember {
+        listOf(
+            Preference(
+                R.string.screen_title_appearance,
+                R.drawable.rounded_palette_24,
+                Appearance
+            ),
+            Preference(
+                R.string.screen_title_about,
+                R.drawable.rounded_info_24,
+                About
+            )
+        )
+    }
+    
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
@@ -58,15 +76,14 @@ private fun SettingsLayout(
         },
         snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { innerPadding ->
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
         ) {
-            categories.forEach {
+            items(categories) {
                 ListItem(
-                    modifier = Modifier.clickable(onClick = { onNavigate(it.route) }),
+                    modifier = Modifier.clickable(onClick = { onPreferenceCategoryClick(it.route) }),
                     headlineContent = { Text(text = stringResource(it.title)) },
                     leadingContent = {
                         Icon(
@@ -80,29 +97,10 @@ private fun SettingsLayout(
     }
 }
 
-private data class Preference<T>(
-    @StringRes val title: Int,
-    @DrawableRes val icon: Int,
-    val route: T
-)
-
-private val categories = listOf(
-    Preference(
-        R.string.screen_title_appearance,
-        R.drawable.rounded_palette_24,
-        Appearance
-    ),
-    Preference(
-        R.string.screen_title_about,
-        R.drawable.rounded_info_24,
-        About
-    )
-)
-
 @Previews
 @Composable
 private fun Preview() {
     AppTheme {
-        SettingsLayout(SnackbarHostState(), categories)
+        SettingsLayout(SnackbarHostState())
     }
 }
