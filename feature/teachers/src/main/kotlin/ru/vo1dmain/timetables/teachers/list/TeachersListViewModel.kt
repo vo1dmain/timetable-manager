@@ -1,6 +1,9 @@
 package ru.vo1dmain.timetables.teachers.list
 
 import android.app.Application
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +17,7 @@ internal class TeachersListViewModel(application: Application) :
     AndroidViewModel(application) {
     private val repo = TeachersRepository(TeacherRoomDataSource(application))
     
-    private val selected = mutableSetOf<Int>()
+    private var selected by mutableStateOf(setOf<Int>())
     
     val all by lazy {
         repo.getAll().stateIn(
@@ -22,6 +25,15 @@ internal class TeachersListViewModel(application: Application) :
             started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000L),
             initialValue = emptyList()
         )
+    }
+    
+    fun toggleSelection(id: Int) {
+        if (selected.contains(id)) selected -= id
+        else selected += id
+    }
+    
+    fun isSelected(id: Int): Boolean {
+        return selected.contains(id)
     }
     
     fun deleteSelected() {

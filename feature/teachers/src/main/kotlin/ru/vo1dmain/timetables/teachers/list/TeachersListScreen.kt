@@ -3,20 +3,26 @@ package ru.vo1dmain.timetables.teachers.list
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.Scaffold
@@ -59,8 +65,15 @@ internal fun TeachersListScreen(
     TeachersListLayout(
         items = items,
         snackbarHostState = snackbarHostState,
-        onClickTeacher = { onNavigateTo(TeacherScreen(it)) },
-        onClickAddTeacher = { onNavigateTo(TeacherEdit()) }
+        onTeacherClick = { onNavigateTo(TeacherScreen(it)) },
+        onTeacherLongClick = {
+            viewModel.toggleSelection(it)
+        },
+        onTeacherImageClick = {
+            viewModel.toggleSelection(it)
+        },
+        onClickAddTeacher = { onNavigateTo(TeacherEdit()) },
+        isItemSelected = { viewModel.isSelected(it) }
     )
 }
 
@@ -69,8 +82,11 @@ internal fun TeachersListScreen(
 private fun TeachersListLayout(
     items: State<List<Teacher>>,
     snackbarHostState: SnackbarHostState,
-    onClickTeacher: (Int) -> Unit = {},
-    onClickAddTeacher: () -> Unit = {}
+    onTeacherClick: (Int) -> Unit = {},
+    onTeacherLongClick: (Int) -> Unit = {},
+    onTeacherImageClick: (Int) -> Unit = {},
+    onClickAddTeacher: () -> Unit = {},
+    isItemSelected: (Int) -> Boolean = { false }
 ) {
     val topAppBarState = rememberTopAppBarState()
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(topAppBarState)
@@ -104,16 +120,26 @@ private fun TeachersListLayout(
         LazyColumn(
             modifier = Modifier
                 .padding(innerPadding)
-                .fillMaxSize()
+                .fillMaxSize(),
+            contentPadding = PaddingValues(dimensions.contentPadding)
         ) {
-            items(
-                items = items.value,
-                key = { it.id }
-            ) {
+            val teachers = items.value
+            
+            itemsIndexed(
+                items = teachers,
+                key = { index, item -> item.id }
+            ) { index, item ->
                 TeacherListItem(
-                    item = it,
-                    onClick = onClickTeacher
+                    item = item,
+                    isSelected = isItemSelected(item.id),
+                    onClick = onTeacherClick,
+                    onLongClick = onTeacherLongClick,
+                    onImageClick = onTeacherImageClick
                 )
+                
+                if (index != teachers.size - 1) {
+                    Spacer(modifier = Modifier.height(dimensions.smallSpacerSize))
+                }
             }
         }
     }
@@ -123,12 +149,22 @@ private fun TeachersListLayout(
 @Composable
 private fun TeacherListItem(
     item: Teacher,
-    onClick: (Int) -> Unit = {}
+    isSelected: Boolean = false,
+    onClick: (Int) -> Unit = {},
+    onLongClick: (Int) -> Unit = {},
+    onImageClick: (Int) -> Unit = {}
 ) {
+    val colors = if (isSelected) {
+        ListItemDefaults.colors(containerColor = colorScheme.secondaryContainer)
+    } else {
+        ListItemDefaults.colors()
+    }
+    
     ListItem(
         modifier = Modifier
+            .clip(shapes.medium)
             .combinedClickable(
-                onLongClick = {},
+                onLongClick = { onLongClick(item.id) },
                 onClick = { onClick(item.id) }
             ),
         supportingContent = {
@@ -137,18 +173,32 @@ private fun TeacherListItem(
         },
         headlineContent = { Text(text = item.name) },
         leadingContent = {
-            Image(
-                painter = rememberAsyncImagePainter(
-                    model = item.image,
-                    fallback = painterResource(R.drawable.rounded_person_24_filled)
-                ),
-                contentDescription = "Image",
-                modifier = Modifier
-                    .clip(shapes.small)
-                    .requiredSize(dimensions.smallImageSize)
-                    .background(colorScheme.secondaryContainer)
-            )
-        }
+            val modifier = Modifier
+                .clickable {
+                    onImageClick(item.id)
+                }
+                .clip(shapes.small)
+                .requiredSize(dimensions.smallImageSize)
+            
+            if (isSelected) {
+                Icon(
+                    imageVector = Icons.Rounded.Check,
+                    contentDescription = "Selection icon",
+                    modifier = modifier.background(colorScheme.onSecondaryContainer),
+                    tint = colorScheme.secondaryContainer
+                )
+            } else {
+                Image(
+                    painter = rememberAsyncImagePainter(
+                        model = item.image,
+                        fallback = painterResource(R.drawable.rounded_person_24_filled)
+                    ),
+                    contentDescription = "Image",
+                    modifier = modifier.background(colorScheme.secondaryContainer)
+                )
+            }
+        },
+        colors = colors
     )
 }
 
@@ -161,17 +211,31 @@ private fun Preview() {
                 Teacher(
                     id = it,
                     name = "Ivanov Ivan Ivanovich",
-                    title = if (it % 2 == 1) "Programming" else null,
+                    title = if (it % 2 == 1) "Programming" else "Databases",
                     email = "sample@mail.com"
                 )
             }
         )
     }
     
+    var selected by remember { mutableStateOf(setOf(1, 3, 5, 7, 9, 11)) }
+    
+    fun toggleSelected(id: Int) {
+        if (selected.contains(id)) selected -= id
+        else selected += id
+    }
+    
     AppTheme {
         TeachersListLayout(
             items = state,
-            snackbarHostState = SnackbarHostState()
+            snackbarHostState = SnackbarHostState(),
+            onTeacherLongClick = {
+                toggleSelected(it)
+            },
+            onTeacherImageClick = {
+                toggleSelected(it)
+            },
+            isItemSelected = { selected.contains(it) }
         )
     }
 }
