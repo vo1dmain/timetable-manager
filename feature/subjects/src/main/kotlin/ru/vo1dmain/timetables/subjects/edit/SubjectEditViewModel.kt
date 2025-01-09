@@ -20,6 +20,7 @@ import ru.vo1dmain.timetables.data.models.Subject
 import ru.vo1dmain.timetables.data.models.Teacher
 import ru.vo1dmain.timetables.data.repos.SubjectRepository
 import ru.vo1dmain.timetables.data.sources.subject.SubjectRoomDataSource
+import ru.vo1dmain.timetables.subjects.SubjectEdit
 
 internal class SubjectEditViewModel(
     savedStateHandle: SavedStateHandle,

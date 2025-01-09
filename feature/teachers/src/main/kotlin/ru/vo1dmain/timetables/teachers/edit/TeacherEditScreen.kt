@@ -38,16 +38,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.rememberAsyncImagePainter
-import kotlinx.serialization.Serializable
 import ru.vo1dmain.timetables.design.AppTheme
 import ru.vo1dmain.timetables.design.dimensions
 import ru.vo1dmain.timetables.teachers.R
 import ru.vo1dmain.timetables.ui.Previews
 import ru.vo1dmain.timetables.ui.TopBarScaffoldScreen
 import ru.vo1dmain.timetables.ui.R as UiR
-
-@Serializable
-internal data class TeacherEdit(val id: Int? = null)
 
 @Composable
 internal fun TeacherEditScreen(

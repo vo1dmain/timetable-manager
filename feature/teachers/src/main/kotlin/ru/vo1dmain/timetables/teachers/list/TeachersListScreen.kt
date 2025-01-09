@@ -39,18 +39,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.rememberAsyncImagePainter
-import kotlinx.serialization.Serializable
 import ru.vo1dmain.timetables.data.models.Teacher
 import ru.vo1dmain.timetables.design.AppTheme
 import ru.vo1dmain.timetables.design.dimensions
 import ru.vo1dmain.timetables.teachers.R
+import ru.vo1dmain.timetables.teachers.TeacherEdit
 import ru.vo1dmain.timetables.teachers.TeacherScreen
-import ru.vo1dmain.timetables.teachers.edit.TeacherEdit
 import ru.vo1dmain.timetables.ui.Previews
 import ru.vo1dmain.timetables.ui.R as UiR
-
-@Serializable
-internal object TeachersList
 
 @Composable
 internal fun TeachersListScreen(

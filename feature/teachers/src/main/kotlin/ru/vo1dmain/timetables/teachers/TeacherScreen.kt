@@ -33,21 +33,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.rememberAsyncImagePainter
-import kotlinx.serialization.Serializable
 import ru.vo1dmain.timetables.design.AppTheme
 import ru.vo1dmain.timetables.design.dimensions
-import ru.vo1dmain.timetables.teachers.edit.TeacherEdit
 import ru.vo1dmain.timetables.ui.Previews
 import ru.vo1dmain.timetables.ui.TopBarScaffoldScreen
 import ru.vo1dmain.timetables.ui.R as UiR
 
-@Serializable
-internal data class TeacherScreen(val id: Int)
-
 @Composable
 internal fun TeacherScreen(
     snackbarHostState: SnackbarHostState,
-    onNavigateToEdit: (TeacherEdit) -> Unit,
+    onNavigateTo: (Any) -> Unit,
     onNavigateUp: () -> Unit
 ) {
     val viewModel = viewModel<TeacherViewModel>()
@@ -57,7 +52,7 @@ internal fun TeacherScreen(
         state = state.value,
         snackbarHostState = snackbarHostState,
         onEditClick = {
-            onNavigateToEdit(TeacherEdit(viewModel.id))
+            onNavigateTo(TeacherEdit(viewModel.id))
         },
         onNavigationIconClick = onNavigateUp
     )

@@ -9,13 +9,13 @@ import ru.vo1dmain.timetables.settings.about.AboutScreen
 import ru.vo1dmain.timetables.settings.appearance.AppearanceScreen
 
 @Serializable
-internal object Settings
-
-@Serializable
 internal object About
 
 @Serializable
 internal object Appearance
+
+@Serializable
+internal object Settings
 
 @Serializable
 object SettingsNavigation
