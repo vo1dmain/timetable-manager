@@ -12,23 +12,23 @@ import ru.vo1d.ttmanager.ui.sections.settings.SettingsFragment
 
 internal class MainActivity : AppCompatActivity(), ActionModeOwner {
     override var actionMode: ActionMode? = null
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         setThemeFromPreferences()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        
         val navigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-
+        
         navigationView.setupWithNavController(navController)
         navController.addOnDestinationChangedListener { _, _, _ ->
             actionMode?.finish()
         }
     }
-
+    
     private fun setThemeFromPreferences() {
         val themeId = PreferenceManager
             .getDefaultSharedPreferences(applicationContext)
@@ -38,8 +38,8 @@ internal class MainActivity : AppCompatActivity(), ActionModeOwner {
             )
         setTheme(themeId)
     }
-
-
+    
+    
     companion object {
         val appBarConfiguration = AppBarConfiguration.Builder(
             R.id.nav_timetable,

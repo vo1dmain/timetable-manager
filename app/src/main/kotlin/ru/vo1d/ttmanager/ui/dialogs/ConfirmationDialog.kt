@@ -14,7 +14,7 @@ class ConfirmationDialog(
     private val onNegativeClick: (DialogFragment) -> Unit = { it.dismiss() },
     private val onDismiss: () -> Unit = {}
 ) : DialogFragment() {
-
+    
     override fun onCreateDialog(savedInstance: Bundle?) =
         MaterialAlertDialogBuilder(requireActivity())
             .setTitle(title)
@@ -22,7 +22,7 @@ class ConfirmationDialog(
             .setNegativeButton(R.string.dialog_negative) { _, _ -> onNegativeClick(this) }
             .setMessage(message)
             .create()
-
+    
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
         onDismiss()

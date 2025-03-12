@@ -9,13 +9,13 @@ import ru.vo1d.ttmanager.databinding.FragmentAboutBinding
 class AboutFragment : Fragment(R.layout.fragment_about) {
     private var _binding: FragmentAboutBinding? = null
     private val binding get() = _binding!!
-
-
+    
+    
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
+    
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentAboutBinding.bind(view)

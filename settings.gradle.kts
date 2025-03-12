@@ -4,7 +4,7 @@ pluginManagement {
         google()
         mavenCentral()
     }
-
+    
     val navigationVersion: String by settings
     plugins {
         kotlin("android") version "1.7.10"

@@ -11,10 +11,10 @@ import ru.vo1d.ttmanager.ui.common.selection.SelectableListViewModel
 internal class InstructorsViewModel(application: Application) :
     SelectableListViewModel<Long>(application) {
     private val repo = InstructorsRepository(application)
-
+    
     val all by lazy { repo.all }
-
-
+    
+    
     fun deleteSelected(onResult: (Boolean) -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
             val result = tryDeleteSelected()
@@ -23,8 +23,8 @@ internal class InstructorsViewModel(application: Application) :
             }
         }
     }
-
-
+    
+    
     fun deleteAll(onResult: (Boolean) -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
             val result = tryDeleteAll()
@@ -33,8 +33,8 @@ internal class InstructorsViewModel(application: Application) :
             }
         }
     }
-
-
+    
+    
     private suspend fun tryDeleteSelected() = try {
         repo.deleteByIds(tracker.selection.toMutableList())
         true
@@ -42,7 +42,7 @@ internal class InstructorsViewModel(application: Application) :
         e.printStackTrace()
         false
     }
-
+    
     private suspend fun tryDeleteAll() = try {
         repo.deleteAll()
         true

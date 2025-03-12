@@ -9,9 +9,9 @@ import ru.vo1d.ttmanager.ui.common.selection.SelectableListViewModel
 internal class SubjectsListViewModel(application: Application) :
     SelectableListViewModel<Long>(application) {
     private val repo = SubjectsRepository(application)
-
+    
     val all by lazy { repo.all }
-
+    
     fun deleteAll() {
         viewModelScope.launch {
             repo.deleteAll()

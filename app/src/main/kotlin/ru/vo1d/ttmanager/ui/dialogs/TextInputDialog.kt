@@ -17,7 +17,7 @@ class TextInputDialog(
     private val onNegativeClick: (DialogFragment) -> Unit = {},
     private val onDismiss: () -> Unit = {}
 ) : DialogFragment() {
-
+    
     override fun onCreateDialog(savedInstance: Bundle?): Dialog {
         val binding = DialogCreateBinding.inflate(layoutInflater, null, false)
         val dialog = MaterialAlertDialogBuilder(requireActivity())
@@ -25,12 +25,12 @@ class TextInputDialog(
             .setPositiveButton(R.string.dialog_positive) { _, _ -> onPositiveClick(this) }
             .setNegativeButton(R.string.dialog_negative) { _, _ -> onNegativeClick(this) }
             .create()
-
+        
         dialog.setOnShowListener { dialogInterface ->
             if (dialogInterface !is AlertDialog) return@setOnShowListener
-
+            
             val positiveButton = dialogInterface.getButton(AlertDialog.BUTTON_POSITIVE)
-
+            
             positiveButton.isEnabled = false
             binding.newWeekTitle.doAfterTextChanged {
                 positiveButton.isEnabled = it.trim().isNotEmpty()
@@ -40,7 +40,7 @@ class TextInputDialog(
         dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
         return dialog
     }
-
+    
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
         onDismiss()

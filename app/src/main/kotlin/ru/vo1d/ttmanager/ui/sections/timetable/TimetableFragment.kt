@@ -24,54 +24,54 @@ import ru.vo1d.ttmanager.ui.utils.extensions.doOnItemSelected
 
 internal class TimetableFragment : Fragment(R.layout.fragment_timetable) {
     private val daysNames by lazy { resources.getStringArray(R.array.days_of_week_short) }
-
+    
     private var _binding: FragmentTimetableBinding? = null
     private val binding get() = _binding!!
-
+    
     private val viewModel by viewModels<TimetableViewModel>()
-
+    
     private var mediator: TabLayoutMediator? = null
-
+    
     private lateinit var daysAdapter: DaysAdapter
     private lateinit var weeksAdapter: ArrayAdapter<Week>
-
-
+    
+    
     override fun onDestroyView() {
         super.onDestroyView()
         mediator?.detach()
         mediator = null
         _binding = null
     }
-
+    
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentTimetableBinding.bind(view)
-
+        
         binding.toolbar.setupWithNavController(
             findNavController(),
             MainActivity.appBarConfiguration
         )
-
+        
         binding.weeksSpinner.doOnItemSelected { _, _, position, _ ->
             val id = weeksAdapter.getItem(position)?.id ?: INVALID_ID
             viewModel.selectWeek(id)
         }
-
+        
         daysAdapter = DaysAdapter(this)
         weeksAdapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_item,
             mutableListOf<Week>()
         )
-
+        
         binding.weeksSpinner.adapter = weeksAdapter
         binding.daysPager.adapter = daysAdapter
-
+        
         mediator = TabLayoutMediator(binding.daysTabs, binding.daysPager) { tab, position ->
             val day = daysAdapter.getItemAt(position) ?: DayOfWeek.MONDAY
             tab.text = daysNames[day.ordinal]
         }.apply(TabLayoutMediator::attach)
-
+        
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch { viewModel.allWeeks.collectLatest(::onWeeksListChanged) }
@@ -80,16 +80,16 @@ internal class TimetableFragment : Fragment(R.layout.fragment_timetable) {
             }
         }
     }
-
-
+    
+    
     private fun onWeeksListChanged(list: List<Week>) {
         weeksAdapter.clear()
         weeksAdapter.addAll(list)
     }
-
+    
     private fun onDaysListChanged(list: List<DayOfWeek>) {
         daysAdapter.submitList(list)
-
+        
         binding.daysTabs.isVisible = list.isNotEmpty()
         binding.daysPager.isVisible = list.isNotEmpty()
     }

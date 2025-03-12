@@ -36,16 +36,16 @@ abstract class TimetableDb : RoomDatabase() {
     abstract fun instructorsDao(): InstructorsDao
     abstract fun subjectInstructorsDao(): SubjectInstructorsDao
     abstract fun weeksDao(): WeeksDao
-
+    
     companion object {
         private lateinit var db: TimetableDb
-
+        
         @Synchronized
         fun instance(context: Context): TimetableDb {
             if (Companion::db.isInitialized.not()) db = Room
                 .databaseBuilder(context, TimetableDb::class.java, "timetable_db")
                 .build()
-
+            
             return db
         }
     }

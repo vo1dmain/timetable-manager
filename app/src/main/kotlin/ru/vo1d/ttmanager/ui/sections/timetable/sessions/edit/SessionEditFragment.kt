@@ -19,20 +19,20 @@ import ru.vo1d.ttmanager.ui.sections.timetable.sessions.setup.SessionSetupFragme
 
 class SessionEditFragment : SessionSetupFragment() {
     override val viewModel by viewModels<SessionEditViewModel>()
-
-
+    
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        
         arguments?.let {
             val args = SessionEditFragmentArgs.fromBundle(it)
             viewModel.setItemId(args.sessionId)
         }
     }
-
+    
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch { viewModel.subjectId.collectLatest(::onSubjectIdSet) }
@@ -41,36 +41,36 @@ class SessionEditFragment : SessionSetupFragment() {
             }
         }
     }
-
-
+    
+    
     private fun onSubjectIdSet(id: Int) {
         val index = subjectsAdapter.findIndex { it.id == id }
         binding.subject.subjectInput.setSelection(index)
     }
-
+    
     private fun onInstructorIdSet(id: Int) {
         if (id == INVALID_ID) return binding.instructor.list.clearCheck()
-
+        
         val chip = binding.instructor.list.findViewByPredicate<Chip> {
             val tag = it.tag
             tag is Instructor && tag.id == id
         } ?: return
-
+        
         binding.instructor.list.check(chip.id)
     }
-
+    
     private fun onTypeSelected(type: SessionType?) {
         if (type == null) return binding.type.list.clearCheck()
-
+        
         val chip = binding.type.list.findViewByPredicate<Chip> {
             val tag = it.tag
             tag is SessionType && tag == type
         } ?: return
-
+        
         binding.type.list.check(chip.id)
     }
-
-
+    
+    
     companion object {
         private inline fun <reified T : View> ChipGroup.findViewByPredicate(predicate: (T) -> Boolean): T? {
             forEach {
@@ -79,7 +79,7 @@ class SessionEditFragment : SessionSetupFragment() {
             }
             return null
         }
-
+        
         internal inline fun <T> ArrayAdapter<T>.findIndex(predicate: (T) -> Boolean): Int {
             for (index in 0 until count) {
                 val item = getItem(index) ?: return -1

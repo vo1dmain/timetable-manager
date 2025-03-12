@@ -6,6 +6,6 @@ import androidx.recyclerview.selection.SelectionTracker
 
 internal abstract class SelectableListViewModel<K : Any>(application: Application) :
     AndroidViewModel(application) {
-
+    
     lateinit var tracker: SelectionTracker<K>
 }

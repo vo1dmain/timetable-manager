@@ -14,13 +14,13 @@ import ru.vo1d.ttmanager.ui.sections.timetable.sessions.setup.SessionSetupViewMo
 
 class SessionEditViewModel(application: Application) : SessionSetupViewModel(application) {
     private val itemId = MutableStateFlow(INVALID_ID)
-
-
+    
+    
     val subjectId by lazy { _subjectId.asStateFlow() }
     val instructorId by lazy { _instructorId.asStateFlow() }
     val selectedType by lazy { _selectedType.asStateFlow() }
-
-
+    
+    
     override fun submit(onResult: (Boolean) -> Unit) {
         viewModelScope.launch {
             val result = trySubmit()
@@ -29,12 +29,12 @@ class SessionEditViewModel(application: Application) : SessionSetupViewModel(app
             }
         }
     }
-
-
+    
+    
     fun setItemId(id: Int) =
         itemId.update { id }
-
-
+    
+    
     private suspend fun trySubmit() = try {
         val item = buildItem(itemId.value)
         sessionsRepo.update(item)
@@ -42,8 +42,8 @@ class SessionEditViewModel(application: Application) : SessionSetupViewModel(app
     } catch (e: Exception) {
         false
     }
-
-
+    
+    
     init {
         viewModelScope.launch {
             itemId.collectLatest {

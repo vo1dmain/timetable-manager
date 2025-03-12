@@ -14,7 +14,7 @@ fun <T : Any> SelectionTracker<T>.observe(
     override fun onSelectionChanged() {
         onSelectionChanged?.invoke(this@observe)
     }
-
+    
     override fun onItemStateChanged(key: T, selected: Boolean) {
         onItemStateChanged?.invoke(key, selected)
     }

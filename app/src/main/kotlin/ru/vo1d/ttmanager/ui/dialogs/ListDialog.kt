@@ -12,13 +12,13 @@ class ListDialog<T>(
     private val onItemSelected: (DialogInterface, Int) -> Unit,
     private val onDismiss: () -> Unit = {}
 ) : DialogFragment() {
-
+    
     override fun onCreateDialog(savedInstance: Bundle?) =
         MaterialAlertDialogBuilder(requireActivity())
             .setTitle(titleId)
             .setItems(items.map { it.toString() }.toTypedArray(), onItemSelected)
             .create()
-
+    
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
         onDismiss()

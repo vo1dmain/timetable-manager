@@ -13,13 +13,13 @@ import ru.vo1d.ttmanager.ui.common.selection.SelectableListViewModel
 internal class SessionsViewModel(application: Application) :
     SelectableListViewModel<Long>(application) {
     private val repo = SessionsRepository(application)
-
+    
     private val day = MutableStateFlow(DayOfWeek.MONDAY)
-
+    
     val allForDay by lazy {
         day.flatMapLatest { repo.findAllForDay(it) }
     }
-
+    
     fun setDay(dayOfWeek: DayOfWeek) {
         day.update { dayOfWeek }
     }

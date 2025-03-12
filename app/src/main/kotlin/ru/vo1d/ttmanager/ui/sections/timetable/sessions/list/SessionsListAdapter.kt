@@ -13,51 +13,51 @@ import ru.vo1d.ttmanager.ui.sections.timetable.sessions.list.SessionsListAdapter
 
 internal class SessionsListAdapter(private val preferences: SharedPreferences) :
     ListAdapter<Session, ViewHolder>(diffCallback) {
-
+    
     private val editionModeListeners = mutableListOf<(Boolean) -> Unit>()
-
+    
     private var isEditionMode = false
     private var shouldSelectAll = false
-
+    
     private var itemClickListener: (Session) -> Unit = { }
     private var selectionChangedListener: (Session, Boolean) -> Unit = { _, _ -> }
-
-
+    
+    
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = CardSessionBinding.inflate(inflater, parent, false)
         return ViewHolder(binding)
     }
-
+    
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
+    
     }
-
+    
     override fun getItemId(position: Int) =
         getItem(position).id.toLong()
-
-
+    
+    
     @SuppressLint("NotifyDataSetChanged")
     fun selectAll() {
         shouldSelectAll = !shouldSelectAll
         notifyDataSetChanged()
     }
-
-
+    
+    
     internal class ViewHolder(binding: CardSessionBinding) : RecyclerView.ViewHolder(binding.root)
-
-
+    
+    
     companion object {
         private val diffCallback = object : DiffUtil.ItemCallback<Session>() {
             override fun areItemsTheSame(old: Session, new: Session) =
                 old.id == new.id
-
+            
             override fun areContentsTheSame(old: Session, new: Session) =
                 old == new
         }
     }
-
-
+    
+    
     init {
         setHasStableIds(true)
     }

@@ -13,7 +13,7 @@ internal inline fun AdapterView<*>.doOnItemSelected(
             position: Int,
             id: Long
         ) = action(parent, view, position, id)
-
+        
         override fun onNothingSelected(parent: AdapterView<*>?) = Unit
     }
 }

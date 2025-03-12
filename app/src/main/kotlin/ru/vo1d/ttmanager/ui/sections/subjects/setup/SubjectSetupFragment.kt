@@ -19,30 +19,30 @@ import ru.vo1d.ttmanager.ui.utils.extensions.doAfterTextChanged
 
 internal class SubjectSetupFragment : Fragment(R.layout.fragment_subject_setup) {
     private var titleWatcher: TextWatcher? = null
-
+    
     private var _binding: FragmentSubjectSetupBinding? = null
     private val binding get() = _binding!!
-
+    
     private val viewModel by viewModels<SubjectSetupViewModel>()
-
+    
     private lateinit var actionSubmit: MenuItem
-
-
+    
+    
     override fun onDestroyView() {
         super.onDestroyView()
         binding.subjectTitle.removeTextChangedListener(titleWatcher)
-
+        
         titleWatcher = null
-
+        
         _binding = null
     }
-
+    
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentSubjectSetupBinding.bind(view)
-
+        
         binding.toolbar.setupWithNavController(findNavController())
-
+        
         actionSubmit = binding.toolbar.menu.findItem(R.id.action_submit)
         actionSubmit.setOnMenuItemClickListener {
             viewModel.submit {
@@ -50,11 +50,11 @@ internal class SubjectSetupFragment : Fragment(R.layout.fragment_subject_setup) 
             }
             findNavController().navigateUp()
         }
-
-
+        
+        
         titleWatcher = binding.subjectTitle.doAfterTextChanged(viewModel::setTitle)
-
-
+        
+        
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch { viewModel.canBeSubmitted.collectLatest(actionSubmit::setEnabled) }

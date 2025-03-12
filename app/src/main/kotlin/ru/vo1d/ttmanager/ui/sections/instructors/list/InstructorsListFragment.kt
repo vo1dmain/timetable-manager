@@ -33,35 +33,35 @@ import ru.vo1d.ttmanager.ui.utils.selectionModeCallback
 class InstructorsListFragment : Fragment(R.layout.fragment_instructors_list) {
     private var _binding: FragmentInstructorsListBinding? = null
     private val binding get() = _binding!!
-
+    
     private val addInstructor = InstructorsListFragmentDirections.addInstructor()
-
+    
     private val activity by activity<MainActivity>()
     private val viewModel by viewModels<InstructorsViewModel>()
-
+    
     private lateinit var actionDeleteAll: MenuItem
     private lateinit var adapter: InstructorsListAdapter
     private lateinit var actionModeCallback: ActionMode.Callback
-
-
+    
+    
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
+    
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentInstructorsListBinding.bind(view)
-
+        
         binding.toolbar.apply {
             setupWithNavController(findNavController(), MainActivity.appBarConfiguration)
             setOnMenuItemClickListener(::onMenuItemClicked)
             actionDeleteAll = menu.findItem(R.id.action_delete_all)
         }
-
+        
         adapter = InstructorsListAdapter().apply {
             binding.list.adapter = this
-
+            
             viewModel.tracker = selectionTracker(
                 "instructors-list",
                 binding.list,
@@ -71,10 +71,10 @@ class InstructorsListFragment : Fragment(R.layout.fragment_instructors_list) {
             ) {
                 withSelectionPredicate(SelectionPredicates.createSelectAnything())
             }.apply { observe(::onSelectionChanged) }
-
+            
             tracker = viewModel.tracker
         }
-
+        
         actionModeCallback = selectionModeCallback(
             viewModel.tracker,
             activity,
@@ -87,36 +87,36 @@ class InstructorsListFragment : Fragment(R.layout.fragment_instructors_list) {
             }
             true
         }
-
+        
         binding.actionAddInstructor.setOnClickListener {
             findNavController().navigate(addInstructor)
         }
-
+        
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch { viewModel.all.collectLatest(::onInstructorsListLoaded) }
             }
         }
     }
-
-
+    
+    
     private fun onInstructorsListLoaded(list: List<Instructor>) {
         adapter.submitList(list)
-
+        
         val listIsEmpty = list.isEmpty()
-
+        
         binding.messageIsEmpty.isVisible = listIsEmpty
         binding.list.isVisible = listIsEmpty.not()
         actionDeleteAll.isEnabled = listIsEmpty.not()
     }
-
+    
     private fun onMenuItemClicked(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_delete_all -> onDeleteAll()
         }
         return true
     }
-
+    
     private fun onDeleteAll() {
         ConfirmationDialog(
             R.string.dialog_title_delete_multiple_items,
@@ -124,20 +124,20 @@ class InstructorsListFragment : Fragment(R.layout.fragment_instructors_list) {
             ::deleteAll
         ).show(parentFragmentManager, "confirm_deletion_dialog")
     }
-
+    
     private fun onSelectionChanged(tracker: SelectionTracker<Long>) {
         if (tracker.hasSelection().not()) {
             activity.actionMode?.finish()
             return
         }
-
+        
         if (activity.actionMode == null)
             activity.startSupportActionMode(actionModeCallback)
-
+        
         activity.actionMode?.title = tracker.selection.size().toString()
     }
-
-
+    
+    
     private fun deleteAll() {
         viewModel.deleteAll {
             val message = when (it) {
@@ -150,10 +150,10 @@ class InstructorsListFragment : Fragment(R.layout.fragment_instructors_list) {
                 .show()
         }
     }
-
+    
     private fun deleteSelected() {
         viewModel.deleteSelected {
-
+        
         }
     }
 }

@@ -13,14 +13,14 @@ import ru.vo1d.ttmanager.data.entities.timetables.TimetablesRepository
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class TimetableViewModel(application: Application) : AndroidViewModel(application) {
     private val repo = TimetablesRepository(application)
-
+    
     private val _selectedWeek = MutableStateFlow(INVALID_ID)
-
+    
     val selectedWeek by lazy { _selectedWeek.asStateFlow() }
     val allWeeks by lazy { repo.allWeeks }
     val daysForCurrentWeek by lazy { _selectedWeek.flatMapLatest { repo.findAllDaysForWeek(it) } }
-
-
+    
+    
     fun selectWeek(weekId: Int) {
         _selectedWeek.update { weekId }
     }

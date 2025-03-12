@@ -20,33 +20,33 @@ import ru.vo1d.ttmanager.databinding.FragmentSubjectsListBinding
 internal class SubjectsListFragment : Fragment(R.layout.fragment_subjects_list) {
     private var _binding: FragmentSubjectsListBinding? = null
     private val binding get() = _binding!!
-
+    
     private val addSubject = SubjectsListFragmentDirections.addSubject()
-
+    
     private val adapter by lazy { SubjectsListAdapter() }
     private val viewModel by viewModels<SubjectsListViewModel>()
-
-
+    
+    
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
+    
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentSubjectsListBinding.bind(view)
-
+        
         binding.toolbar.setupWithNavController(
             findNavController(),
             MainActivity.appBarConfiguration
         )
-
+        
         binding.list.adapter = adapter
-
+        
         binding.actionAddSubject.setOnClickListener {
             findNavController().navigate(addSubject)
         }
-
+        
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
@@ -55,11 +55,11 @@ internal class SubjectsListFragment : Fragment(R.layout.fragment_subjects_list) 
             }
         }
     }
-
-
+    
+    
     private fun onSubjectsListLoaded(list: List<Subject>) {
         adapter.submitList(list)
-
+        
         binding.messageIsEmpty.isVisible = list.isEmpty()
         binding.list.isVisible = list.isNotEmpty()
     }
