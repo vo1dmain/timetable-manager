@@ -5,7 +5,7 @@ compileSdk = "35"
 buildTools = "35.0.0"
 jdk = "17"
 
-agp = "8.9.1"
+agp = "8.9.2"
 androidJunitExt = "1.2.1"
 activity = "1.10.1"
 appcompat = "1.7.0"
@@ -20,17 +20,17 @@ espressoCore = "3.6.1"
 jdkDesugaring = "2.1.5"
 junit = "4.13.2"
 
-kotlin = "2.0.21"
-kotlinxDatetime = "0.6.1"
-kotlinxSerialization = "1.7.3"
+kotlin = "2.1.20"
+kotlinxDatetime = "0.6.2"
+kotlinxSerialization = "1.8.1"
 
-ksp = "2.0.21-1.0.26"
+ksp = "2.1.20-2.0.0"
 
 lifecycle = "2.8.7"
 
 navigation = "2.8.9"
 
-room = "2.6.1"
+room = "2.7.0"
 
 [libraries]
 android-tools-build-gradle = { module = "com.android.tools.build:gradle", version.ref = "agp" }
